@@ -6,7 +6,8 @@
   "scripts": {
     "preinstall": "composer install",
     "lint-release": "composer lint-release",
-    "lint": "composer lint && composer verify"
+    "lint": "composer lint && composer verify",
+    "clean": "rm -rf node_modules public/plugins/vendor"
   },
   "devDependencies": {
     "husky": "^2.1.0"
