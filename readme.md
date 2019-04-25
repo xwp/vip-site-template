@@ -24,11 +24,8 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 ## Overview
 
 - Project plugins and themes can be added as Composer dependencies or manualy to this repository under `public/plugins/your-plugin` and `public/themes/your-theme`.
-
 - Composer dependencies are placed under `public/plugins/vendor`.
-
 - Composer autoloader `public/plugins/vendor/autoload.php` is included in `public/vip-config/vip-config.php`.
-
 - [Composer installers](https://github.com/composer/installers) maps WordPress plugins, themes and mu-plugins to sub-directories under `public`.
 
 
@@ -72,11 +69,8 @@ Deployments to the VIP Go upstream repository are handled by `scripts/deploy.sh`
 ### Configure Deployments
 
 1. Change the repository URL for `deploy-staging` and `deploy-production` scripts in `package.json` to match your VIP Go upstream repository.
-
 2. Adjust the build sequence in `scripts/deploy.sh` to match your setup.
-
 3. Run `npm run deploy-staging` to deploy to the `develop` branch or `npm run deploy-production` to deploy to the `master` branch of the upstream VIP Go repository.
-
 4. Visit GitHub to open a pull request to the deploy target branch.
 
 
