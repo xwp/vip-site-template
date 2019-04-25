@@ -12,14 +12,9 @@
     }
   ],
   "config": {
-    "vendor-dir": "public/plugins/vendor"
-  },
-  "extra": {
-    "wordpress-install-dir": "local/public/wp",
-    "installer-paths": {
-      "public/plugins/{$name}": ["type:wordpress-plugin"],
-      "public/themes/{$name}": ["type:wordpress-theme"],
-      "public/client-mu-plugins/{$name}": ["type:wordpress-muplugin"]
+    "vendor-dir": "public/plugins/vendor",
+    "platform": {
+      "php": "7.2"
     }
   },
   "require": {
@@ -28,16 +23,31 @@
   },
   "require-dev": {
     "automattic/vipwpcs": "^1.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
     "automattic/vip-go-mu-plugins": "dev-master",
     "johnpbloch/wordpress": "dev-master",
     "wpsh/local": "^0.2.2"
   },
   "scripts": {
+    "lint": [
+      "phpcs"
+    ],
+    "lint-release": [
+      "phpcs --standard=phpcs-release.xml"
+    ],
     "verify": [
       "composer validate --no-check-publish --strict"
     ],
     "release": [
       "composer install --no-dev --prefer-dist --optimize-autoloader"
     ]
+  },
+  "extra": {
+    "wordpress-install-dir": "local/public/wp",
+    "installer-paths": {
+      "public/plugins/{$name}": ["type:wordpress-plugin"],
+      "public/themes/{$name}": ["type:wordpress-theme"],
+      "public/client-mu-plugins/{$name}": ["type:wordpress-muplugin"]
+    }
   }
 }

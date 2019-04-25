@@ -5,9 +5,14 @@
 	<arg value="s" /><!-- Show sniff codes in all reports. -->
 
 	<rule ref="WordPress-VIP-Go" />
-	<rule ref="WordPress" /><!-- Optional WordPress core coding standards. -->
-	<rule ref="WordPress-Docs" /><!-- Optional documentation standards. -->
 
-	<exclude-pattern>/vendor</exclude-pattern>
-	<exclude-pattern>/node_modules</exclude-pattern>
+	<rule ref="WordPress" />
+
+	<rule ref="WordPress-Docs">
+		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
+	</rule>
+
+	<file>local/public/wp-config.php</file>
+	<file>public/vip-config/vip-config.php</file>
+	<file>public/client-mu-plugins/plugin-loader.php</file>
 </ruleset>

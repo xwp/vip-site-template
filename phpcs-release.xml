@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress VIP Go Coding Standard">
+	<arg name="extensions" value="php" />
+	<arg name="colors" />
+	<arg value="s" /><!-- Show sniff codes in all reports. -->
+
+	<rule ref="WordPress-VIP-Go" />
+
+	<file>public/themes</file>
+</ruleset>

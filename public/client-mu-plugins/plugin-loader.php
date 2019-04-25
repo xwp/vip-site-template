@@ -1,7 +1,12 @@
 <?php
+/**
+ * Bootstrap all must-use plugins.
+ */
 
 /**
- * @var array List of relative paths to plugin bootstrap files.
+ * List of relative paths to plugin bootstrap files.
+ *
+ * @var array
  */
 $plugins = [
 	// 'example-plugin/plugin.php',
