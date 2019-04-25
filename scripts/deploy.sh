@@ -55,14 +55,15 @@ export GIT_WORK_TREE="$UPSTREAM_DIR"
 rm -rf "$UPSTREAM_DIR"
 
 git clone "$UPSTREAM_REPO" "$UPSTREAM_DIR/.git"
-git checkout -b "$SRC_BRANCH" "origin/$UPSTREAM_BRANCH"
+git checkout -b "$UPSTREAM_BRANCH" "origin/$SRC_BRANCH"
 
 echo "Copying files to the VIP Go upstream repository:"
 
 # Sync everything from our clean git directory to our git upstream directory
 # but exclude all files matched by .distignore.
-rsync --archive --delete --delete-excluded --prune-empty-dirs \
-	${DIST_IGNORE:+ --exclude-from "$DIST_IGNORE"} \
+rsync --archive --delete --prune-empty-dirs \
+	--exclude-from "$DIST_IGNORE" --delete-excluded \
+	--filter='protect .git' \
 	"$SRC_DIR/public/" "$UPSTREAM_DIR/"
 
 # Now deploy everything from the upstream directory.
