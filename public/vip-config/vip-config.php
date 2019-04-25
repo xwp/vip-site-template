@@ -4,4 +4,4 @@
  */
 
 // Enable Composer autoloader.
-require dirname( __DIR__ ) . '/client-mu-plugins/vendor/autoload.php';
+require dirname( __DIR__ ) . '/plugins/vendor/autoload.php';
