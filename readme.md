@@ -44,7 +44,7 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 	or by manually copying them from existing repositories to `public/themes` or `public/plugins`. Remember to start tracking those directories by excluding them in `public/themes/.gitignore` and `public/plugins/.gitignore`.
 
 
-### Local Development Setup
+### Local Development Environment
 
 3. If using Docker inside Vagrant, adjust the hostname of the development environment in `Vagrantfile` to match your project.
 
