@@ -27,7 +27,7 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 
 - Composer autoloader `public/plugins/vendor/autoload.php` is included in `public/vip-config/vip-config.php`.
 
-- [Composer installers](https://github.com/composer/installers) is used to map WordPress plugins, themes and mu-plugins to sub-directories under `public`.
+- [Composer installers](https://github.com/composer/installers) maps WordPress plugins, themes and mu-plugins to sub-directories under `public`.
 
 
 ## Usage
