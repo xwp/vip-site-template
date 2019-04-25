@@ -9,6 +9,10 @@
     {
       "type": "github",
       "url": "https://github.com/automattic/vip-go-mu-plugins-built.git"
+    },
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
     }
   ],
   "config": {
@@ -19,7 +23,8 @@
   },
   "require": {
     "php": ">=7.2",
-    "composer/installers": "^1.6"
+    "composer/installers": "^1.6",
+    "wpackagist-theme/twentynineteen": "^1.3"
   },
   "require-dev": {
     "automattic/vipwpcs": "^1.0",
