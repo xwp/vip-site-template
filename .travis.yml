@@ -1,0 +1,43 @@
+
+language: php
+
+php: '7.2'
+
+addons:
+  ssh_known_hosts:
+    - github.com
+
+install:
+  - npm install
+
+script:
+  - npm run lint
+
+deploy:
+  # To production.
+  - provider: script
+    script:
+      - npm run deploy-production
+    skip_cleanup: true
+    on:
+      branch: master
+  # To staging.
+  - provider: script
+    script:
+      - npm run deploy-staging
+    skip_cleanup: true
+    on:
+      branch: develop
+
+branches:
+  only:
+  - master
+  - develop
+
+cache:
+  npm: true
+  directories:
+    - $HOME/.composer/cache
+
+notifications:
+  email: false

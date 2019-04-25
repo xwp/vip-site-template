@@ -1,0 +1,43 @@
+{
+  "name": "xwp/vip-go-site",
+  "description": "Environment boilerplate for VIP Go hosted websites",
+  "type": "project",
+  "license": "MIT",
+  "prefer-stable": true,
+  "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "github",
+      "url": "https://github.com/automattic/vip-go-mu-plugins-built.git"
+    }
+  ],
+  "config": {
+    "vendor-dir": "public/plugins/vendor"
+  },
+  "extra": {
+    "wordpress-install-dir": "local/public/wp",
+    "installer-paths": {
+      "public/plugins/{$name}": ["type:wordpress-plugin"],
+      "public/themes/{$name}": ["type:wordpress-theme"],
+      "public/client-mu-plugins/{$name}": ["type:wordpress-muplugin"]
+    }
+  },
+  "require": {
+    "php": ">=7.2",
+    "composer/installers": "^1.6"
+  },
+  "require-dev": {
+    "automattic/vipwpcs": "^1.0",
+    "automattic/vip-go-mu-plugins": "dev-master",
+    "johnpbloch/wordpress": "dev-master",
+    "wpsh/local": "^0.2.2"
+  },
+  "scripts": {
+    "verify": [
+      "composer validate --no-check-publish --strict"
+    ],
+    "release": [
+      "composer install --no-dev --prefer-dist --optimize-autoloader"
+    ]
+  }
+}
