@@ -19,7 +19,7 @@ A modern setup for [WordPress VIP Go](https://vip.wordpress.com/documentation/vi
 We suggest using [Homebrew](https://brew.sh) for installing all project dependencies.
 
 
-## Usage
+## Overview
 
 - Project plugins and themes can be added as Composer dependencies or manualy to this repository under `public/plugins/your-plugin` and `public/themes/your-theme`.
 
@@ -28,6 +28,30 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 - Composer autoloader `public/plugins/vendor/autoload.php` is included in `public/vip-config/vip-config.php`.
 
 - [Composer installers](https://github.com/composer/installers) is used to map WordPress plugins, themes and mu-plugins to sub-directories under `public`.
+
+
+## Usage
+
+1. Create a fresh Git repository from this reference repository:
+
+		composer create-project xwp/vip-go-site --stability dev
+
+2. Add your theme and plugins as Composer dependencies:
+
+		composer require your/theme your/plugin another/plugin
+
+3. Adjust the hostname of the local development environment in `Vagrantfile` to match your project.
+
+		- config.vm.hostname = "vipgo"
+		+ config.vm.hostname = "your-project"
+	
+	which will create the development environment at `your-project.local`.
+
+4. Start the development environment:
+
+		vagrant up
+
+5. Visit [your-project.local](http://your-project.local) (or the default [vipgo.local](http://vipgo.local)) to view the development environment. 
 
 
 ## To Do
