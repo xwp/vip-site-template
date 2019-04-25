@@ -40,16 +40,22 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 
 		composer require your/theme your/plugin another/plugin
 
-3. Adjust the hostname of the local development environment in `Vagrantfile` to match your project.
+	or by manually copying them from existing repositories to `public/themes` or `public/plugins`. Remember to start tracking those directories by excluding them in `public/themes/.gitignore` and `public/plugins/.gitignore`.
+
+3. If using Docker inside Vagrant, adjust the hostname of the development environment in `Vagrantfile` to match your project.
 
 		- config.vm.hostname = "vipgo"
 		+ config.vm.hostname = "your-project"
 	
 	which will create the development environment at `your-project.local`.
 
-4. Start the development environment:
+4. Start the development environment using Vagrant:
 
 		vagrant up
+
+	or using Docker Compose:
+
+		docker-compose up
 
 5. Visit [your-project.local](http://your-project.local) (or the default [vipgo.local](http://vipgo.local)) to view the development environment. 
 
