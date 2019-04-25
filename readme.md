@@ -8,7 +8,7 @@ A modern setup for [WordPress VIP Go](https://vip.wordpress.com/documentation/vi
 - 🏭 Uses Composer for adding project dependencies, including plugins and themes.
 - 🌎 Uses Composer autoloader for using any of the popular PHP packages anywhere in the codebase.
 - 👩‍💻 Provides a local development environment based on Docker that can be run inside Vagrant without having to install Docker on the host machine.
-- 🚀 Includes an automated build and deploy pipeline for deployments to WordPress VIP Go.
+- 🚀 Includes automated build and deploy pipelines to WordPress VIP Go.
 
 
 ## Requirements
