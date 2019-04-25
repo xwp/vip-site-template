@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "preinstall": "composer install",
     "lint-release": "composer lint-release",
     "lint": "composer lint && composer verify"
   },
