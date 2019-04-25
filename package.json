@@ -1,0 +1,19 @@
+{
+  "name": "@xwp/vip-go-site",
+  "private": true,
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "lint-release": "composer lint-release",
+    "lint": "composer lint && composer verify"
+  },
+  "devDependencies": {
+    "husky": "^2.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint"
+    }
+  }
+}
