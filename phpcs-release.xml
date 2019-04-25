@@ -7,4 +7,6 @@
 	<rule ref="WordPress-VIP-Go" />
 
 	<file>public/themes</file>
+
+	<exclude-pattern>public/themes/twentynineteen</exclude-pattern>
 </ruleset>
