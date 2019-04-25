@@ -7,8 +7,8 @@
   "minimum-stability": "dev",
   "repositories": [
     {
-      "type": "github",
-      "url": "https://github.com/automattic/vip-go-mu-plugins-built.git"
+      "type": "vcs",
+      "url": "https://github.com/automattic/vip-go-mu-plugins-built"
     },
     {
       "type": "composer",
