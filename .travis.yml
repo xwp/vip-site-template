@@ -11,14 +11,16 @@ script:
   - npm run lint-release
 
 deploy:
-  # To production.
+
+  # Deploy to production.
   - provider: script
     script:
       - npm run deploy-production
     skip_cleanup: true
     on:
       branch: master
-  # To staging.
+
+  # Deploy to staging.
   - provider: script
     script:
       - npm run deploy-staging
@@ -26,6 +28,7 @@ deploy:
     on:
       branch: develop
 
+# Travis must run on brances that need to be deployed.
 branches:
   only:
   - master
