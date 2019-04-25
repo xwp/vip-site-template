@@ -79,7 +79,7 @@ Deployments to the VIP Go upstream repository are handled by `scripts/deploy.sh`
 4. Visit GitHub to open a pull request to the deploy target branch.
 
 
-## Maintance Tasks
+## Maintenance Tasks
 
 - Keep the `public` directory in sync with any updates to the [VIP Go skeleton repository](https://github.com/automattic/vip-go-mu-plugins-built). It is not added as a project dependency because it requires plugins and themes to be placed _inside_ it.
 
