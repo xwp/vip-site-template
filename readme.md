@@ -31,7 +31,7 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 - [Composer installers](https://github.com/composer/installers) maps WordPress plugins, themes and mu-plugins to sub-directories under `public`.
 
 
-## Usage
+## Setup
 
 1. Create a fresh Git repository from this reference repository:
 
@@ -61,10 +61,19 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 5. Visit [your-project.local](http://your-project.local) (or the default [vipgo.local](http://vipgo.local)) to view the development environment. 
 
 
-## To Do
+## Deployments
 
-- Document project structure.
-- Add a sample deployment pipeline.
+Deployments to the VIP Go upstream repository are handled by `scripts/deploy.sh` which does a clean checkout of the deploy branch to `deploy/src`, runs the build pipeline and copies the the `public` directory with the resulting artifects to `deploy/dist` (using `rsync`) which contains the upstream VIP Go repository. It then creates a new branch with the new changes and pushes it to the upstream repository.
+
+Configure the deployment:
+
+1. Change the repository URL for `deploy-staging` and `deploy-production` scripts in `package.json` to match your VIP Go upstream repository.
+
+2. Adjust the build sequence in `scripts/deploy.sh` to match your setup.
+
+3. Run `npm run deploy-staging` to deploy to the `develop` branch or `npm run deploy-production` to deploy to the `master` branch of the upstream VIP Go repository.
+
+4. Visit GitHub to open a pull request to the deploy target branch.
 
 
 ## Maintance Tasks
