@@ -7,7 +7,7 @@
   "minimum-stability": "dev",
   "repositories": [
     {
-      "type": "vcs",
+      "type": "git",
       "url": "https://github.com/automattic/vip-go-mu-plugins-built"
     },
     {
@@ -16,6 +16,7 @@
     }
   ],
   "config": {
+    "preferred-install": "dist",
     "vendor-dir": "public/plugins/vendor",
     "platform": {
       "php": "7.2"
