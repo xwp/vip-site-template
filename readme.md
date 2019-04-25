@@ -43,6 +43,9 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 
 	or by manually copying them from existing repositories to `public/themes` or `public/plugins`. Remember to start tracking those directories by excluding them in `public/themes/.gitignore` and `public/plugins/.gitignore`.
 
+
+### Local Development Setup
+
 3. If using Docker inside Vagrant, adjust the hostname of the development environment in `Vagrantfile` to match your project.
 
 		- config.vm.hostname = "vipgo"
@@ -65,7 +68,7 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 
 Deployments to the VIP Go upstream repository are handled by `scripts/deploy.sh` which does a clean checkout of the deploy branch to `deploy/src`, runs the build pipeline and copies the the `public` directory with the resulting artifects to `deploy/dist` (using `rsync`) which contains the upstream VIP Go repository. It then creates a new branch with the new changes and pushes it to the upstream repository.
 
-Configure the deployment:
+### Configure Deployments
 
 1. Change the repository URL for `deploy-staging` and `deploy-production` scripts in `package.json` to match your VIP Go upstream repository.
 
