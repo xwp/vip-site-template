@@ -72,3 +72,5 @@ cd "$UPSTREAM_DIR"
 git add --all
 git commit --message "Deploy $SRC_BRANCH at $SYNCREV"
 git push -u origin "$UPSTREAM_BRANCH"
+
+echo "Done! Now open a pull request from $UPSTREAM_BRANCH to $SRC_BRANCH on $UPSTREAM_REPO to submit the changes for code review."
