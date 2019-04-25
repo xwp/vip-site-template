@@ -15,6 +15,16 @@ define( 'DB_COLLATE', '' );
 
 define( 'WP_DEBUG', true );
 
+// Use a custom wp-content directory to avoid including the default themes.
+define( 'WP_CONTENT_DIR', __DIR__ . '/content' );
+
+if ( defined( 'WP_HOME' ) && WP_HOME ) {
+	define( 'WP_CONTENT_URL', WP_HOME . '/content' );
+}
+
+// Include VIP-specific config.
+require __DIR__ . '/wp-content/vip-config/vip-config.php';
+
 $table_prefix = 'wp_';
 
 require_once ABSPATH . 'wp-settings.php';

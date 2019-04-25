@@ -23,8 +23,8 @@ services:
     volumes:
       - ./local/public/wp:/var/www/html
       - ./local/public/wp-config.php:/var/www/html/wp-config.php
-      - ./public:/var/www/html/wp-content
-      - ./public/plugins/vendor/automattic/vip-go-mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./public:/var/www/html/content
+      - ./public/plugins/vendor/automattic/vip-go-mu-plugins:/var/www/html/content/mu-plugins
     environment:
       # Don't use WORDPRESS_* environment variables since we have a custom wp-config.php mapped above.
       VIPGOLOCAL: 1
