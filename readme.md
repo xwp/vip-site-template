@@ -5,8 +5,8 @@
 
 A modern setup for [WordPress VIP Go](https://vip.wordpress.com/documentation/vip-go/) hosted projects with:
 
-- 🏭 Composer for adding project depencenies, including plugins and themes.
-- 🚀 Composer autoloader for using any of the popular PHP packages.
+- 🏭 Composer for adding project dependencies, including plugins and themes.
+- 🚀 Composer autoloader for using any of the popular PHP packages anywhere in the codebase.
 - 👩‍💻 Local development environment based on Docker that can be run inside Vagrant without having to install Docker on the host machine.
 
 
