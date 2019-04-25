@@ -7,6 +7,7 @@
     "preinstall": "composer install",
     "lint-release": "composer lint-release",
     "lint": "composer lint && composer verify",
+    "release": "composer release",
     "clean": "rm -rf node_modules public/plugins/vendor"
   },
   "devDependencies": {
