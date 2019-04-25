@@ -33,8 +33,6 @@ branches:
 
 cache:
   npm: true
-  directories:
-    - $HOME/.composer/cache
 
 notifications:
   email: false
