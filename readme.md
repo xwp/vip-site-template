@@ -16,6 +16,7 @@ A modern setup for [WordPress VIP Go](https://vip.wordpress.com/documentation/vi
 - PHP 7.2 or higher
 - [Composer](https://getcomposer.org)
 - [Vagrant](https://www.vagrantup.com) or [Docker with Docker Compose](https://docs.docker.com/compose/install/)
+- [rsync](https://rsync.samba.org) for deployments
 
 We suggest using [Homebrew](https://brew.sh) for installing all project dependencies.
 
