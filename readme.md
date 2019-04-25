@@ -3,11 +3,12 @@
 [![Build Status](https://travis-ci.com/xwp/vip-go-site.svg?branch=master)](https://travis-ci.com/xwp/vip-go-site)
 
 
-A modern setup for [WordPress VIP Go](https://vip.wordpress.com/documentation/vip-go/) hosted projects with:
+A modern setup for [WordPress VIP Go](https://vip.wordpress.com/documentation/vip-go/) hosted projects:
 
-- 🏭 Composer for adding project dependencies, including plugins and themes.
-- 🚀 Composer autoloader for using any of the popular PHP packages anywhere in the codebase.
-- 👩‍💻 Local development environment based on Docker that can be run inside Vagrant without having to install Docker on the host machine.
+- 🏭 Uses Composer for adding project dependencies, including plugins and themes.
+- 🌎 Uses Composer autoloader for using any of the popular PHP packages anywhere in the codebase.
+- 👩‍💻 Provides a local development environment based on Docker that can be run inside Vagrant without having to install Docker on the host machine.
+- 🚀 Includes an automated build and deploy pipeline for deployments to WordPress VIP Go.
 
 
 ## Requirements
