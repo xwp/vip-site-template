@@ -12,12 +12,16 @@
     "lint": "composer lint && composer verify",
     "release": "composer release",
     "clean": "rm -rf node_modules public/plugins/vendor",
-    "deploy-staging": "./scripts/deploy.sh $npm_package_config_releaseRepository develop",
-    "deploy-production": "./scripts/deploy.sh $npm_package_config_releaseRepository master"
+    "deploy-staging": "node scripts/deploy.js $npm_package_config_releaseRepository develop",
+    "deploy-production": "node scripts/deploy.js $npm_package_config_releaseRepository master"
   },
   "devDependencies": {
-    "husky": "^2.1.0"
+    "fs-extra": "^7.0.1",
+    "husky": "^2.1.0",
+    "minimist": "^1.2.0",
+    "simple-git": "^1.110.0"
   },
+  "dependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint",
