@@ -18,6 +18,7 @@
   "devDependencies": {
     "fs-extra": "^7.0.1",
     "husky": "^2.1.0",
+    "ignore": "^5.1.1",
     "minimist": "^1.2.0",
     "simple-git": "^1.110.0"
   },
