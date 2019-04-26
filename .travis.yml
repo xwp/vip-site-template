@@ -19,6 +19,7 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
+      condition: -z $SKIP_DEPLOY
 
   # Deploy to staging.
   - provider: script
@@ -27,6 +28,7 @@ deploy:
     skip_cleanup: true
     on:
       branch: develop
+      condition: -z $SKIP_DEPLOY
 
 # Travis must run on brances that need to be deployed.
 branches:
