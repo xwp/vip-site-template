@@ -15,7 +15,7 @@ A modern setup for [WordPress VIP Go](https://vip.wordpress.com/documentation/vi
 
 ### Upstream Repositories for Deployment Only
 
-Most enterprise WordPress hosts use Git repositories for tracking the website source code including the built Javascript and CSS files, and PHP dependencies which shouldn't be part of the development repositories. Therefore, we use the host's repositories only for deployment purposes. Deployments consist of all changes bundled into a single Git commit to a timestamp-based "release" branch in the host's repository from which we can open a pull request to the deployement target branch.
+Most enterprise WordPress hosts use Git repositories for tracking the website source code including the built Javascript and CSS files, and PHP dependencies which shouldn't be part of the development repositories. Therefore, we use the host's repositories only for deployment purposes. Deployments consist of all changes bundled into a single Git commit to a timestamp-based "release" branch in the host's repository from which we open a pull request to the deployement target branch.
 
 ### Reproducible Builds
 
