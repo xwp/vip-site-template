@@ -11,6 +11,17 @@ A modern setup for [WordPress VIP Go](https://vip.wordpress.com/documentation/vi
 - 🚀 Includes automated build and deploy pipelines to WordPress VIP Go.
 
 
+## Principles and Ideas
+
+### Upstream Repositories for Deployment Only
+
+Most enterprise WordPress hosts use Git repositories for tracking the website source code including the built Javascript and CSS files, and PHP dependencies which shouldn't be part of the development repositories. Therefore, we use the host's repositories only for deployment purposes. Deployments consist of all changes bundled into a single Git commit to a timestamp-based "release" branch in the host's repository from which we can open a pull request to the deployement target branch.
+
+### Reproducible Builds
+
+Deployment process always starts from the same clean state which enables reproducable builds accross different environments such as local development machines and continuous integration services. See the "Deployments" section below for more details.
+
+
 ## Requirements
 
 - PHP 7.2 or higher
