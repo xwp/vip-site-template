@@ -3,14 +3,17 @@
   "private": true,
   "version": "1.0.0",
   "license": "MIT",
+  "config": {
+    "releaseRepository": "https://github.com/Automattic/vip-go-skeleton.git"
+  },
   "scripts": {
     "preinstall": "composer install",
     "lint-release": "composer lint-release",
     "lint": "composer lint && composer verify",
     "release": "composer release",
     "clean": "rm -rf node_modules public/plugins/vendor",
-    "deploy-staging": "./scripts/deploy.sh https://github.com/Automattic/vip-go-skeleton.git develop",
-    "deploy-production": "./scripts/deploy.sh https://github.com/Automattic/vip-go-skeleton.git master"
+    "deploy-staging": "./scripts/deploy.sh $npm_package_config_releaseRepository develop",
+    "deploy-production": "./scripts/deploy.sh $npm_package_config_releaseRepository master"
   },
   "devDependencies": {
     "husky": "^2.1.0"
