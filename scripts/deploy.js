@@ -1,4 +1,4 @@
-const exec = require('child_process').execSync;
+const exec = require('child_process').execSync
 const parseArgs = require('minimist')
 const path = require('path')
 const fs = require('fs-extra')
@@ -17,13 +17,13 @@ const config = {
     repo: rootDir,
     releaseDir: path.join(rootDir, 'deploy/src/public'),
     branch: srcBranch,
-    dir: path.join(rootDir, 'deploy/src'),
+    dir: path.join(rootDir, 'deploy/src')
   },
   dist: {
     repo: upstreamRepo,
     repoDir: path.join(rootDir, 'deploy/dist-src'),
-    branch: `deploy/${srcBranch}-${Math.round(new Date().getTime()/1000)}`,
-    dir: path.join(rootDir, 'deploy/dist'),
+    branch: `deploy/${srcBranch}-${Math.round(new Date().getTime() / 1000)}`,
+    dir: path.join(rootDir, 'deploy/dist')
   },
   build: 'npm install && npm run release',
   distignore: path.join(rootDir, 'public/.distignore')
@@ -32,8 +32,8 @@ const config = {
 const log = console.log
 
 const gitOutputHandler = (command, stdout, stderr) => {
-  stdout.pipe(process.stdout);
-  stderr.pipe(process.stderr);
+  stdout.pipe(process.stdout)
+  stderr.pipe(process.stderr)
 }
 
 // Always start with fresh source and release directories.
