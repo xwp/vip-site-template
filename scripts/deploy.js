@@ -29,6 +29,13 @@ const config = {
   distignore: path.join(rootDir, 'public/.distignore')
 }
 
+const log = console.log
+
+const gitOutputHandler = (command, stdout, stderr) => {
+  stdout.pipe(process.stdout);
+  stderr.pipe(process.stderr);
+}
+
 // Always start with fresh source and release directories.
 fs.emptyDirSync(config.src.dir)
 fs.emptyDirSync(config.dist.dir)
@@ -40,13 +47,7 @@ fs.copySync(
   path.join(config.src.dir, '.git')
 )
 
-const log = console.log
-
-const gitOutputHandler = (command, stdout, stderr) => {
-  stdout.pipe(process.stdout);
-  stderr.pipe(process.stderr);
-}
-
+// Create Git repository references now that directories exist.
 const gitSrc = git(config.src.dir).outputHandler(gitOutputHandler)
 const gitDist = git(config.dist.repoDir).outputHandler(gitOutputHandler)
 
