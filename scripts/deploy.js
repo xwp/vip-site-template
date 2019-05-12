@@ -93,7 +93,7 @@ gitSrc.reset('hard')
 
     log(`Committing all changes to the upstream repository ${upstreamRepo}.`)
     return gitRelease.raw(['add', '--all'])
-      .then(() => gitRelease.commit(`Deploy ${config.src.branch}`))
+      .then(() => gitRelease.commit(`Deploy ${config.src.branch}`)) // TODO: Reference source revision number.
       .then(() => gitRelease.push('origin', config.dist.branch))
   })
   .then(() => {
