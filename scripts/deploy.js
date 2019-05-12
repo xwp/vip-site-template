@@ -79,20 +79,21 @@ gitSrc.reset('hard')
         filter: ignore().add(fs.readFileSync(config.distignore).toString()).createFilter()
       }
     )
-    .then(() => {
-      log(`Making the release directory ${config.dist.dir} an upstream Git repository.`)
-      return fs.copy(
-        path.join(config.dist.repoDir, '.git'),
-        path.join(config.dist.dir, '.git')
-      )
-    })
-    .then(() => {
-      const gitRelease = git(config.dist.dir).outputHandler(gitOutputHandler)
+  })
+  .then(() => {
+    log(`Making the release directory ${config.dist.dir} an upstream Git repository.`)
+    return fs.copy(
+      path.join(config.dist.repoDir, '.git'),
+      path.join(config.dist.dir, '.git')
+    )
+  })
+  .then(() => {
+    const gitRelease = git(config.dist.dir).outputHandler(gitOutputHandler)
 
-      return gitRelease.raw(['add', '--all'])
-        .then(gitRelease.commit(`Deploy ${config.src.branch}`))
-        .then(gitRelease.push('origin', config.dist.branch))
-    })
+    log(`Committing all changes to the upstream repository ${upstreamRepo}.`)
+    return gitRelease.raw(['add', '--all'])
+      .then(() => gitRelease.commit(`Deploy ${config.src.branch}`))
+      .then(() => gitRelease.push('origin', config.dist.branch))
   })
   .then(() => {
     // TODO: Print a URL for opening the pull request.
