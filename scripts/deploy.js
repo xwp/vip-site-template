@@ -2,7 +2,7 @@ const exec = require('child_process').execSync;
 const parseArgs = require('minimist')
 const path = require('path')
 const fs = require('fs-extra')
-const git = require('simple-git')
+const git = require('simple-git/promise')
 const ignore = require('ignore')
 
 // Parse the command-line arguments.
@@ -40,33 +40,62 @@ fs.copySync(
   path.join(config.src.dir, '.git')
 )
 
+const log = console.log
+
+const gitOutputHandler = (command, stdout, stderr) => {
+  stdout.pipe(process.stdout);
+  stderr.pipe(process.stderr);
+}
+
+const gitSrc = git(config.src.dir).outputHandler(gitOutputHandler)
+const gitDist = git(config.dist.repoDir).outputHandler(gitOutputHandler)
+
 // Checkout a fresh source repository.
-git(config.src.dir)
-  .reset('hard')
-  .checkout(config.src.branch)
+gitSrc.reset('hard')
+  .then(() => {
+    log(`Checking out ${config.src.branch} branch to ${config.src.dir}.`)
+    return gitSrc.checkout(config.src.branch)
+  })
+  .then(() => {
+    log(`Cloning ${config.dist.repo} to ${config.dist.repoDir}.`)
+    return gitDist.clone(config.dist.repo, config.dist.repoDir)
+  })
+  .then(() => gitDist.reset('hard'))
+  .then(() => {
+    log(`Checking out ${config.dist.branch} branch in ${config.dist.repoDir}.`)
+    return gitDist.checkoutBranch(config.dist.branch, config.src.branch)
+  })
+  .then(() => {
+    log(`Building release in ${config.src.dir}.`)
+    exec(config.build, {
+      cwd: config.src.dir
+    })
 
-// Checkout a fresh release repository.
-git(config.dist.repoDir)
-  .clone(config.dist.repo, config.dist.repoDir)
-  .reset('hard')
-  .checkoutBranch(config.dist.branch, config.src.branch)
+    log(`Copying release from ${config.src.releaseDir} to ${config.dist.dir}.`)
+    return fs.copy(
+      path.relative(rootDir, config.src.releaseDir),
+      path.relative(rootDir, config.dist.dir),
+      {
+        filter: ignore().add(fs.readFileSync(config.distignore).toString()).createFilter()
+      }
+    )
+    .then(() => {
+      log(`Making the release directory ${config.dist.dir} an upstream Git repository.`)
+      return fs.copy(
+        path.join(config.dist.repoDir, '.git'),
+        path.join(config.dist.dir, '.git')
+      )
+    })
+    .then(() => {
+      const gitRelease = git(config.dist.dir).outputHandler(gitOutputHandler)
 
-// Run the build.
-exec(config.build, {
-  cwd: config.src.dir
-})
-
-// Copy the build to the release directory.
-fs.copySync(
-  config.src.releaseDir,
-  config.dist.dir,
-  {
-    filter: ignore().add(fs.readFileSync(config.distignore).toString()).createFilter()
-  }
-)
-
-// Now make the release directory a release repository.
-fs.copySync(
-  path.join(config.dist.repoDir, '.git'),
-  path.join(config.dist.dir, '.git')
-)
+      return gitRelease.raw(['add', '--all'])
+        .then(gitRelease.commit(`Deploy ${config.src.branch}`))
+        .then(gitRelease.push('origin', config.dist.branch))
+    })
+  })
+  .then(() => {
+    // TODO: Print a URL for opening the pull request.
+    log(`Done! Now open a pull request from ${config.dist.branch} to ${srcBranch} on ${upstreamRepo} to submit the changes for code review.`)
+  })
+  .catch((err) => console.error(err))
