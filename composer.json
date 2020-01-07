@@ -24,7 +24,7 @@
   },
   "require": {
     "php": ">=7.2",
-    "composer/installers": "^1.6",
+    "composer/installers": "^1.7",
     "wpackagist-theme/twentynineteen": "^1.3"
   },
   "require-dev": {
