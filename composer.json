@@ -32,7 +32,7 @@
     "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
     "automattic/vip-go-mu-plugins": "dev-master",
     "johnpbloch/wordpress": "dev-master",
-    "wpsh/local": "^0.2.2"
+    "wpsh/local": "^0.2.3"
   },
   "scripts": {
     "lint": [
