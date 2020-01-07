@@ -6,7 +6,9 @@
 
 	<rule ref="WordPress-VIP-Go" />
 
-	<rule ref="WordPress" />
+	<rule ref="WordPress">
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+	</rule>
 
 	<rule ref="WordPress-Docs">
 		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
