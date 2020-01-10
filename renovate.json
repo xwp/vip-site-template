@@ -2,5 +2,14 @@
   "extends": [
     "config:base"
   ],
-  "rangeStrategy": "replace"
+  "rangeStrategy": "replace",
+  "packageRules": [
+    {
+      "updateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
+    }
+  ]
 }
