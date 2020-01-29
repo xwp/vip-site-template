@@ -29,7 +29,7 @@
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.0",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.6.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
     "automattic/vip-go-mu-plugins": "dev-master",
     "johnpbloch/wordpress": "dev-master",
     "wpsh/local": "^0.2.3"
