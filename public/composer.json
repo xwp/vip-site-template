@@ -17,14 +17,14 @@
   ],
   "config": {
     "preferred-install": "dist",
-    "vendor-dir": "public/plugins/vendor",
+    "vendor-dir": "plugins/vendor",
     "platform": {
       "php": "7.2"
     }
   },
   "require": {
     "php": ">=7.2",
-    "composer/installers": "^1.8",
+    "composer/installers": "~1.0",
     "wpackagist-theme/twentynineteen": "^1.4"
   },
   "require-dev": {
@@ -39,7 +39,7 @@
       "phpcs"
     ],
     "lint-release": [
-      "phpcs --standard=phpcs-release.xml"
+      "phpcs --standard=../phpcs-release.xml"
     ],
     "verify": [
       "composer validate --no-check-publish --strict"
@@ -49,11 +49,11 @@
     ]
   },
   "extra": {
-    "wordpress-install-dir": "local/public/wp",
+    "wordpress-install-dir": "../local/public/wp",
     "installer-paths": {
-      "public/plugins/{$name}": ["type:wordpress-plugin"],
-      "public/themes/{$name}": ["type:wordpress-theme"],
-      "public/client-mu-plugins/{$name}": ["type:wordpress-muplugin"]
+      "plugins/{$name}": ["type:wordpress-plugin"],
+      "themes/{$name}": ["type:wordpress-theme"],
+      "client-mu-plugins/{$name}": ["type:wordpress-muplugin"]
     }
   }
 }

@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "preinstall": "composer install",
-    "lint-release": "composer lint-release",
-    "lint": "composer lint && composer verify",
-    "release": "composer release",
+    "preinstall": "composer install --working-dir=public",
+    "lint-release": "composer lint-release --working-dir=public",
+    "lint": "composer lint --working-dir=public && composer verify --working-dir=public",
+    "release": "composer release --working-dir=public",
     "clean": "rm -rf node_modules public/plugins/vendor",
     "deploy-staging": "./scripts/deploy.sh https://github.com/Automattic/vip-go-skeleton.git develop",
     "deploy-production": "./scripts/deploy.sh https://github.com/Automattic/vip-go-skeleton.git master"
