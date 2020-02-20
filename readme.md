@@ -48,7 +48,7 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 
 2. Add your theme and plugins as Composer dependencies:
 
-		composer require your/theme your/plugin another/plugin
+		composer require --working-dir=public your/theme your/plugin another/plugin
 
 	or by manually copying them from existing repositories to `public/themes` or `public/plugins`. Remember to start tracking those directories by excluding them in `public/themes/.gitignore` and `public/plugins/.gitignore`.
 
