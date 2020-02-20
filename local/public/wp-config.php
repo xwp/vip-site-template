@@ -23,7 +23,7 @@ if ( defined( 'WP_HOME' ) && WP_HOME ) {
 }
 
 // Include VIP-specific config.
-require __DIR__ . '/content/vip-config/vip-config.php';
+require __DIR__ . '/vip-config/vip-config.php';
 
 $table_prefix = 'wp_';
 
