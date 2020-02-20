@@ -3,12 +3,19 @@
 [![Build Status](https://travis-ci.com/xwp/vip-go-site.svg?branch=master)](https://travis-ci.com/xwp/vip-go-site)
 
 
-A modern setup for [WordPress VIP Go](https://vip.wordpress.com/documentation/vip-go/) hosted projects:
+A modern setup for [WordPress VIP Go](https://wpvip.com/documentation/vip-go/) hosted projects:
 
 - 🏭 Uses Composer for adding project dependencies, including plugins and themes.
 - 🌎 Uses Composer autoloader for using any of the popular PHP packages anywhere in the codebase.
 - 👩‍💻 Provides a local development environment based on Docker that can be run inside Vagrant without having to install Docker on the host machine.
 - 🚀 Includes automated build and deploy pipelines to WordPress VIP Go.
+
+
+## Links & Resources
+
+- [VIP Go dashboard](https://dashboard.wpvip.com)
+- [VIP Go NewRelic dashboard](https://rpm.newrelic.com)
+- [VIP Go documentation](https://wpvip.com/documentation/)
 
 
 ## Principles and Ideas
