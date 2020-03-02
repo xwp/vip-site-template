@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "318b814e493a6d3ab134fc2d4ec2f1ff",
+    "content-hash": "5d60c47768a27e3bd69fd1023e2e39a3",
     "packages": [
         {
             "name": "composer/installers",
@@ -140,7 +140,9 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/twentynineteen.1.4.zip"
+                "url": "https://downloads.wordpress.org/theme/twentynineteen.1.4.zip",
+                "reference": null,
+                "shasum": null
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -156,14 +158,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/automattic/vip-go-mu-plugins-built",
-                "reference": "e4ad4c61cff66b4fb6f72b787a0073193cf85db5"
+                "reference": "d11374d27ad4140624ade8a9ec89498dcc45956b"
             },
             "require": {
                 "php": "^7.2"
             },
             "type": "library",
             "description": "The mu-plugins that power the VIP Go Platform",
-            "time": "2020-02-20T08:35:46+00:00"
+            "time": "2020-03-02T16:42:48+00:00"
         },
         {
             "name": "automattic/vipwpcs",
