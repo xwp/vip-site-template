@@ -3,12 +3,19 @@
 [![Build Status](https://travis-ci.com/xwp/vip-go-site.svg?branch=master)](https://travis-ci.com/xwp/vip-go-site)
 
 
-A modern setup for [WordPress VIP Go](https://vip.wordpress.com/documentation/vip-go/) hosted projects:
+A modern setup for [WordPress VIP Go](https://wpvip.com/documentation/vip-go/) hosted projects:
 
 - 🏭 Uses Composer for adding project dependencies, including plugins and themes.
 - 🌎 Uses Composer autoloader for using any of the popular PHP packages anywhere in the codebase.
 - 👩‍💻 Provides a local development environment based on Docker that can be run inside Vagrant without having to install Docker on the host machine.
 - 🚀 Includes automated build and deploy pipelines to WordPress VIP Go.
+
+
+## Links & Resources
+
+- [VIP Go dashboard](https://dashboard.wpvip.com)
+- [VIP Go NewRelic dashboard](https://rpm.newrelic.com)
+- [VIP Go documentation](https://wpvip.com/documentation/)
 
 
 ## Principles and Ideas
@@ -48,7 +55,7 @@ We suggest using [Homebrew](https://brew.sh) for installing all project dependen
 
 2. Add your theme and plugins as Composer dependencies:
 
-		composer require your/theme your/plugin another/plugin
+		composer require --working-dir=public your/theme your/plugin another/plugin
 
 	or by manually copying them from existing repositories to `public/themes` or `public/plugins`. Remember to start tracking those directories by excluding them in `public/themes/.gitignore` and `public/plugins/.gitignore`.
 
