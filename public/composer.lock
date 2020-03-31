@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d60c47768a27e3bd69fd1023e2e39a3",
+    "content-hash": "73b40ae378958443892595d5478f005c",
     "packages": [
         {
             "name": "composer/installers",
@@ -132,17 +132,15 @@
         },
         {
             "name": "wpackagist-theme/twentynineteen",
-            "version": "1.4",
+            "version": "1.5",
             "source": {
                 "type": "svn",
                 "url": "https://themes.svn.wordpress.org/twentynineteen/",
-                "reference": "1.4"
+                "reference": "1.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/twentynineteen.1.4.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://downloads.wordpress.org/theme/twentynineteen.1.5.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -158,14 +156,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/automattic/vip-go-mu-plugins-built",
-                "reference": "d11374d27ad4140624ade8a9ec89498dcc45956b"
+                "reference": "37fccacdc55010150b728aeea567fc253c7c5c8a"
             },
             "require": {
                 "php": "^7.2"
             },
             "type": "library",
             "description": "The mu-plugins that power the VIP Go Platform",
-            "time": "2020-03-02T16:42:48+00:00"
+            "time": "2020-03-31T16:59:51+00:00"
         },
         {
             "name": "automattic/vipwpcs",
@@ -540,5 +538,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.2"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
