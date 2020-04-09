@@ -13,7 +13,7 @@
     "deploy-production": "./scripts/deploy.sh https://github.com/Automattic/vip-go-skeleton.git master"
   },
   "devDependencies": {
-    "husky": "^4.2.4"
+    "husky": "^4.2.5"
   },
   "husky": {
     "hooks": {
