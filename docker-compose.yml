@@ -66,8 +66,8 @@ services:
     ports:
       - "8088:80"
     volumes:
-      - ./local/docker/nginx/config/conf.d:/etc/nginx/conf.d
       - .:/var/www/html/wp-content
+      - ./local/docker/nginx/config/conf.d:/etc/nginx/conf.d
       - ./local/public/wp:/var/www/html
       - ./vip-config:/var/www/html/vip-config
       - ./plugins/vendor/automattic/vip-go-mu-plugins:/var/www/html/wp-content/mu-plugins
