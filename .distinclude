@@ -1,0 +1,17 @@
+# List all files and directories to be deployed to VIP Go servers.
+# Use the rsync syntax https://linux.die.net/man/1/rsync
+
++ /client-mu-plugins/
++ /images/
++ /languages/
++ /plugins/
++ /private/
++ /themes/
++ /themes/
++ /vip-config/
++ /config/
++ .gitkeep
+
+# Exclude everything else
+- /*
+- .gitignore

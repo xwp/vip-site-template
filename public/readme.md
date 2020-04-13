@@ -1,1 +1,0 @@
-A close replicate of the [VIP Go skeleton repository](https://github.com/Automattic/vip-go-skeleton) repository that needs to be kept in sync. It is not added as a project dependency because it requires plugins and themes to be placed _inside_ it.
