@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "davidanson.vscode-markdownlint",
+    "felixfbecker.php-debug",
+    "bmewburn.vscode-intelephense-client"
+  ]
+}
