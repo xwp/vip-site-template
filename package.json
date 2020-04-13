@@ -6,6 +6,7 @@
   "scripts": {
     "preinstall": "composer install",
     "lint": "composer lint && composer verify",
+    "lint-yaml": "yamllint '**/*.(yaml|yml)'",
     "release": "composer release",
     "clean": "rm -rf node_modules plugins/vendor",
     "vip": "vip",
@@ -20,7 +21,8 @@
   },
   "devDependencies": {
     "@automattic/vip": "^1.9.0",
-    "husky": "^4.2.3"
+    "husky": "^4.2.3",
+    "yaml-lint": "^1.2.4"
   },
   "husky": {
     "hooks": {
