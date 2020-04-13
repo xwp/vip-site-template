@@ -1,8 +1,8 @@
 {
   "name": "xwp/vip-go-site",
-  "description": "Environment boilerplate for VIP Go hosted websites",
+  "description": "VIP Go site environment",
   "type": "project",
-  "license": "MIT",
+  "license": "proprietary",
   "prefer-stable": true,
   "minimum-stability": "dev",
   "repositories": [
@@ -16,6 +16,8 @@
     }
   ],
   "config": {
+    "sort-packages": true,
+    "process-timeout": 600,
     "preferred-install": "dist",
     "vendor-dir": "plugins/vendor",
     "platform": {
@@ -24,32 +26,29 @@
   },
   "require": {
     "php": ">=7.2",
-    "composer/installers": "~1.9",
-    "wpackagist-theme/twentynineteen": "^1.5"
+    "composer/installers": "~1.0",
+    "wpackagist-theme/twentytwenty": "^1.2"
   },
   "require-dev": {
+    "automattic/vip-go-mu-plugins": "dev-master",
     "automattic/vipwpcs": "^2.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
-    "automattic/vip-go-mu-plugins": "dev-master",
     "johnpbloch/wordpress": "dev-master",
-    "wpsh/local": "^0.2.3"
+    "wp-cli/wp-cli-bundle": "^2.4"
   },
   "scripts": {
     "lint": [
       "phpcs"
     ],
-    "lint-release": [
-      "phpcs --standard=../phpcs-release.xml"
-    ],
     "verify": [
-      "composer validate --no-check-publish --strict"
+      "composer validate --no-check-all --no-check-publish --strict"
     ],
     "release": [
       "composer install --no-dev --prefer-dist --optimize-autoloader"
     ]
   },
   "extra": {
-    "wordpress-install-dir": "../local/public/wp",
+    "wordpress-install-dir": "local/public/wp",
     "installer-paths": {
       "plugins/{$name}": ["type:wordpress-plugin"],
       "themes/{$name}": ["type:wordpress-theme"],

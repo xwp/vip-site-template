@@ -1,6 +1,30 @@
-version: '3.3'
+version: '3.6'
 
 services:
+
+  # Route HTTP requests to specific containers based on the HTTP_HOST header.
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    depends_on:
+      - nginx
+      - wordpress
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./local/docker/nginx-proxy/conf.d/custom.conf:/etc/nginx/conf.d/custom.conf
+
+  # Create a local DNS server that maps local.devgo.vip to this environment.
+  dnsmasq:
+    image: andyshinn/dnsmasq:2.76
+    restart: always
+    ports:
+      - "53:53/udp"
+    cap_add:
+      - NET_ADMIN
+    command: --address=/local.devgo.vip/${DOCKER_HOST_IP:-"127.0.0.1"}
+
   db:
     image: mysql:5.7
     volumes:
@@ -12,23 +36,60 @@ services:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
 
-  wp:
+  # Capture all emails sent by WordPress.
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    environment:
+      VIRTUAL_HOST: mail.${DEV_URL:-local.devgo.vip}
+      VIRTUAL_PORT: 8025
+
+  # For WP object caching.
+  memcached:
+    image: memcached:1.5
+
+  nginx:
+    image: nginx:1.17
+    depends_on:
+      - wordpress
+    ports:
+      - "8088:80"
+    volumes:
+      - ./local/docker/nginx/config/conf.d:/etc/nginx/conf.d
+      - .:/var/www/html/wp-content
+      - ./local/public/wp:/var/www/html
+      - ./vip-config:/var/www/html/vip-config
+      - ./plugins/vendor/automattic/vip-go-mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./plugins/vendor/automattic/vip-go-mu-plugins/drop-ins/object-cache/object-cache.php:/var/www/html/wp-content/object-cache.php
+    environment:
+      VIRTUAL_HOST: ${DEV_URL:-local.devgo.vip}, *.${DEV_URL:-local.devgo.vip}
+      VIRTUAL_PORT: 8088
+
+  wordpress:
     depends_on:
       - db
-    image: wordpress:latest
+      - mailhog
+    build: ./local/docker/wordpress
     ports:
-      - "80:80"
-      - "8088:80"
+      # For Xdebug to avoid conflicts with PHP-FPM on port 9000.
+      - "9090:9090"
     restart: always
+    # Give PHP file write access.
+    user: "1000"
     volumes:
+      - .:/var/www/html/wp-content
       - ./local/public/wp:/var/www/html
       - ./local/public/wp-config.php:/var/www/html/wp-config.php
-      - ./public:/var/www/html/content
-      - ./public/vip-config:/var/www/html/vip-config
-      - ./public/plugins/vendor/automattic/vip-go-mu-plugins:/var/www/html/content/mu-plugins
+      - ./local/public/wp-cli.yml:/var/www/html/wp-cli.yml
+      - ./vip-config:/var/www/html/vip-config
+      - ./plugins/vendor/automattic/vip-go-mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./plugins/vendor/automattic/vip-go-mu-plugins/drop-ins/object-cache/object-cache.php:/var/www/html/wp-content/object-cache.php
     environment:
-      # Don't use WORDPRESS_* environment variables since we have a custom wp-config.php mapped above.
-      VIPGOLOCAL: 1
+      VIP_GO_ENV: local
+      SMTPSERVER: mailhog
+      EMAIL: local@devgo.vip
 
 volumes:
   db_data: {}

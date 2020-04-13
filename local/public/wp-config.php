@@ -15,12 +15,22 @@ define( 'DB_COLLATE', '' );
 
 define( 'WP_DEBUG', true );
 
-// Use a custom wp-content directory to avoid including the default themes.
-define( 'WP_CONTENT_DIR', __DIR__ . '/content' );
+// Use Composer and Git to update plugins and themes.
+define( 'DISALLOW_FILE_MODS', true );
+define( 'DISALLOW_FILE_EDIT', true );
+define( 'AUTOMATIC_UPDATER_DISABLED', true );
 
-if ( defined( 'WP_HOME' ) && WP_HOME ) {
-	define( 'WP_CONTENT_URL', WP_HOME . '/content' );
+// Respond as if we were on HTTPS.
+if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
+	$_SERVER['HTTPS'] = 'on';
 }
+
+// Define our custom Memcached server for object caching.
+$memcached_servers = [
+	'default' => [
+		'memcached:11211',
+	]
+];
 
 // Include VIP-specific config.
 require __DIR__ . '/vip-config/vip-config.php';

@@ -1,10 +1,14 @@
 <?php
 /**
  * Bootstrap all must-use plugins.
+ *
+ * Use wpcom_vip_load_plugin( 'plugin-name' ); to always
+ * enable certain plugins from wp-content/plugins.
  */
 
 /**
- * List of relative paths to plugin bootstrap files.
+ * List all of the must-use (MU) plugins to be loaded for this site
+ * relative to this directory root.
  *
  * @var array
  */
