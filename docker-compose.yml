@@ -57,7 +57,7 @@ services:
 
   # For WP object caching.
   memcached:
-    image: memcached:1.5
+    image: memcached:1.6
 
   nginx:
     image: nginx:1.17
