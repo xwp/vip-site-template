@@ -8,10 +8,12 @@ services:
     depends_on:
       - nginx
       - wordpress
+      - mkcert
     ports:
       - "80:80"
       - "443:443"
     volumes:
+      - cert_data:/etc/nginx/certs
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./local/docker/nginx-proxy/conf.d/custom.conf:/etc/nginx/conf.d/custom.conf
 
@@ -100,3 +102,4 @@ services:
 
 volumes:
   db_data: {}
+  cert_data: {}
