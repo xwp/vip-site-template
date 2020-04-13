@@ -25,6 +25,13 @@ services:
       - NET_ADMIN
     command: --address=/local.devgo.vip/${DOCKER_HOST_IP:-"127.0.0.1"}
 
+  # Generate SSL certs for the local development environment.
+  mkcert:
+    build: ./local/docker/mkcert
+    volumes:
+      - cert_data:/root/.local/share/mkcert
+    command: mkcert -cert-file "${DEV_URL:-local.devgo.vip}.crt" -key-file "${DEV_URL:-local.devgo.vip}.key" "${DEV_URL:-local.devgo.vip}" "*.${DEV_URL:-local.devgo.vip}"
+
   db:
     image: mysql:5.7
     volumes:
