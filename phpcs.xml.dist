@@ -5,6 +5,8 @@
 	<arg value="s" /><!-- Show sniff codes in all reports. -->
 	<arg value="p" /><!-- Show progress. -->
 
+	<rule ref="WordPress-VIP-Go" />
+
 	<file>themes</file>
 	<file>vip-config</file>
 	<file>client-mu-plugins</file>
