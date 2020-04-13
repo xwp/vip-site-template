@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "license": "MIT",
+  "engines": {
+    "node": "^12.16.0"
+  },
   "scripts": {
     "preinstall": "composer install --working-dir=public",
     "lint-release": "composer lint-release --working-dir=public",
