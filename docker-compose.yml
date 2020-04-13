@@ -98,7 +98,7 @@ services:
     environment:
       VIP_GO_ENV: local
       SMTPSERVER: mailhog
-      EMAIL: local@devgo.vip
+      EMAIL: local@${DEV_URL:-local.devgo.vip}
 
 volumes:
   db_data: {}
