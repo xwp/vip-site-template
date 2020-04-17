@@ -8,15 +8,15 @@
     "lint": "composer lint && composer verify",
     "release": "composer release",
     "clean": "rm -rf node_modules plugins/vendor",
-    "vip": "vip",
+    "vip": "vip @devgo-vip",
     "cli": "docker-compose exec --user=1000 --workdir=/var/www/html wordpress",
     "start": "docker-compose up --detach --build",
     "start-debug": "docker-compose up --build",
     "stop": "docker-compose down",
     "stop-all": "docker stop $(docker ps --all --quiet)",
     "setup": "npm run cli -- wp core install",
-    "deploy-staging": "./local/scripts/deploy.sh git@github.com:wpcomvip/example.git develop",
-    "deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/example.git master"
+    "deploy-staging": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
+    "deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master"
   },
   "devDependencies": {
     "@automattic/vip": "^1.9.0",
