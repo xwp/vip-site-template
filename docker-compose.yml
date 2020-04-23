@@ -62,7 +62,7 @@ services:
     image: memcached:1.6
 
   nginx:
-    image: nginx:1.17
+    image: nginx:1.18
     depends_on:
       - wordpress
     ports:
