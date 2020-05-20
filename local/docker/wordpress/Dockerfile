@@ -8,7 +8,7 @@ ENV PATH /var/www/html/wp-content/plugins/vendor/bin:$PATH
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		bash less default-mysql-client git zip unzip \
-		nodejs npm curl \
+		nodejs npm curl pv \
 		msmtp libz-dev libmemcached-dev \
 	&& npm install --global npm@latest \
 	&& rm -rf /var/lib/apt/lists/*
