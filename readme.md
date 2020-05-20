@@ -159,6 +159,8 @@ Use [VaultPress](https://vaultpress.com) to download the database data from the 
 
 - Run `npm run cli -- wp db import export.sql` to import `local/public/wp/export.sql` into your local development environment. Run `cat export/*.sql > combined.sql` to combine all `.sql` files in the `export` directory into one `combined.sql` file for quicker import (useful for working with exports from VaultPress).
 
+- Run `npm run cli -- bash -c "pv import.sql | wp db query"` to import a large database file `local/public/wp/import.sql` while monitoring the progress with [`pv`](https://linux.die.net/man/1/pv) which is bundled with the WordPress container. The `bash -c` prefix allows us to run multiple commands inside the container without affecting the main `npm run cli` command.
+
 
 ## Scripts 🧰
 
