@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "92bebe7cf72099cfbda9942e800ddb5f",
+    "content-hash": "a78543659c3d9c317848af04a73d0a3e",
     "packages": [
         {
             "name": "composer/installers",
@@ -169,14 +169,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/automattic/vip-go-mu-plugins-built",
-                "reference": "1c03ff60631a1ec4c83066d636484bcd5aa8052f"
+                "reference": "e6ca0fb87f5f7f701893dd11ebaac54b9fa4f677"
             },
             "require": {
                 "php": "^7.2"
             },
             "type": "library",
             "description": "The mu-plugins that power the VIP Go Platform",
-            "time": "2020-06-10T11:56:50+00:00"
+            "time": "2020-06-25T17:29:25+00:00"
         },
         {
             "name": "automattic/vipwpcs",
@@ -597,22 +597,22 @@
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v0.6.2",
+            "version": "v0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
-                "reference": "8001af8eb107fbfcedc31a8b51e20b07d85b457a"
+                "reference": "e8d808670b8f882188368faaf1144448c169c0b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/8001af8eb107fbfcedc31a8b51e20b07d85b457a",
-                "reference": "8001af8eb107fbfcedc31a8b51e20b07d85b457a",
+                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/e8d808670b8f882188368faaf1144448c169c0b7",
+                "reference": "e8d808670b8f882188368faaf1144448c169c0b7",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.0",
-                "php": "^5.3|^7",
-                "squizlabs/php_codesniffer": "^2|^3"
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": ">=5.3",
+                "squizlabs/php_codesniffer": "^2 || ^3 || 4.0.x-dev"
             },
             "require-dev": {
                 "composer/composer": "*",
@@ -659,7 +659,7 @@
                 "stylecheck",
                 "tests"
             ],
-            "time": "2020-01-29T20:22:20+00:00"
+            "time": "2020-06-25T14:57:39+00:00"
         },
         {
             "name": "gettext/gettext",
@@ -829,12 +829,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "b88ce4165ab6021632a775a656a06a19bfd7aca9"
+                "reference": "0c245af47f76deab3daca59d63e9ebd1d3089ce5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/b88ce4165ab6021632a775a656a06a19bfd7aca9",
-                "reference": "b88ce4165ab6021632a775a656a06a19bfd7aca9",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/0c245af47f76deab3daca59d63e9ebd1d3089ce5",
+                "reference": "0c245af47f76deab3daca59d63e9ebd1d3089ce5",
                 "shasum": ""
             },
             "require": {
@@ -862,7 +862,7 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2020-06-10T19:32:29+00:00"
+            "time": "2020-06-25T12:47:12+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
@@ -1351,16 +1351,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.5.4",
+            "version": "3.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "dceec07328401de6211037abbb18bda423677e26"
+                "reference": "73e2e7f57d958e7228fce50dc0c61f58f017f9f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/dceec07328401de6211037abbb18bda423677e26",
-                "reference": "dceec07328401de6211037abbb18bda423677e26",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/73e2e7f57d958e7228fce50dc0c61f58f017f9f6",
+                "reference": "73e2e7f57d958e7228fce50dc0c61f58f017f9f6",
                 "shasum": ""
             },
             "require": {
@@ -1398,7 +1398,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2020-01-30T22:20:29+00:00"
+            "time": "2020-04-17T01:09:41+00:00"
         },
         {
             "name": "symfony/console",
