@@ -9,7 +9,7 @@ add_action(
 	'template_redirect',
 	function() {
 		$request = ! empty( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( $_SERVER['REQUEST_URI'] ) : false;
-		$dir     = WP_CONTENT_DIR . '/vip-config';
+		$dir     = WP_CONTENT_DIR . '/client-mu-plugins';
 
 		if (
 			$request &&
