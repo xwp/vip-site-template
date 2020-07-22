@@ -13,7 +13,7 @@
  * @var array
  */
 $mu_plugin_files = [
-	// 'example-plugin/plugin.php',
+	'vip/well-known.php',
 ];
 
 foreach ( $mu_plugin_files as $mu_plugin_file ) {
