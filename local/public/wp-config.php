@@ -20,6 +20,9 @@ define( 'DISALLOW_FILE_MODS', true );
 define( 'DISALLOW_FILE_EDIT', true );
 define( 'AUTOMATIC_UPDATER_DISABLED', true );
 
+// Define the local environment.
+define( 'VIP_GO_APP_ENVIRONMENT', 'local' );
+
 // Respond as if we were on HTTPS.
 if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
 	$_SERVER['HTTPS'] = 'on';
