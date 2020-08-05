@@ -19,7 +19,7 @@
     "deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master"
   },
   "devDependencies": {
-    "@automattic/vip": "^1.10.0",
+    "@automattic/vip": "^1.11.1",
     "husky": "^4.2.3"
   },
   "husky": {
