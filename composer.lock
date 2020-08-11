@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7906c572f9ef7c98f86fcc3ff058139e",
+    "content-hash": "2266dac3e801a085a074fc6ad4c72b3d",
     "packages": [
         {
             "name": "composer/installers",
@@ -145,15 +145,15 @@
         },
         {
             "name": "wpackagist-theme/twentytwenty",
-            "version": "1.4",
+            "version": "1.5",
             "source": {
                 "type": "svn",
                 "url": "https://themes.svn.wordpress.org/twentytwenty/",
-                "reference": "1.4"
+                "reference": "1.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/twentytwenty.1.4.zip"
+                "url": "https://downloads.wordpress.org/theme/twentytwenty.1.5.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -169,14 +169,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/automattic/vip-go-mu-plugins-built",
-                "reference": "8ac7bc5bca3b767169b4d896ddfd0a020be80778"
+                "reference": "5a6a11f5c67319525ff38224eddcd7dc5899c4a4"
             },
             "require": {
                 "php": "^7.2"
             },
             "type": "library",
             "description": "The mu-plugins that power the VIP Go Platform",
-            "time": "2020-07-06T22:54:04+00:00"
+            "time": "2020-08-10T15:48:07+00:00"
         },
         {
             "name": "automattic/vipwpcs",
@@ -829,12 +829,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "7499f6846c03ddafadb18e5f1c89d446d8767cfa"
+                "reference": "e5bca8109731574df71a3ea129aab00d3476f8ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/7499f6846c03ddafadb18e5f1c89d446d8767cfa",
-                "reference": "7499f6846c03ddafadb18e5f1c89d446d8767cfa",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/e5bca8109731574df71a3ea129aab00d3476f8ae",
+                "reference": "e5bca8109731574df71a3ea129aab00d3476f8ae",
                 "shasum": ""
             },
             "require": {
@@ -862,7 +862,7 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2020-07-07T07:17:17+00:00"
+            "time": "2020-08-11T17:06:12+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
