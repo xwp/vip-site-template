@@ -27,7 +27,7 @@
   "require": {
     "php": ">=7.2",
     "composer/installers": "~1.0",
-    "wpackagist-theme/twentytwenty": "^1.5"
+    "wpackagist-theme/twentytwenty": "^1.6"
   },
   "require-dev": {
     "automattic/vip-go-mu-plugins": "dev-master",
