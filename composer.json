@@ -21,7 +21,7 @@
     "preferred-install": "dist",
     "vendor-dir": "plugins/vendor",
     "platform": {
-      "php": "7.2"
+      "php": "7.4"
     }
   },
   "require": {
