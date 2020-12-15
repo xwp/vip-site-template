@@ -20,5 +20,5 @@ RUN curl -s https://getcomposer.org/installer | php \
 COPY config/php/* /usr/local/etc/php/conf.d/
 
 # Setup xdebug and memcache.
-RUN	pecl install xdebug memcache; \
+RUN pecl install xdebug-2.9.8 memcache-4.0.5.2; \
 	docker-php-ext-enable xdebug memcache;
