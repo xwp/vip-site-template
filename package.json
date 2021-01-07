@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@automattic/vip": "^1.12.1",
-    "husky": "^4.3.6"
+    "husky": "^4.3.7"
   },
   "husky": {
     "hooks": {
