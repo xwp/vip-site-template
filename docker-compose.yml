@@ -19,7 +19,7 @@ services:
 
   # Create a local DNS server that maps the development URL to this environment.
   dnsmasq:
-    image: andyshinn/dnsmasq:2.81
+    image: andyshinn/dnsmasq:2.83
     restart: always
     ports:
       - "53:53/udp"
