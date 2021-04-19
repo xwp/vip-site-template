@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a6bc93aeadc4708dabfef5b5c255ee0e",
+    "content-hash": "e30c9801c41679ab7bbd438036a82068",
     "packages": [
         {
             "name": "composer/installers",
@@ -176,42 +176,42 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/automattic/vip-go-mu-plugins-built",
-                "reference": "59c5abdf675f2cdd3a0f7c0d07776ae6e09706c0"
+                "reference": "4925eb022eeb0cff197b1c7e138b690f864fa307"
             },
             "require": {
                 "php": "^7.2"
             },
             "type": "library",
             "description": "The mu-plugins that power the VIP Go Platform",
-            "time": "2021-03-09T14:32:36+00:00"
+            "time": "2021-04-19T07:00:42+00:00"
         },
         {
             "name": "automattic/vipwpcs",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-                "reference": "4d0612461232b313d06321f1501c3989bd6aecf9"
+                "reference": "a2eef7f48e31a8c35305ed4bf576ef7a484d9f3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/4d0612461232b313d06321f1501c3989bd6aecf9",
-                "reference": "4d0612461232b313d06321f1501c3989bd6aecf9",
+                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/a2eef7f48e31a8c35305ed4bf576ef7a484d9f3c",
+                "reference": "a2eef7f48e31a8c35305ed4bf576ef7a484d9f3c",
                 "shasum": ""
             },
             "require": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1 || ^0.5 || ^0.6.2 || ^0.7",
                 "php": ">=5.4",
                 "sirbrillig/phpcs-variable-analysis": "^2.8.3",
                 "squizlabs/php_codesniffer": "^3.5.5",
                 "wp-coding-standards/wpcs": "^2.3"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+                "php-parallel-lint/php-console-highlighter": "^0.5",
+                "php-parallel-lint/php-parallel-lint": "^1.0",
                 "phpcompatibility/php-compatibility": "^9",
+                "phpcsstandards/phpcsdevtools": "^1.0",
                 "phpunit/phpunit": "^4 || ^5 || ^6 || ^7"
-            },
-            "suggest": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7 || This Composer plugin will manage the PHPCS 'installed_paths' automatically."
             },
             "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
@@ -230,7 +230,7 @@
                 "standards",
                 "wordpress"
             ],
-            "time": "2020-09-07T10:45:45+00:00"
+            "time": "2021-04-19T16:40:16+00:00"
         },
         {
             "name": "behat/behat",
@@ -1130,12 +1130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "16e490d139f810234ef68148b49e22aa2e30c139"
+                "reference": "b62d314f923fb60572b0783efaba62bc172bfd24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/16e490d139f810234ef68148b49e22aa2e30c139",
-                "reference": "16e490d139f810234ef68148b49e22aa2e30c139",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/b62d314f923fb60572b0783efaba62bc172bfd24",
+                "reference": "b62d314f923fb60572b0783efaba62bc172bfd24",
                 "shasum": ""
             },
             "require": {
@@ -1163,7 +1163,7 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2021-03-09T10:15:46+00:00"
+            "time": "2021-04-19T11:49:20+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
@@ -3675,16 +3675,16 @@
         },
         {
             "name": "sirbrillig/phpcs-variable-analysis",
-            "version": "v2.10.1",
+            "version": "v2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
-                "reference": "c6716a98fe7bee25d31306e14fb62c3ffa16d70a"
+                "reference": "e76e816236f401458dd8e16beecab905861b5867"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/c6716a98fe7bee25d31306e14fb62c3ffa16d70a",
-                "reference": "c6716a98fe7bee25d31306e14fb62c3ffa16d70a",
+                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/e76e816236f401458dd8e16beecab905861b5867",
+                "reference": "e76e816236f401458dd8e16beecab905861b5867",
                 "shasum": ""
             },
             "require": {
@@ -3719,20 +3719,20 @@
                 }
             ],
             "description": "A PHPCS sniff to detect problems with variables.",
-            "time": "2020-12-12T18:28:57+00:00"
+            "time": "2021-03-09T22:32:14+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.5.8",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "9d583721a7157ee997f235f327de038e7ea6dac4"
+                "reference": "ffced0d2c8fa8e6cdc4d695a743271fab6c38625"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/9d583721a7157ee997f235f327de038e7ea6dac4",
-                "reference": "9d583721a7157ee997f235f327de038e7ea6dac4",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ffced0d2c8fa8e6cdc4d695a743271fab6c38625",
+                "reference": "ffced0d2c8fa8e6cdc4d695a743271fab6c38625",
                 "shasum": ""
             },
             "require": {
@@ -3770,7 +3770,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2020-10-23T02:01:07+00:00"
+            "time": "2021-04-09T00:54:41+00:00"
         },
         {
             "name": "symfony/config",
@@ -7183,12 +7183,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "55ed16933dc242afb615f5b5304f2d1e7284f981"
+                "reference": "75979b428d09347e3928d935692f0e76cf393b62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/55ed16933dc242afb615f5b5304f2d1e7284f981",
-                "reference": "55ed16933dc242afb615f5b5304f2d1e7284f981",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/75979b428d09347e3928d935692f0e76cf393b62",
+                "reference": "75979b428d09347e3928d935692f0e76cf393b62",
                 "shasum": ""
             },
             "require": {
@@ -7241,7 +7241,7 @@
                 "cli",
                 "wordpress"
             ],
-            "time": "2021-03-05T18:44:53+00:00"
+            "time": "2021-03-18T10:51:00+00:00"
         },
         {
             "name": "wp-cli/wp-cli-bundle",
