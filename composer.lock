@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e30c9801c41679ab7bbd438036a82068",
+    "content-hash": "636267a29500d8363720a9ffeff50025",
     "packages": [
         {
             "name": "composer/installers",
-            "version": "v1.10.0",
+            "version": "v1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d"
+                "reference": "ae03311f45dfe194412081526be2e003960df74b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d",
-                "reference": "1a0357fccad9d1cc1ea0c9a05b8847fbccccb78d",
+                "url": "https://api.github.com/repos/composer/installers/zipball/ae03311f45dfe194412081526be2e003960df74b",
+                "reference": "ae03311f45dfe194412081526be2e003960df74b",
                 "shasum": ""
             },
             "require": {
@@ -111,6 +111,7 @@
                 "majima",
                 "mako",
                 "mediawiki",
+                "miaoxing",
                 "modulework",
                 "modx",
                 "moodle",
@@ -128,6 +129,7 @@
                 "sydes",
                 "sylius",
                 "symfony",
+                "tastyigniter",
                 "typo3",
                 "wordpress",
                 "yawik",
@@ -148,7 +150,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-14T11:07:16+00:00"
+            "time": "2021-04-28T06:42:17+00:00"
         },
         {
             "name": "wpackagist-theme/twentytwenty",
@@ -176,14 +178,14 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/automattic/vip-go-mu-plugins-built",
-                "reference": "4925eb022eeb0cff197b1c7e138b690f864fa307"
+                "reference": "00b2c6b7dd7ea03dcd57845f6be794ef64693298"
             },
             "require": {
                 "php": "^7.2"
             },
             "type": "library",
             "description": "The mu-plugins that power the VIP Go Platform",
-            "time": "2021-04-19T07:00:42+00:00"
+            "time": "2021-04-27T20:26:37+00:00"
         },
         {
             "name": "automattic/vipwpcs",
@@ -1130,12 +1132,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "b62d314f923fb60572b0783efaba62bc172bfd24"
+                "reference": "8c2b73bd61a0d222805709a47e04c8c475aa1318"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/b62d314f923fb60572b0783efaba62bc172bfd24",
-                "reference": "b62d314f923fb60572b0783efaba62bc172bfd24",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/8c2b73bd61a0d222805709a47e04c8c475aa1318",
+                "reference": "8c2b73bd61a0d222805709a47e04c8c475aa1318",
                 "shasum": ""
             },
             "require": {
@@ -1163,7 +1165,7 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2021-04-19T11:49:20+00:00"
+            "time": "2021-04-27T18:59:55+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
