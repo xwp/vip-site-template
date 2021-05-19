@@ -34,7 +34,7 @@
     "automattic/vipwpcs": "^2.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
     "johnpbloch/wordpress": "dev-master",
-    "wp-cli/wp-cli-bundle": "^2.4"
+    "wp-cli/wp-cli-bundle": "^2.5"
   },
   "scripts": {
     "lint": [
