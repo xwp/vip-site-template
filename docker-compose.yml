@@ -35,7 +35,7 @@ services:
     command: mkcert -cert-file "${DEV_URL:-local.devgo.vip}.crt" -key-file "${DEV_URL:-local.devgo.vip}.key" "${DEV_URL:-local.devgo.vip}" "*.${DEV_URL:-local.devgo.vip}"
 
   db:
-    image: mysql:5.7
+    image: mysql:8.0
     ports:
       - "3306:3306"
     volumes:
