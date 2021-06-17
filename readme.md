@@ -101,11 +101,11 @@ Important: This section can be deleted once you've completed the initial setup f
 
 		npm run setup
 
-	with the configuration from `local/wp-cli.yml`.
+	with the configuration from `local/public/wp-cli.yml`.
 
 6. Visit [local.devgo.vip](https://local.devgo.vip) to view the development environment. WordPress username `devgo` and password `devgo`.
 
-7. Visit [mail.local.devgo.vip](https://local.devgo.vip) to view all emails sent by WordPress.
+7. Visit [mail.local.devgo.vip](https://mail.local.devgo.vip) to view all emails sent by WordPress.
 
 The local development environment uses a self-signed SSL sertificate for HTTPS so the "Your connection is not private" error can be ignored to visit the site.
 
