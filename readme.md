@@ -41,7 +41,10 @@ The following configuration must be requested from VIP Go to use this site repos
 We suggest using [Homebrew](https://brew.sh) on macOS or [Chocolatey](https://chocolatey.org) for Windows to install the project dependencies.
 
 	brew install git php composer node@12 mkcert
+	# Homebrew < 2.6.0
 	brew cask install docker
+	# Homebrew >= 2.6.0
+	brew install --cask docker
 
 
 ### Code Editor and Git Client
