@@ -4,7 +4,7 @@ services:
 
   # Route HTTP requests to specific containers based on the HTTP_HOST header.
   nginx-proxy:
-    image: jwilder/nginx-proxy
+    image: jwilder/nginx-proxy:0.9.0
     depends_on:
       - nginx
       - wordpress
@@ -49,7 +49,7 @@ services:
 
   # Capture all emails sent by WordPress.
   mailhog:
-    image: mailhog/mailhog
+    image: mailhog/mailhog:v1.0.1
     ports:
       - "1025:1025"
       - "8025:8025"
@@ -71,6 +71,8 @@ services:
       - .:/var/www/html/wp-content
       - ./local/docker/nginx/config/conf.d:/etc/nginx/conf.d
       - ./local/public/wp:/var/www/html
+      - ./local/public/wp-config.php:/var/www/html/wp-config.php
+      - ./local/public/wp-cli.yml:/var/www/html/wp-cli.yml
       - ./vip-config:/var/www/html/vip-config
       - ./plugins/vendor/automattic/vip-go-mu-plugins:/var/www/html/wp-content/mu-plugins
       - ./plugins/vendor/automattic/vip-go-mu-plugins/drop-ins/object-cache/object-cache.php:/var/www/html/wp-content/object-cache.php
