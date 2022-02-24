@@ -99,6 +99,26 @@ Important: This section can be deleted once you've completed the initial setup f
 		npm run start
 
 	and `npm run stop` to stop the virtual environment at any time. Run `npm run start-debug` to start the environment in debug mode where all output from containers is displayed. Run `npm run stop-all` to stop all active Docker containers in case you're running into port conflicts.
+	
+	**Linux distributions**
+	
+	If your OS is one of Linux distributions and you have other services already running (such as Apache or mySQL) make sure you disable them **before** running `npm run start` command:
+	- `sudo systemctl stop mysql` - stop mySQL
+	- `sudo systemctl stop apache2` - stop Apache
+	
+	Depending on distribution, you might also need to start docker globally before running `docker-compose` commands (which is what `npm run start` is doing):
+	- `sudo systemctl start docker`
+	
+	You will need to change UDP port as well if you get following error (because Linux by default uses 53 port for TCP and UDP):
+	```
+	ERROR: for dnsmasq  Cannot start service dnsmasq: driver failed programming external connectivity on endpoint evolve-media_dnsmasq_1 (a2ecdb46174d30f241d202d6efc5a3ab084c1893564090b6f42292f92d41c27a): Error starting userland proxy: listen udp4 0.0.0.0:53: bind: address already in use
+	```
+	The port is changed in [`docker-compose.yml`](https://github.com/xwp/vip-go-site/blob/master/docker-compose.yml#L25). 
+	```
+	    ports:
+      - "5353:53/udp"
+    ```
+	List of used ports on your machine can be found in `/etc/services` or run `less /etc/services` in terminal. See also [Well known ports](http://www.networksorcery.com/enp/protocol/ip/ports05000.htm).
 
 5. Install the local WordPress multisite environment:
 
