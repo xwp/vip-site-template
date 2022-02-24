@@ -118,7 +118,7 @@ Important: This section can be deleted once you've completed the initial setup f
 	    ports:
       - "5353:53/udp"
     ```
-	List of used ports on your machine can be found in `/etc/services` or run `less /etc/services` in terminal. See also [Well known ports](http://www.networksorcery.com/enp/protocol/ip/ports05000.htm).
+	List of used ports on your machine can be found in `/etc/services` or run `less /etc/services` in terminal. See also [Well known ports](http://www.networksorcery.com/enp/protocol/ip/ports00000.htm).
 
 5. Install the local WordPress multisite environment:
 
