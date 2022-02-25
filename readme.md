@@ -111,7 +111,7 @@ Important: This section can be deleted once you've completed the initial setup f
 	
 	You will need to change UDP port as well if you get following error (because Linux by default uses 53 port for TCP and UDP):
 	```
-	ERROR: for dnsmasq  Cannot start service dnsmasq: driver failed programming external connectivity on endpoint evolve-media_dnsmasq_1 (a2ecdb46174d30f241d202d6efc5a3ab084c1893564090b6f42292f92d41c27a): Error starting userland proxy: listen udp4 0.0.0.0:53: bind: address already in use
+	ERROR: for dnsmasq  Cannot start service dnsmasq: driver failed programming external connectivity on endpoint ...: Error starting userland proxy: listen udp4 0.0.0.0:53: bind: address already in use
 	```
 	The port is changed in [`docker-compose.yml`](https://github.com/xwp/vip-go-site/blob/master/docker-compose.yml#L25). 
 	```
