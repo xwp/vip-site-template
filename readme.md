@@ -199,9 +199,13 @@ We use `npm` as the canonical task runner for things like linting files and crea
 
 The deployment process always starts from the same clean state which enables reproducable builds accross different environments such as local development machines and continuous integration services.
 
-Deployments to the VIP Go upstream repository are handled automatically by the [Travis CI build process](https://travis-ci.com/xwp/vip-go-site) after a feature branch is merged into `master` for production or `develop` for staging.
+Deployments to the VIP Go upstream repository are handled automatically by the [Travis CI build process](https://travis-ci.com/xwp/vip-go-site) after a feature branch is merged into `master` for production or `develop` for staging. We use Travis CI because GitHub Actions are currently not available on VIP hosted GitHub repositories.
 
 The Travis CI process (see [`.travis.yml`](.travis.yml)) checks the code against the [VIP coding standards](https://github.com/Automattic/VIP-Coding-Standards), builds the release bundle and pushes the changes to the `master-built` branch for production or `develop-built` for staging deployment.
+
+	┌──────────┐   ┌─────────────┐   ┌────────────────┐
+	│  master  ├──►│  Travis CI  ├──►│  master-built  │
+	└──────────┘   └─────────────┘   └────────────────┘
 
 Internally it runs the `local/scripts/deploy.sh` script which does a clean checkout of the deploy source branch to `local/deploy/src`, runs the build process and copies the project files with the release artifects to `deploy/dist` using `rsync`. It then commits the changes to the matching `*-built` branch which is then imported by the VIP Go servers.
 
