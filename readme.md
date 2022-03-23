@@ -21,29 +21,18 @@ Site setup, development environment and deploy tooling for [WordPress VIP Go](ht
 
 ## Requirements
 
-- PHP 7.2 or higher
+- PHP 7.4
 - [Composer](https://getcomposer.org)
-- [Node.js](https://nodejs.org) version 12
+- [Node.js](https://nodejs.org) version 16
 - [Docker with Docker Compose](https://docs.docker.com/compose/install/)
 - [rsync](https://rsync.samba.org) for deployments
-
-
-### VIP Go Configuration
-
-The following configuration must be requested from VIP Go to use this site repository:
-
-1. Deployments from `*-built` branches such as `master-built` and `develop-built`.
-2. Staging environment tracking the `develop-built` branch.
 
 
 ### Install Dependencies
 
 We suggest using [Homebrew](https://brew.sh) on macOS or [Chocolatey](https://chocolatey.org) for Windows to install the project dependencies.
 
-	brew install git php composer node@12 mkcert
-	# Homebrew < 2.6.0
-	brew cask install docker
-	# Homebrew >= 2.6.0
+	brew install git php@7.4 composer node@16 mkcert
 	brew install --cask docker
 
 
@@ -58,16 +47,25 @@ A user-friendly Git client such as [GitHub Desktop](https://desktop.github.com) 
 
 - Project plugins and themes can be added as Composer dependencies or manualy to this repository under `plugins/your-plugin` and `themes/your-theme`.
 - Composer dependencies are placed under `plugins/vendor` since it has to be in the same location relative to the project root (which is not the case for `vip-config` which is mapped to the WP root directory on the server).
-- Composer autoloader `plugins/vendor/autoload.php` is included in `publicvip-config/vip-config.php`.
+- Composer autoloader `plugins/vendor/autoload.php` is included in `vip-config/vip-config.php`.
 
 
 ## Initial Setup
 
-Important: This section can be deleted once you've completed the initial setup from the VIP Go Site template.
+**Important:** This section can be deleted once you've completed the initial setup from the VIP Go Site template.
+
+### VIP Platform Configuration
+
+The following configuration must be requested from VIP Go to use this site repository:
+
+1. Deployments from `*-built` branches such as `master-built` and `develop-built`.
+2. Staging environment tracking the `develop-built` branch.
+
+### VIP Repository Setup
 
 1. Ensure that VIP has configured the site to deploy from the `*-built` branches.
 
-2. Create a fresh Git repository from this reference repository:
+2. Create a fresh local Git repository from this reference repository:
 
 		composer create-project xwp/vip-go-site --stability dev
 
@@ -77,8 +75,13 @@ Important: This section can be deleted once you've completed the initial setup f
 
 	or by manually copying them to `themes` or `plugins`. Remember to start tracking those directories by excluding them in `themes/.gitignore` and `plugins/.gitignore`.
 
-3. Add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
+4. Adjust the repository URLs used in `package.json` scripts and this README file match your project.
 
+4. Add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
+
+5. Generate a new SSH key pair and add the private key [to the Travis CI configuration](https://docs.travis-ci.com/user/private-dependencies/#user-key) and the public part as the [Deploy key to the GitHub repository](https://docs.github.com/en/developers/overview/managing-deploy-keys).
+
+6. Remove these instructions from the README after the initial project setup.
 
 ## Setup 🛠
 
@@ -99,26 +102,6 @@ Important: This section can be deleted once you've completed the initial setup f
 		npm run start
 
 	and `npm run stop` to stop the virtual environment at any time. Run `npm run start-debug` to start the environment in debug mode where all output from containers is displayed. Run `npm run stop-all` to stop all active Docker containers in case you're running into port conflicts.
-	
-	**Linux distributions**
-	
-	If your OS is one of Linux distributions and you have other services already running (such as Apache or mySQL) make sure you disable them **before** running `npm run start` command:
-	- `sudo systemctl stop mysql` - stop mySQL
-	- `sudo systemctl stop apache2` - stop Apache
-	
-	Depending on distribution, you might also need to start docker globally before running `docker-compose` commands (which is what `npm run start` is doing):
-	- `sudo systemctl start docker`
-	
-	You will need to change UDP port as well if you get following error (because Linux by default uses 53 port for TCP and UDP):
-	```
-	ERROR: for dnsmasq  Cannot start service dnsmasq: driver failed programming external connectivity on endpoint ...: Error starting userland proxy: listen udp4 0.0.0.0:53: bind: address already in use
-	```
-	The port is changed in [`docker-compose.yml`](https://github.com/xwp/vip-go-site/blob/master/docker-compose.yml#L25). 
-	```
-	    ports:
-      - "5353:53/udp"
-    ```
-	List of used ports on your machine can be found in `/etc/services` or run `less /etc/services` in terminal. See also [Well known ports](http://www.networksorcery.com/enp/protocol/ip/ports00000.htm).
 
 5. Install the local WordPress multisite environment:
 
@@ -131,6 +114,20 @@ Important: This section can be deleted once you've completed the initial setup f
 7. Visit [mail.local.devgo.vip](https://mail.local.devgo.vip) to view all emails sent by WordPress.
 
 The local development environment uses a self-signed SSL sertificate for HTTPS so the "Your connection is not private" error can be ignored to visit the site.
+
+### Resolving Port Conflicts
+
+Docker engine shares the networking interface with the host computer so all the ports used by the containers need to be free and unused by any other services such as a DNS resolver on port 53, MySQL service on port 3306 or another web server running on port 80.
+
+Use the included `npm run stop-all` command to stop all containers running Docker containers on the host machine.
+
+On Debian and Ubuntu systems use `sudo systemctl stop ...` to disable those services. For example:
+
+- `sudo systemctl stop mysql` to stop MySQL
+- `sudo systemctl stop apache2` to stop Apache
+- `sudo systemctl stop systemd-resolved` to stop the local name server.
+
+Alternativelly, you can adjust the port mappings in `docker-compose.yml` to use different ports.
 
 
 ## Contribute
@@ -202,9 +199,13 @@ We use `npm` as the canonical task runner for things like linting files and crea
 
 The deployment process always starts from the same clean state which enables reproducable builds accross different environments such as local development machines and continuous integration services.
 
-Deployments to the VIP Go upstream repository are handled automatically by the [Travis CI build process](https://travis-ci.com/xwp/vip-go-site) after a feature branch is merged into `master` for production or `develop` for staging.
+Deployments to the VIP Go upstream repository are handled automatically by the [Travis CI build process](https://travis-ci.com/xwp/vip-go-site) after a feature branch is merged into `master` for production or `develop` for staging. We use Travis CI because GitHub Actions are currently not available on VIP hosted GitHub repositories.
 
 The Travis CI process (see [`.travis.yml`](.travis.yml)) checks the code against the [VIP coding standards](https://github.com/Automattic/VIP-Coding-Standards), builds the release bundle and pushes the changes to the `master-built` branch for production or `develop-built` for staging deployment.
+
+	┌──────────┐   ┌─────────────┐   ┌────────────────┐
+	│  master  ├──►│  Travis CI  ├──►│  master-built  │
+	└──────────┘   └─────────────┘   └────────────────┘
 
 Internally it runs the `local/scripts/deploy.sh` script which does a clean checkout of the deploy source branch to `local/deploy/src`, runs the build process and copies the project files with the release artifects to `deploy/dist` using `rsync`. It then commits the changes to the matching `*-built` branch which is then imported by the VIP Go servers.
 

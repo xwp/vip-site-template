@@ -7,10 +7,6 @@
   "minimum-stability": "dev",
   "repositories": [
     {
-      "type": "git",
-      "url": "https://github.com/automattic/vip-go-mu-plugins-built"
-    },
-    {
       "type": "composer",
       "url": "https://wpackagist.org"
     }
@@ -22,11 +18,16 @@
     "vendor-dir": "plugins/vendor",
     "platform": {
       "php": "7.4"
+    },
+    "allow-plugins": {
+      "johnpbloch/wordpress-core-installer": true,
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "require": {
-    "php": ">=7.2",
-    "composer/installers": "~1.11",
+    "php": ">=7.4",
+    "composer/installers": "^1.11",
     "wpackagist-theme/twentytwenty": "^1.7"
   },
   "require-dev": {
