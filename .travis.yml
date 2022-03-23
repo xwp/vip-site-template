@@ -7,8 +7,6 @@ php: '7.4'
 before_install:
   - nvm install
   - nvm use
-    # Lock to Composer version 1 for now.
-  - composer self-update --1
 
 install:
   - npm install
