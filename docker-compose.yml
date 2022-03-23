@@ -35,17 +35,17 @@ services:
     command: mkcert -cert-file "${DEV_URL:-local.devgo.vip}.crt" -key-file "${DEV_URL:-local.devgo.vip}.key" "${DEV_URL:-local.devgo.vip}" "*.${DEV_URL:-local.devgo.vip}"
 
   db:
-    image: mysql:5.7
+    image: mariadb:10.3
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: wordpress
 
   # Capture all emails sent by WordPress.
   mailhog:
