@@ -76,6 +76,10 @@ Important: This section can be deleted once you've completed the initial setup f
 
 3. Add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
 
+4. Generate a new SSH key pair and add the private key [to the Travis CI configuration](https://docs.travis-ci.com/user/private-dependencies/#user-key) and the public part as the [Deploy key to the GitHub repository](https://docs.github.com/en/developers/overview/managing-deploy-keys).
+
+5. Remove this instructions from the README after the initial project setup.
+
 
 ## Setup 🛠
 
