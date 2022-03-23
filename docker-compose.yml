@@ -39,7 +39,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - db_data:/var/lib/mariadb
+      - db_data:/var/lib/mysql
     restart: always
     environment:
       MARIADB_ROOT_PASSWORD: root
