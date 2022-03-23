@@ -21,9 +21,9 @@ Site setup, development environment and deploy tooling for [WordPress VIP Go](ht
 
 ## Requirements
 
-- PHP 7.2 or higher
+- PHP 7.4
 - [Composer](https://getcomposer.org)
-- [Node.js](https://nodejs.org) version 12
+- [Node.js](https://nodejs.org) version 16
 - [Docker with Docker Compose](https://docs.docker.com/compose/install/)
 - [rsync](https://rsync.samba.org) for deployments
 
@@ -40,10 +40,7 @@ The following configuration must be requested from VIP Go to use this site repos
 
 We suggest using [Homebrew](https://brew.sh) on macOS or [Chocolatey](https://chocolatey.org) for Windows to install the project dependencies.
 
-	brew install git php composer node@12 mkcert
-	# Homebrew < 2.6.0
-	brew cask install docker
-	# Homebrew >= 2.6.0
+	brew install git php@7.4 composer node@16 mkcert
 	brew install --cask docker
 
 
