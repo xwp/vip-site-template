@@ -7,10 +7,6 @@
   "minimum-stability": "dev",
   "repositories": [
     {
-      "type": "git",
-      "url": "https://github.com/automattic/vip-go-mu-plugins-built"
-    },
-    {
       "type": "composer",
       "url": "https://wpackagist.org"
     }

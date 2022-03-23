@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aea1891686ef4afa98d404188b11f71d",
+    "content-hash": "a975696f9b848299c216df47c4bdd21a",
     "packages": [
         {
             "name": "composer/installers",
@@ -182,15 +182,25 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/automattic/vip-go-mu-plugins-built",
+                "url": "https://github.com/Automattic/vip-go-mu-plugins-built.git",
                 "reference": "f41cf0d6cd4091973f842bb79dae0be11593d2e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Automattic/vip-go-mu-plugins-built/zipball/f41cf0d6cd4091973f842bb79dae0be11593d2e0",
+                "reference": "f41cf0d6cd4091973f842bb79dae0be11593d2e0",
+                "shasum": ""
             },
             "require": {
                 "php": "^7.2"
             },
             "default-branch": true,
             "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
             "description": "The mu-plugins that power the VIP Go Platform",
+            "support": {
+                "source": "https://github.com/Automattic/vip-go-mu-plugins-built/tree/master"
+            },
             "time": "2022-03-22T22:23:17+00:00"
         },
         {
