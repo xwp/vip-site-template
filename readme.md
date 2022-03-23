@@ -119,6 +119,8 @@ The local development environment uses a self-signed SSL sertificate for HTTPS s
 
 Docker engine shares the networking interface with the host computer so all the ports used by the containers need to be free and unused by any other services such as a DNS resolver on port 53, MySQL service on port 3306 or another web server running on port 80.
 
+Use the included `npm run stop-all` command to stop all containers running Docker containers on the host machine.
+
 On Debian and Ubuntu systems use `sudo systemctl stop ...` to disable those services. For example:
 
 - `sudo systemctl stop mysql` to stop MySQL
