@@ -22,6 +22,11 @@
     "vendor-dir": "plugins/vendor",
     "platform": {
       "php": "7.4"
+    },
+    "allow-plugins": {
+      "johnpbloch/wordpress-core-installer": true,
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   },
   "require": {
