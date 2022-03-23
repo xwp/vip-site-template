@@ -102,26 +102,6 @@ The following configuration must be requested from VIP Go to use this site repos
 		npm run start
 
 	and `npm run stop` to stop the virtual environment at any time. Run `npm run start-debug` to start the environment in debug mode where all output from containers is displayed. Run `npm run stop-all` to stop all active Docker containers in case you're running into port conflicts.
-	
-	**Linux distributions**
-	
-	If your OS is one of Linux distributions and you have other services already running (such as Apache or mySQL) make sure you disable them **before** running `npm run start` command:
-	- `sudo systemctl stop mysql` - stop mySQL
-	- `sudo systemctl stop apache2` - stop Apache
-	
-	Depending on distribution, you might also need to start docker globally before running `docker-compose` commands (which is what `npm run start` is doing):
-	- `sudo systemctl start docker`
-	
-	You will need to change UDP port as well if you get following error (because Linux by default uses 53 port for TCP and UDP):
-	```
-	ERROR: for dnsmasq  Cannot start service dnsmasq: driver failed programming external connectivity on endpoint ...: Error starting userland proxy: listen udp4 0.0.0.0:53: bind: address already in use
-	```
-	The port is changed in [`docker-compose.yml`](https://github.com/xwp/vip-go-site/blob/master/docker-compose.yml#L25). 
-	```
-	    ports:
-      - "5353:53/udp"
-    ```
-	List of used ports on your machine can be found in `/etc/services` or run `less /etc/services` in terminal. See also [Well known ports](http://www.networksorcery.com/enp/protocol/ip/ports00000.htm).
 
 5. Install the local WordPress multisite environment:
 
@@ -134,6 +114,18 @@ The following configuration must be requested from VIP Go to use this site repos
 7. Visit [mail.local.devgo.vip](https://mail.local.devgo.vip) to view all emails sent by WordPress.
 
 The local development environment uses a self-signed SSL sertificate for HTTPS so the "Your connection is not private" error can be ignored to visit the site.
+
+### Resolving Port Conflicts
+
+Docker engine shares the networking interface with the host computer so all the ports used by the containers need to be free and unused by any other services such as a DNS resolver on port 53, MySQL service on port 3306 or another web server running on port 80.
+
+On Debian and Ubuntu systems use `sudo systemctl stop ...` to disable those services. For example:
+
+- `sudo systemctl stop mysql` to stop MySQL
+- `sudo systemctl stop apache2` to stop Apache
+- `sudo systemctl stop systemd-resolved` to stop the local name server.
+
+Alternativelly, you can adjust the port mappings in `docker-compose.yml` to use different ports.
 
 
 ## Contribute
