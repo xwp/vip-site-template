@@ -28,14 +28,6 @@ Site setup, development environment and deploy tooling for [WordPress VIP Go](ht
 - [rsync](https://rsync.samba.org) for deployments
 
 
-### VIP Go Configuration
-
-The following configuration must be requested from VIP Go to use this site repository:
-
-1. Deployments from `*-built` branches such as `master-built` and `develop-built`.
-2. Staging environment tracking the `develop-built` branch.
-
-
 ### Install Dependencies
 
 We suggest using [Homebrew](https://brew.sh) on macOS or [Chocolatey](https://chocolatey.org) for Windows to install the project dependencies.
@@ -55,16 +47,25 @@ A user-friendly Git client such as [GitHub Desktop](https://desktop.github.com) 
 
 - Project plugins and themes can be added as Composer dependencies or manualy to this repository under `plugins/your-plugin` and `themes/your-theme`.
 - Composer dependencies are placed under `plugins/vendor` since it has to be in the same location relative to the project root (which is not the case for `vip-config` which is mapped to the WP root directory on the server).
-- Composer autoloader `plugins/vendor/autoload.php` is included in `publicvip-config/vip-config.php`.
+- Composer autoloader `plugins/vendor/autoload.php` is included in `vip-config/vip-config.php`.
 
 
 ## Initial Setup
 
-Important: This section can be deleted once you've completed the initial setup from the VIP Go Site template.
+**Important:** This section can be deleted once you've completed the initial setup from the VIP Go Site template.
+
+### VIP Platform Configuration
+
+The following configuration must be requested from VIP Go to use this site repository:
+
+1. Deployments from `*-built` branches such as `master-built` and `develop-built`.
+2. Staging environment tracking the `develop-built` branch.
+
+### VIP Repository Setup
 
 1. Ensure that VIP has configured the site to deploy from the `*-built` branches.
 
-2. Create a fresh Git repository from this reference repository:
+2. Create a fresh local Git repository from this reference repository:
 
 		composer create-project xwp/vip-go-site --stability dev
 
@@ -74,12 +75,13 @@ Important: This section can be deleted once you've completed the initial setup f
 
 	or by manually copying them to `themes` or `plugins`. Remember to start tracking those directories by excluding them in `themes/.gitignore` and `plugins/.gitignore`.
 
-3. Add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
+4. Adjust the repository URLs used in `package.json` scripts and this README file match your project.
 
-4. Generate a new SSH key pair and add the private key [to the Travis CI configuration](https://docs.travis-ci.com/user/private-dependencies/#user-key) and the public part as the [Deploy key to the GitHub repository](https://docs.github.com/en/developers/overview/managing-deploy-keys).
+4. Add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
 
-5. Remove this instructions from the README after the initial project setup.
+5. Generate a new SSH key pair and add the private key [to the Travis CI configuration](https://docs.travis-ci.com/user/private-dependencies/#user-key) and the public part as the [Deploy key to the GitHub repository](https://docs.github.com/en/developers/overview/managing-deploy-keys).
 
+6. Remove these instructions from the README after the initial project setup.
 
 ## Setup 🛠
 
