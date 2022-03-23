@@ -5,9 +5,7 @@
 	<arg value="s" /><!-- Show sniff codes in all reports. -->
 	<arg value="p" /><!-- Show progress. -->
 
-	<rule ref="WordPress-VIP-Go">
-		<exclude name="WordPress.WP.TimezoneChange" /><!-- Until https://github.com/Automattic/VIP-Coding-Standards/pull/453/files has been included in a release. -->
-	</rule>
+	<rule ref="WordPress-VIP-Go" />
 
 	<file>themes</file>
 	<file>vip-config</file>
