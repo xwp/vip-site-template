@@ -146,7 +146,7 @@ Alternativelly, you can adjust the port mappings in `docker-compose.yml` to use 
 
 7. Once the feature is ready for production, open a new pull request from the same feature branch to the `master` branch.
 
-8. Ensure that all automated checks pass and merge in the pull request. The automated [Travis CI workflow](https://travis-ci.com/xwp/vip-go-site) will deploy it to the `master-build` branch.
+8. Ensure that all automated checks pass and merge in the pull request. The automated [Travis CI workflow](https://travis-ci.com/xwp/vip-go-site) will deploy it to the `master-built` branch.
 
 
 ## Plugins and Themes
