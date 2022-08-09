@@ -64,8 +64,6 @@ services:
     image: nginx:1.22
     depends_on:
       - wordpress
-    ports:
-      - "8088:80"
     volumes:
       - .:/var/www/html/wp-content
       - ./local/docker/nginx/config/conf.d:/etc/nginx/conf.d
@@ -77,7 +75,6 @@ services:
       - ./plugins/vendor/automattic/vip-go-mu-plugins/drop-ins/object-cache/object-cache.php:/var/www/html/wp-content/object-cache.php
     environment:
       VIRTUAL_HOST: ${DEV_URL:-local.devgo.vip}, *.${DEV_URL:-local.devgo.vip}
-      VIRTUAL_PORT: 8088
 
   wordpress:
     depends_on:
