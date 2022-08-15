@@ -1,0 +1,20 @@
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+
+RewriteRule ^index\.php$ - [L]
+
+# Add a trailing slash to /wp-admin
+RewriteRule ^wp-admin$ wp-admin/ [R=301,L]
+
+# Route requests to WP core in a sub-directory.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^(wp-(content|admin|includes).*) /wp/$1 [L]
+RewriteRule ^(.*\.php)$ /wp/$1 [L]
+RewriteRule . /wp/index.php [L]
+</IfModule>
+# END WordPress
