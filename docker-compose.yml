@@ -94,7 +94,6 @@ services:
       - ./local/public/wp-cli.yml:/var/www/html/wp-cli.yml
       - ./vip-config:/var/www/html/vip-config
       - ./plugins/vendor/automattic/vip-go-mu-plugins:/var/www/html/wp-content/mu-plugins
-      - ./plugins/vendor/automattic/vip-go-mu-plugins/drop-ins/object-cache/object-cache.php:/var/www/html/wp-content/object-cache.php
     environment:
       VIP_GO_ENV: local
       SMTPSERVER: mailhog
