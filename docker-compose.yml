@@ -58,9 +58,6 @@ services:
   # Capture all emails sent by WordPress.
   mailhog:
     image: mailhog/mailhog:v1.0.1
-    ports:
-      - "1025:1025"
-      - "8025:8025"
     environment:
       VIRTUAL_HOST: mail.${DEV_URL:-local.devgo.vip}
       VIRTUAL_PORT: 8025
