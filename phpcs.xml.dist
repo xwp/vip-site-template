@@ -7,11 +7,13 @@
 
 	<rule ref="WordPress-VIP-Go" />
 
+	<file>client-mu-plugins</file>
+	<file>local/public</file>
+	<file>plugins</file>
 	<file>themes</file>
 	<file>vip-config</file>
-	<file>client-mu-plugins</file>
-	<file>local/public/wp-config.php</file>
 
 	<exclude-pattern>themes/twentytwenty</exclude-pattern>
 	<exclude-pattern>plugins/vendor</exclude-pattern>
+	<exclude-pattern>local/public/wp</exclude-pattern>
 </ruleset>

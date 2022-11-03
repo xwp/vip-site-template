@@ -6,8 +6,6 @@ services:
   nginx-proxy:
     image: jwilder/nginx-proxy:1.0.1
     depends_on:
-      - nginx
-      - wordpress
       - mkcert
     ports:
       - "80:80"
@@ -17,14 +15,15 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./local/docker/nginx-proxy/conf.d/custom.conf:/etc/nginx/conf.d/custom.conf
 
-  # Create a local DNS server that maps the development URL to this environment.
+  # Create a local DNS server that maps all *.local.devgo.vip to this environment when not connected to the internet.
+  # Append `--log-queries --log-facility=-` to the command to enable verbose logging to stderr of all lookups.
   dnsmasq:
     image: andyshinn/dnsmasq:2.83
     ports:
       - "53:53/udp"
     cap_add:
       - NET_ADMIN
-    command: --address=/${DEV_URL:-local.devgo.vip}/${DOCKER_HOST_IP:-"127.0.0.1"}
+    command: --address=/${DEV_URL:-local.devgo.vip}/${DOCKER_HOST_IP:-"127.0.0.1"} --server=1.1.1.1
 
   # Generate SSL certs for the local development environment.
   mkcert:
@@ -46,12 +45,19 @@ services:
       MARIADB_USER: wordpress
       MARIADB_PASSWORD: wordpress
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2.0
+    depends_on:
+      - db
+    environment:
+      VIRTUAL_HOST: phpmyadmin.${DEV_URL:-local.devgo.vip}
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+
   # Capture all emails sent by WordPress.
   mailhog:
     image: mailhog/mailhog:v1.0.1
-    ports:
-      - "1025:1025"
-      - "8025:8025"
     environment:
       VIRTUAL_HOST: mail.${DEV_URL:-local.devgo.vip}
       VIRTUAL_PORT: 8025
@@ -60,45 +66,34 @@ services:
   memcached:
     image: memcached:1.6
 
-  nginx:
-    image: nginx:1.23
-    depends_on:
-      - wordpress
+  # Review Xdebug profiling data.
+  webgrind:
+    image: jokkedk/webgrind:latest
     volumes:
-      - .:/var/www/html/wp-content
-      - ./local/docker/nginx/config/conf.d:/etc/nginx/conf.d
-      - ./local/public/wp:/var/www/html
-      - ./local/public/wp-config.php:/var/www/html/wp-config.php
-      - ./local/public/wp-cli.yml:/var/www/html/wp-cli.yml
-      - ./vip-config:/var/www/html/vip-config
-      - ./plugins/vendor/automattic/vip-go-mu-plugins:/var/www/html/wp-content/mu-plugins
-      - ./plugins/vendor/automattic/vip-go-mu-plugins/drop-ins/object-cache/object-cache.php:/var/www/html/wp-content/object-cache.php
+      - webgrind_data:/tmp
     environment:
-      VIRTUAL_HOST: ${DEV_URL:-local.devgo.vip}, *.${DEV_URL:-local.devgo.vip}
+      VIRTUAL_HOST: webgrind.${DEV_HOSTNAME:-local.devgo.vip}
 
   wordpress:
     depends_on:
       - db
-      - mailhog
     build: ./local/docker/wordpress
-    ports:
-      # For Xdebug to avoid conflicts with PHP-FPM on port 9000.
-      - "9090:9090"
     restart: always
-    # Give PHP file write access.
-    user: "1000"
     volumes:
+      - ./local/public:/var/www/html
       - .:/var/www/html/wp-content
-      - ./local/public/wp:/var/www/html
-      - ./local/public/wp-config.php:/var/www/html/wp-config.php
-      - ./local/public/wp-cli.yml:/var/www/html/wp-cli.yml
-      - ./vip-config:/var/www/html/vip-config
-      - ./plugins/vendor/automattic/vip-go-mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./vip-config:/var/www/html/vip-config # Match the VIP production setup where vip-config is mapped to the root directory.
+      - webgrind_data:/tmp
+    command: bash -c "wp core multisite-install --url=${DEV_URL:-local.devgo.vip} --allow-root && docker-entrypoint.sh apache2-foreground"
     environment:
-      VIP_GO_ENV: local
+      VIRTUAL_HOST: ${DEV_URL:-local.devgo.vip}, *.${DEV_URL:-local.devgo.vip}
       SMTPSERVER: mailhog
       EMAIL: local@${DEV_URL:-local.devgo.vip}
+      XDEBUG_MODE: debug,coverage # Append `profile` to enable profiling or leave empty to disable all.
+      XDEBUG_CONFIG: client_host=host.docker.internal discover_client_host=0 # Required for MacOS only.
+      WP_PHPUNIT__TESTS_CONFIG: local/public/wp-tests-config.php
 
 volumes:
-  db_data: {}
-  cert_data: {}
+  db_data:
+  cert_data:
+  webgrind_data:

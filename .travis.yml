@@ -1,8 +1,11 @@
 dist: bionic
 
+services:
+  - docker
+
 language: php
 
-php: '7.4'
+php: '8.0'
 
 before_install:
   - nvm install
@@ -13,6 +16,7 @@ install:
 
 script:
   - npm run lint
+  - npm run test
 
 deploy:
 

@@ -1,7 +1,7 @@
 FROM golang:1.16-alpine
 
 # Set the version tag to build.
-ENV MKCERT_VERSION "v1.4.1"
+ENV MKCERT_VERSION "v1.4.3"
 
 RUN apk add --no-cache git
 

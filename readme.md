@@ -21,7 +21,7 @@ Site setup, development environment and deploy tooling for [WordPress VIP Go](ht
 
 ## Requirements
 
-- PHP 7.4
+- PHP 8.0
 - [Composer](https://getcomposer.org)
 - [Node.js](https://nodejs.org) version 16
 - [Docker with Docker Compose](https://docs.docker.com/compose/install/)
