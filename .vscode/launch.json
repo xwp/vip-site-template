@@ -5,9 +5,10 @@
       "name": "Listen for XDebug",
       "type": "php",
       "request": "launch",
-      "port": 9090,
+      "port": 9003,
       "pathMappings": {
-        "/var/www/html/wp-content": "${workspaceFolder}"
+        "/var/www/html/wp-content": "${workspaceFolder}",
+        "/var/www/html": "${workspaceFolder}/local/public"
       }
     }
   ]

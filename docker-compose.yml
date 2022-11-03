@@ -83,7 +83,8 @@ services:
       VIRTUAL_HOST: ${DEV_URL:-local.devgo.vip}, *.${DEV_URL:-local.devgo.vip}
       SMTPSERVER: mailhog
       EMAIL: local@${DEV_URL:-local.devgo.vip}
-      XDEBUG_CONFIG: remote_host=host.docker.internal remote_connect_back=0
+      XDEBUG_MODE: debug,coverage
+      XDEBUG_CONFIG: client_host=host.docker.internal discover_client_host=0 # Required for MacOS only.
       WP_PHPUNIT__TESTS_CONFIG: local/public/wp-tests-config.php
 
 volumes:
