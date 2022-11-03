@@ -28,14 +28,14 @@
   "require": {
     "php": ">=8.0",
     "composer/installers": "^1.12",
-    "wpackagist-theme/twentytwenty": "^2.0"
+    "wpackagist-theme/twentytwenty": "^2.1"
   },
   "require-dev": {
     "automattic/vip-go-mu-plugins": "dev-master",
-    "automattic/vipwpcs": "^2.3",
+    "automattic/vipwpcs": "^2.3.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
     "johnpbloch/wordpress": "dev-master",
-    "wp-cli/wp-cli-bundle": "^2.6"
+    "wp-cli/wp-cli-bundle": "^2.7.1"
   },
   "scripts": {
     "lint": [

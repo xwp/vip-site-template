@@ -40,6 +40,7 @@ git checkout --force "$SRC_BRANCH"
 
 # Store the current revision hash.
 SYNCREV=$(git rev-parse HEAD)
+LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
 
 # Build the release.
 npm install --ignore-scripts
@@ -73,7 +74,7 @@ git add --all
 
 # Commit and deploy if changes found.
 if ! git diff-index --cached --quiet HEAD --; then
-	git commit --message "Deploy $SRC_BRANCH at $SYNCREV"
+	git commit --message "Deploy to $SRC_BRANCH at \"$LAST_COMMIT_MSG\" ($SYNCREV)"
 	git push -u origin "$UPSTREAM_BRANCH"
 
 	echo "Branch $SRC_BRANCH was built and deployed to $UPSTREAM_BRANCH."
