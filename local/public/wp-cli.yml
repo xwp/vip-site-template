@@ -1,5 +1,6 @@
 # Update the `setup` script in package.json to configure the correct type of site.
 url: local.devgo.vip
+path: wp
 
 # Single site config.
 core install:
