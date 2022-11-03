@@ -5,6 +5,7 @@
   },
   "scripts": {
     "preinstall": "composer install",
+    "prepare": "git config core.hooksPath ./local/git-hooks",
     "lint": "npm-run-all lint-*",
     "lint-composer": "composer verify",
     "lint-php": "composer lint",
@@ -22,13 +23,11 @@
   },
   "devDependencies": {
     "@automattic/vip": "^2.15.0",
-    "husky": "^4.3.8",
+    "lint-staged": "^13.0.3",
     "npm-run-all": "^4.1.5"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run lint"
-    }
+  "lint-staged": {
+    "composer.*": "npm run lint-composer",
+    "*.php": "npm run lint-php"
   }
 }
