@@ -51,7 +51,9 @@ $memcached_servers = [
 ];
 
 // Include VIP-specific config.
-require __DIR__ . '/vip-config/vip-config.php';
+if ( file_exists( __DIR__ . '/vip-config/vip-config.php' ) ) {
+	require __DIR__ . '/vip-config/vip-config.php';
+}
 
 $table_prefix = 'wp_';
 

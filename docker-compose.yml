@@ -84,6 +84,7 @@ services:
       SMTPSERVER: mailhog
       EMAIL: local@${DEV_URL:-local.devgo.vip}
       XDEBUG_CONFIG: remote_host=host.docker.internal remote_connect_back=0
+      WP_PHPUNIT__TESTS_CONFIG: local/public/wp-tests-config.php
 
 volumes:
   db_data: {}

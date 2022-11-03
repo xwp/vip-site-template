@@ -35,7 +35,11 @@
     "automattic/vipwpcs": "^2.3.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
     "johnpbloch/wordpress": "dev-master",
-    "wp-cli/wp-cli-bundle": "^2.7.1"
+    "phpunit/phpunit": "^9.5",
+    "wp-cli/wp-cli-bundle": "^2.7.1",
+    "wp-phpunit/wp-phpunit": "^6.1",
+    "xwp/wait-for": "^0.0.1",
+    "yoast/phpunit-polyfills": "^1.0"
   },
   "scripts": {
     "lint": [
@@ -43,6 +47,9 @@
     ],
     "verify": [
       "composer validate --no-check-all --no-check-publish --strict"
+    ],
+    "test": [
+      "phpunit --configuration=client-mu-plugins/phpunit.xml.dist"
     ],
     "release": [
       "composer install --no-dev --prefer-dist --optimize-autoloader"
