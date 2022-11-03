@@ -17,6 +17,7 @@
     "start-debug": "docker-compose up --remove-orphans --build",
     "stop": "docker-compose down",
     "stop-all": "docker stop $(docker ps --all --quiet)",
+    "logs": "docker-compose logs --follow",
     "setup": "npm run cli -- wp core install",
     "deploy-staging": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
     "deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master"
