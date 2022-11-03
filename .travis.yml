@@ -1,5 +1,8 @@
 dist: bionic
 
+services:
+  - docker
+
 language: php
 
 php: '8.0'
