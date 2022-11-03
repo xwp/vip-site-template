@@ -10,7 +10,7 @@
     "lint-composer": "composer verify",
     "lint-php": "composer lint",
     "release": "composer release",
-    "clean": "rm -rf node_modules plugins/vendor",
+    "clean": "rm -rf node_modules plugins/vendor local/public/wp",
     "vip": "vip @devgo-vip",
     "cli": "docker-compose run --rm --user=1000 --workdir=/var/www/html wordpress",
     "test": "npm run cli -- composer test --working-dir=wp-content",
