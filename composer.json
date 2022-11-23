@@ -31,6 +31,8 @@
     "wpackagist-theme/twentytwenty": "^2.1"
   },
   "require-dev": {
+    "10up/debug-bar-elasticpress": "^2.1",
+    "10up/elasticpress": "^4.3",
     "automattic/vip-go-mu-plugins": "dev-master",
     "automattic/vipwpcs": "^2.3.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
@@ -38,6 +40,7 @@
     "phpunit/phpunit": "^9.5.26",
     "wp-cli/wp-cli-bundle": "^2.7.1",
     "wp-phpunit/wp-phpunit": "^6.1",
+    "wpackagist-plugin/debug-bar": "^1.1",
     "xwp/wait-for": "^0.0.1",
     "yoast/phpunit-polyfills": "^1.0.3"
   },
