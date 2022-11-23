@@ -22,6 +22,9 @@ define( 'WP_DEFAULT_THEME', 'twentytwentytwo' );
 // Enable offline mode to ensure it doesn't connect to WP.com.
 define( 'JETPACK_DEV_DEBUG', true ); // phpcs:ignore WordPressVIPMinimum.Constants.RestrictedConstants.DefiningRestrictedConstant
 
+// Define ElasticSearch server.
+define( 'EP_HOST', 'http://elasticsearch:9200' );
+
 // Use Composer and Git to update plugins and themes.
 define( 'DISALLOW_FILE_MODS', true );
 define( 'DISALLOW_FILE_EDIT', true );
