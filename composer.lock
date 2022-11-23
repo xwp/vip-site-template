@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "329ae5aa57d5e0f27c3207741765bf4a",
+    "content-hash": "02c544dd1e0ee5549264130d9b9a7ede",
     "packages": [
         {
             "name": "composer/installers",
@@ -177,6 +177,124 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "10up/debug-bar-elasticpress",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/10up/debug-bar-elasticpress.git",
+                "reference": "4a5c6e0cba1df12b41e069ec2950da8e3756a931"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/10up/debug-bar-elasticpress/zipball/4a5c6e0cba1df12b41e069ec2950da8e3756a931",
+                "reference": "4a5c6e0cba1df12b41e069ec2950da8e3756a931",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "10up/phpcs-composer": "dev-master",
+                "phpcompatibility/phpcompatibility-wp": "*"
+            },
+            "type": "wordpress-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Lovett",
+                    "email": "taylorl@get10up.com"
+                },
+                {
+                    "name": "10up",
+                    "homepage": "http://10up.com"
+                }
+            ],
+            "description": "Extends the Debug Bar plugin for usage with ElasticPress",
+            "keywords": [
+                "debug",
+                "debug bar",
+                "elasticpress",
+                "elasticsearch",
+                "plugin",
+                "search",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/10up/debug-bar-elasticpress/issues",
+                "source": "https://github.com/10up/debug-bar-elasticpress/tree/2.1.1"
+            },
+            "time": "2022-08-04T17:58:45+00:00"
+        },
+        {
+            "name": "10up/elasticpress",
+            "version": "4.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/10up/ElasticPress.git",
+                "reference": "e52164f2bc1fc749c0d7755ef2992c7b2f65ed4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/10up/ElasticPress/zipball/e52164f2bc1fc749c0d7755ef2992c7b2f65ed4d",
+                "reference": "e52164f2bc1fc749c0d7755ef2992c7b2f65ed4d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "10up/phpcs-composer": "dev-master",
+                "phpcompatibility/phpcompatibility-wp": "*",
+                "phpunit/phpunit": "^7",
+                "wpackagist-plugin/woocommerce": "*",
+                "yoast/phpunit-polyfills": "1.x-dev"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-paths": {
+                    "vendor/{$name}/": [
+                        "type:wordpress-plugin",
+                        "type:wordpress-theme"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Lovett",
+                    "email": "taylorl@get10up.com"
+                },
+                {
+                    "name": "10up",
+                    "homepage": "http://10up.com"
+                },
+                {
+                    "name": "Aaron Holbrook",
+                    "email": "aaron@10up.com",
+                    "homepage": "http://aaronjholbrook.com"
+                }
+            ],
+            "description": "Supercharge WordPress with Elasticsearch.",
+            "keywords": [
+                "elasticpress",
+                "elasticsearch",
+                "plugin",
+                "search",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/10up/ElasticPress/issues",
+                "source": "https://github.com/10up/ElasticPress/tree/4.3.1"
+            },
+            "time": "2022-09-27T17:03:44+00:00"
+        },
         {
             "name": "automattic/vip-go-mu-plugins",
             "version": "dev-master",
@@ -6855,6 +6973,24 @@
                 "source": "https://github.com/wp-phpunit/wp-phpunit"
             },
             "time": "2022-11-02T12:52:44+00:00"
+        },
+        {
+            "name": "wpackagist-plugin/debug-bar",
+            "version": "1.1.4",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/debug-bar/",
+                "reference": "tags/1.1.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/debug-bar.1.1.4.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/debug-bar/"
         },
         {
             "name": "xwp/wait-for",
