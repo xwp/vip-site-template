@@ -16,6 +16,10 @@ define( 'DB_COLLATE', '' );
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_DISPLAY', true );
 
+// Define the local environment.
+define( 'VIP_GO_APP_ENVIRONMENT', 'local' );
+define( 'VIP_GO_ENV', 'local' );
+
 // Set the default theme for new sites.
 define( 'WP_DEFAULT_THEME', 'twentytwentytwo' );
 
@@ -34,9 +38,6 @@ define( 'WP_CONTENT_DIR', __DIR__ . '/wp-content' );
 if ( ! defined( 'WPMU_PLUGIN_DIR' ) && defined( 'WP_CONTENT_DIR' ) ) {
 	define( 'WPMU_PLUGIN_DIR', WP_CONTENT_DIR . '/mu-plugins' );
 }
-
-// Define the local environment.
-define( 'VIP_GO_APP_ENVIRONMENT', 'local' );
 
 // Respond as if we were on HTTPS.
 if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
