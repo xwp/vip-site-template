@@ -4,6 +4,10 @@
  *
  * Mapped to vip-config/vip-config.php in the root of the WordPress installation on the VIP servers.
  *
+ * Consider using environment variables for sensitive data:
+ *
+ * @see https://docs.wpvip.com/how-tos/manage-environment-variables/
+ *
  * WARNING: This file is loaded very early (immediately after `wp-config.php`), which means that most WordPress APIs,
  *   classes, and functions are not available. The code below should be limited to pure PHP.
  *
