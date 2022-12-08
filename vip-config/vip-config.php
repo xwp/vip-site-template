@@ -18,6 +18,14 @@
 require dirname( __DIR__ ) . '/wp-content/plugins/vendor/autoload.php';
 
 /**
+ * Enable VIP Search.
+ *
+ * @see https://docs.wpvip.com/technical-references/enterprise-search/
+ */
+define( 'VIP_ENABLE_VIP_SEARCH', true );
+define( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION', true );
+
+/**
  * Set a high default limit to avoid too many revisions from polluting the database.
  *
  * Posts with extremely high revisions can result in fatal errors or have performance issues.
