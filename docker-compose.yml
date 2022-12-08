@@ -74,6 +74,18 @@ services:
     environment:
       VIRTUAL_HOST: webgrind.${DEV_HOSTNAME:-local.devgo.vip}
 
+  # Enable VIP ElasticSearch https://docs.wpvip.com/technical-references/elasticsearch/
+  elasticsearch:
+    # Sync version with VIP settings https://github.com/Automattic/vip-cli/blob/0e5d5a1fc2761fc67d5e59ab3d817e7724b139e6/assets/dev-env.lando.template.yml.ejs#L99
+    image: elasticsearch:7.17.2
+    environment:
+      - discovery.type=single-node
+      - cluster.name=elasticsearch
+      - xpack.security.enabled=false
+      - bootstrap.memory_lock=true
+    volumes:
+        - elasticsearch_data:/usr/share/elasticsearch/data
+
   wordpress:
     depends_on:
       - db
@@ -97,3 +109,4 @@ volumes:
   db_data:
   cert_data:
   webgrind_data:
+  elasticsearch_data:

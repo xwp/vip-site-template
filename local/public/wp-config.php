@@ -16,6 +16,10 @@ define( 'DB_COLLATE', '' );
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_DISPLAY', true );
 
+// Define the local environment.
+define( 'VIP_GO_APP_ENVIRONMENT', 'local' );
+define( 'VIP_GO_ENV', 'local' );
+
 // Set the default theme for new sites.
 define( 'WP_DEFAULT_THEME', 'twentytwentytwo' );
 
@@ -35,9 +39,6 @@ if ( ! defined( 'WPMU_PLUGIN_DIR' ) && defined( 'WP_CONTENT_DIR' ) ) {
 	define( 'WPMU_PLUGIN_DIR', WP_CONTENT_DIR . '/mu-plugins' );
 }
 
-// Define the local environment.
-define( 'VIP_GO_APP_ENVIRONMENT', 'local' );
-
 // Respond as if we were on HTTPS.
 if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
 	$_SERVER['HTTPS'] = 'on';
@@ -49,6 +50,13 @@ $memcached_servers = [
 		'memcached:11211',
 	],
 ];
+
+// Enable ElasticSearch integration, passed to EP_HOST in VIP mu-plugins.
+// @see https://github.com/Automattic/vip-go-mu-plugins/blob/508123df5b0f36cc0b33eff5b1c91d3d5204b71b/search/includes/classes/class-search.php#L466-L471
+define( 'VIP_ELASTICSEARCH_ENDPOINTS', [ 'http://elasticsearch:9200' ] );
+define( 'VIP_ELASTICSEARCH_USERNAME', 'elastic' );
+define( 'VIP_ELASTICSEARCH_PASSWORD', 'changeme' );
+define( 'FILES_CLIENT_SITE_ID', 123456 ); // Fake client site ID.
 
 // Include VIP-specific config.
 if ( file_exists( __DIR__ . '/vip-config/vip-config.php' ) ) {
