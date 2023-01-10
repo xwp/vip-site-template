@@ -4,7 +4,7 @@ services:
 
   # Route HTTP requests to specific containers based on the HTTP_HOST header.
   nginx-proxy:
-    image: jwilder/nginx-proxy:1.0.3
+    image: jwilder/nginx-proxy:1.0.4
     depends_on:
       - mkcert
     ports:
