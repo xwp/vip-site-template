@@ -35,7 +35,7 @@
     "automattic/vipwpcs": "^2.3.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
     "johnpbloch/wordpress": "dev-master",
-    "phpunit/phpunit": "^9.5.27",
+    "phpunit/phpunit": "^9.5.28",
     "wp-cli/wp-cli-bundle": "^2.7.1",
     "wp-phpunit/wp-phpunit": "^6.1.1",
     "xwp/wait-for": "^0.0.1",
