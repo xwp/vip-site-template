@@ -46,7 +46,7 @@ services:
       MARIADB_PASSWORD: wordpress
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:5.2.0
+    image: phpmyadmin/phpmyadmin:5.2.1
     depends_on:
       - db
     environment:
