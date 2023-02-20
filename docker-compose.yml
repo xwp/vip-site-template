@@ -33,7 +33,8 @@ services:
     command: mkcert -cert-file "${DEV_URL:-local.devgo.vip}.crt" -key-file "${DEV_URL:-local.devgo.vip}.key" "${DEV_URL:-local.devgo.vip}" "*.${DEV_URL:-local.devgo.vip}"
 
   db:
-    image: mariadb:10.3
+    image: mysql:8
+    command: docker-entrypoint.sh mysqld --sql-mode=ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION --max_allowed_packet=67M --default-authentication-plugin=mysql_native_password
     ports:
       - "3306:3306"
     volumes:
