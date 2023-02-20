@@ -32,18 +32,20 @@ services:
       - cert_data:/root/.local/share/mkcert
     command: mkcert -cert-file "${DEV_URL:-local.devgo.vip}.crt" -key-file "${DEV_URL:-local.devgo.vip}.key" "${DEV_URL:-local.devgo.vip}" "*.${DEV_URL:-local.devgo.vip}"
 
+  # Sync VIP MySQL container and it's configurations - https://github.com/Automattic/vip-cli/blob/549a45a37bc254a39dba9ed23ac88174a35aa1da/assets/dev-env.lando.template.yml.ejs#L74-L75
   db:
-    image: mariadb:10.3
+    image: mysql:8
+    command: --sql-mode=ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION --max_allowed_packet=67M --default-authentication-plugin=mysql_native_password
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     restart: always
     environment:
-      MARIADB_ROOT_PASSWORD: root
-      MARIADB_DATABASE: wordpress
-      MARIADB_USER: wordpress
-      MARIADB_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.2.1
