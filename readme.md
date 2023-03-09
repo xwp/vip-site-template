@@ -75,7 +75,7 @@ The following configuration must be requested from VIP Go to use this site repos
 
 	or by manually copying them to `themes` or `plugins`. Remember to start tracking those directories by excluding them in `themes/.gitignore` and `plugins/.gitignore`.
 
-4. Adjust the repository URLs used in `package.json` scripts and this README file match your project.
+4. Adjust the repository URLs used in `package.json` scripts and this README file match your project. Search and replace the following strings: `xwp/vip-site-template`, `wpcomvip/devgo-vip`, `XWP\VipSiteTemplate`.
 
 4. Add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
 
