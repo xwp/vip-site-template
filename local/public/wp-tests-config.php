@@ -56,7 +56,7 @@ if ( file_exists( __DIR__ . '/vip-config/vip-config.php' ) ) {
 }
 
 // Ensure the DB host is ready to accept connections.
-$connection = new XWP\Wait_For\Tcp_Connection( DB_NAME, 3306 );
+$connection = new XWP\Wait_For\Tcp_Connection( DB_HOST, 3306 );
 
 try {
 	$connection->connect( 10 );
