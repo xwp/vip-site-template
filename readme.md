@@ -67,7 +67,7 @@ The following configuration must be requested from VIP Go to use this site repos
 
 2. Create a fresh local Git repository from this reference repository:
 
-		composer create-project xwp/vip-go-site --stability dev
+		composer create-project xwp/vip-site-template --stability dev
 
 3. Add your theme and plugins as Composer dependencies:
 
