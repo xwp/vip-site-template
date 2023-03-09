@@ -2,7 +2,7 @@
 /**
  * Bootstrap all must-use plugins.
  *
- * @package XWP\VipSiteTemplate
+ * @package XWP\Vip_Site_Template
  */
 
 /**

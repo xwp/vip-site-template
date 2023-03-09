@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Yoast SEO Config
  *
- * @package XWP\VipSiteTemplate
+ * @package XWP\Vip_Site_Template
  */
 
 /**

@@ -4,7 +4,7 @@
  *
  * phpcs:disable WordPress.WP.CapitalPDangit.Misspelled, WordPress.WP.GlobalVariablesOverride.Prohibited
  *
- * @package XWP\VipSiteTemplate
+ * @package XWP\Vip_Site_Template
  */
 
 // Configured in docker-compose.yml.

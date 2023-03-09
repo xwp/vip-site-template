@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Jetpack Config
  *
- * @package XWP\VipSiteTemplate
+ * @package XWP\Vip_Site_Template
  */
 
 /**

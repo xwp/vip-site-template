@@ -2,7 +2,7 @@
 /**
  * PHPUnit config used only for tests.
  *
- * @package XWP\VipSiteTemplate
+ * @package XWP\Vip_Site_Template
  */
 
 // In case this is loaded before WP core.
