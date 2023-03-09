@@ -19,8 +19,9 @@ services:
   # Append `--log-queries --log-facility=-` to the command to enable verbose logging to stderr of all lookups.
   dnsmasq:
     image: andyshinn/dnsmasq:2.83
-    ports:
-      - "53:53/udp"
+    # Enable only when needed.
+    # ports:
+    #  - "53:53/udp"
     cap_add:
       - NET_ADMIN
     command: --address=/${DEV_URL:-local.wpenv.net}/${DOCKER_HOST_IP:-"127.0.0.1"} --server=1.1.1.1
