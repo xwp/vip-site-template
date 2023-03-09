@@ -99,7 +99,6 @@ services:
       - .:/var/www/html/wp-content
       - ./vip-config:/var/www/html/vip-config # Match the VIP production setup where vip-config is mapped to the root directory.
       - webgrind_data:/tmp
-    command: bash -c "wp core multisite-install --url=${DEV_URL:-local.wpenv.net} --allow-root && docker-entrypoint.sh apache2-foreground"
     environment:
       VIRTUAL_HOST: ${DEV_URL:-local.wpenv.net}, *.${DEV_URL:-local.wpenv.net}
       SMTPSERVER: mailhog
