@@ -1,4 +1,9 @@
 <?php
+/**
+ * Test the WP setup.
+ *
+ * @package XWP\VipSiteTemplate
+ */
 
 class Test_Example extends \WP_UnitTestCase {
 
