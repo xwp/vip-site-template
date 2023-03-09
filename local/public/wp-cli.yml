@@ -1,5 +1,5 @@
 # Update the `setup` script in package.json to configure the correct type of site.
-url: local.devgo.vip
+url: local.wpenv.net
 path: wp
 
 # Single site config.

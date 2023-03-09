@@ -75,7 +75,7 @@ The following configuration must be requested from VIP Go to use this site repos
 
 	or by manually copying them to `themes` or `plugins`. Remember to start tracking those directories by excluding them in `themes/.gitignore` and `plugins/.gitignore`.
 
-4. Adjust the repository URLs used in `package.json` scripts and this README file match your project. Search and replace the following strings: `xwp/vip-site-template`, `wpcomvip/devgo-vip`, `XWP\VipSiteTemplate`.
+4. Adjust the repository URLs used in `package.json` scripts and this README file match your project. Search and replace the following strings: `xwp/vip-site-template`, `wpcomvip/devgo-vip`, `XWP\VipSiteTemplate`, `local.wpenv.net`.
 
 4. Add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
 
@@ -109,9 +109,9 @@ The following configuration must be requested from VIP Go to use this site repos
 
 	with the configuration from `local/public/wp-cli.yml`.
 
-6. Visit [local.devgo.vip](https://local.devgo.vip) to view the development environment. WordPress username `devgo` and password `devgo`.
+6. Visit [local.wpenv.net](https://local.wpenv.net) to view the development environment. WordPress username `devgo` and password `devgo`.
 
-7. Visit [mail.local.devgo.vip](https://mail.local.devgo.vip) to view all emails sent by WordPress.
+7. Visit [mail.local.wpenv.net](https://mail.local.wpenv.net) to view all emails sent by WordPress.
 
 The local development environment uses a self-signed SSL sertificate for HTTPS so the "Your connection is not private" error can be ignored to visit the site.
 
