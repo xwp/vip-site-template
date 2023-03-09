@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHPUnit config used only for tests.
+ *
+ * @package XWP\VipSiteTemplate
+ */
 
 // In case this is loaded before WP core.
 if ( ! defined( 'ABSPATH' ) ) {

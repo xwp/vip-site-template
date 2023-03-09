@@ -3,6 +3,8 @@
  * Config file used only during local development.
  *
  * phpcs:disable WordPress.WP.CapitalPDangit.Misspelled, WordPress.WP.GlobalVariablesOverride.Prohibited
+ *
+ * @package XWP\VipSiteTemplate
  */
 
 define( 'DB_NAME', 'wordpress' );

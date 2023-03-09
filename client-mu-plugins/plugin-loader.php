@@ -4,6 +4,7 @@
  *
  * Use wpcom_vip_load_plugin( 'plugin-name' ); to always
  * enable certain plugins from wp-content/plugins.
+ * @package XWP\VipSiteTemplate
  */
 
 /**

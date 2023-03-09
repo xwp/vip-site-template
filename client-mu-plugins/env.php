@@ -1,6 +1,8 @@
 <?php
 /**
  * Plugin Name: Environment Config
+ *
+ * @package XWP\VipSiteTemplate
  */
 
 // Always enable Query Monitor on local.

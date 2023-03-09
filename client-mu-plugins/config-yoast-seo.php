@@ -1,6 +1,8 @@
 <?php
 /**
  * Plugin Name: Yoast SEO Config
+ *
+ * @package XWP\VipSiteTemplate
  */
 
 /**
