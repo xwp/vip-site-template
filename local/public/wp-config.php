@@ -7,13 +7,19 @@
  * @package XWP\VipSiteTemplate
  */
 
+// Configured in docker-compose.yml.
 define( 'DB_NAME', 'wordpress' );
 define( 'DB_USER', 'wordpress' );
 define( 'DB_PASSWORD', 'wordpress' );
 define( 'DB_HOST', 'db' );
-
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
+
+define( 'MULTISITE', true );
+define( 'SUBDOMAIN_INSTALL', true );
+define( 'PATH_CURRENT_SITE', '/' );
+define( 'SITE_ID_CURRENT_SITE', 1 );
+define( 'BLOG_ID_CURRENT_SITE', 1 );
 
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_DISPLAY', true );
