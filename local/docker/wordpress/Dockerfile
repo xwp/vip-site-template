@@ -1,5 +1,9 @@
 FROM wordpress:php8.0-apache
 
+# Set cache directories to a predictable location for re-use.
+ENV COMPOSER_HOME /tmp/.composer
+ENV npm_config_cache /tmp/.npmcache
+
 # Add path to Composer binaries to this environment.
 ENV PATH /var/www/html/wp-content/plugins/vendor/bin:$PATH
 
