@@ -53,8 +53,11 @@ $memcached_servers = [
 	],
 ];
 
-// Enable ElasticSearch integration, passed to EP_HOST in VIP mu-plugins.
-// @see https://github.com/Automattic/vip-go-mu-plugins/blob/508123df5b0f36cc0b33eff5b1c91d3d5204b71b/search/includes/classes/class-search.php#L466-L471
+/**
+ * Enable ElasticSearch integration, passed to EP_HOST in VIP mu-plugins.
+ *
+ * @see https://github.com/Automattic/vip-go-mu-plugins/blob/508123df5b0f36cc0b33eff5b1c91d3d5204b71b/search/includes/classes/class-search.php#L466-L471
+ */
 define( 'VIP_ELASTICSEARCH_ENDPOINTS', [ 'http://elasticsearch:9200' ] );
 define( 'VIP_ELASTICSEARCH_USERNAME', 'elastic' );
 define( 'VIP_ELASTICSEARCH_PASSWORD', 'changeme' );
