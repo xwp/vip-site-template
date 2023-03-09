@@ -32,7 +32,7 @@ Site setup, development environment and deploy tooling for [WordPress VIP Go](ht
 
 We suggest using [Homebrew](https://brew.sh) on macOS or [Chocolatey](https://chocolatey.org) for Windows to install the project dependencies.
 
-	brew install git php@7.4 composer node@16 mkcert
+	brew install git php@8.0 composer node@16 mkcert
 	brew install --cask docker
 
 
