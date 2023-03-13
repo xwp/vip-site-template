@@ -1,66 +1,66 @@
 {
-  "name": "xwp/vip-go-site",
-  "description": "VIP Go site environment",
-  "type": "project",
-  "license": "proprietary",
-  "prefer-stable": true,
-  "minimum-stability": "dev",
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://wpackagist.org"
-    }
-  ],
-  "config": {
-    "sort-packages": true,
-    "process-timeout": 600,
-    "preferred-install": "dist",
-    "vendor-dir": "plugins/vendor",
-    "platform": {
-      "php": "8.0"
-    },
-    "allow-plugins": {
-      "johnpbloch/wordpress-core-installer": true,
-      "composer/installers": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
-  },
-  "require": {
-    "php": ">=8.0",
-    "composer/installers": "^1.12",
-    "wpackagist-theme/twentytwenty": "^2.1"
-  },
-  "require-dev": {
-    "automattic/vip-go-mu-plugins": "dev-master",
-    "automattic/vipwpcs": "^2.3.3",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-    "johnpbloch/wordpress": "dev-master",
-    "phpunit/phpunit": "^9.6.5",
-    "wp-cli/wp-cli-bundle": "^2.7.1",
-    "wp-phpunit/wp-phpunit": "^6.1.1",
-    "xwp/wait-for": "^0.0.1",
-    "yoast/phpunit-polyfills": "^1.0.4"
-  },
-  "scripts": {
-    "lint": [
-      "phpcs"
-    ],
-    "verify": [
-      "composer validate --no-check-all --no-check-publish --strict"
-    ],
-    "test": [
-      "phpunit --configuration=client-mu-plugins/phpunit.xml.dist"
-    ],
-    "release": [
-      "composer install --no-dev --prefer-dist --optimize-autoloader"
-    ]
-  },
-  "extra": {
-    "wordpress-install-dir": "local/public/wp",
-    "installer-paths": {
-      "plugins/{$name}": ["type:wordpress-plugin"],
-      "themes/{$name}": ["type:wordpress-theme"],
-      "client-mu-plugins/{$name}": ["type:wordpress-muplugin"]
-    }
-  }
+	"name": "xwp/vip-site-template",
+	"description": "VIP Go site environment",
+	"type": "project",
+	"license": "proprietary",
+	"prefer-stable": true,
+	"minimum-stability": "dev",
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://wpackagist.org"
+		}
+	],
+	"config": {
+		"sort-packages": true,
+		"process-timeout": 600,
+		"preferred-install": "dist",
+		"vendor-dir": "plugins/vendor",
+		"platform": {
+			"php": "8.0"
+		},
+		"allow-plugins": {
+			"johnpbloch/wordpress-core-installer": true,
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"require": {
+		"php": ">=8.0",
+		"composer/installers": "^1.12",
+		"wpackagist-theme/twentytwenty": "^2.1"
+	},
+	"require-dev": {
+		"automattic/vip-go-mu-plugins": "dev-master",
+		"automattic/vipwpcs": "^2.3.3",
+		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+		"johnpbloch/wordpress": "dev-master",
+		"phpunit/phpunit": "^9.6.5",
+		"wp-cli/wp-cli-bundle": "^2.7.1",
+		"wp-phpunit/wp-phpunit": "^6.1.1",
+		"xwp/wait-for": "^0.0.1",
+		"yoast/phpunit-polyfills": "^1.0.4"
+	},
+	"scripts": {
+		"lint": [
+			"phpcs"
+		],
+		"verify": [
+			"composer validate --no-check-all --no-check-publish --strict"
+		],
+		"test": [
+			"phpunit --configuration=client-mu-plugins/phpunit.xml.dist"
+		],
+		"release": [
+			"composer install --no-dev --prefer-dist --optimize-autoloader"
+		]
+	},
+	"extra": {
+		"wordpress-install-dir": "local/public/wp",
+		"installer-paths": {
+			"plugins/{$name}": ["type:wordpress-plugin"],
+			"themes/{$name}": ["type:wordpress-theme"],
+			"client-mu-plugins/{$name}": ["type:wordpress-muplugin"]
+		}
+	}
 }

@@ -3,15 +3,23 @@
  * Config file used only during local development.
  *
  * phpcs:disable WordPress.WP.CapitalPDangit.Misspelled, WordPress.WP.GlobalVariablesOverride.Prohibited
+ *
+ * @package XWP\Vip_Site_Template
  */
 
+// Configured in docker-compose.yml.
 define( 'DB_NAME', 'wordpress' );
 define( 'DB_USER', 'wordpress' );
 define( 'DB_PASSWORD', 'wordpress' );
 define( 'DB_HOST', 'db' );
-
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
+
+define( 'MULTISITE', true );
+define( 'SUBDOMAIN_INSTALL', true );
+define( 'PATH_CURRENT_SITE', '/' );
+define( 'SITE_ID_CURRENT_SITE', 1 );
+define( 'BLOG_ID_CURRENT_SITE', 1 );
 
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_DISPLAY', true );
@@ -51,8 +59,11 @@ $memcached_servers = [
 	],
 ];
 
-// Enable ElasticSearch integration, passed to EP_HOST in VIP mu-plugins.
-// @see https://github.com/Automattic/vip-go-mu-plugins/blob/508123df5b0f36cc0b33eff5b1c91d3d5204b71b/search/includes/classes/class-search.php#L466-L471
+/**
+ * Enable ElasticSearch integration, passed to EP_HOST in VIP mu-plugins.
+ *
+ * @see https://github.com/Automattic/vip-go-mu-plugins/blob/508123df5b0f36cc0b33eff5b1c91d3d5204b71b/search/includes/classes/class-search.php#L466-L471
+ */
 define( 'VIP_ELASTICSEARCH_ENDPOINTS', [ 'http://elasticsearch:9200' ] );
 define( 'VIP_ELASTICSEARCH_USERNAME', 'elastic' );
 define( 'VIP_ELASTICSEARCH_PASSWORD', 'changeme' );

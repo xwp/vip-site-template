@@ -15,22 +15,23 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./local/docker/nginx-proxy/conf.d/custom.conf:/etc/nginx/conf.d/custom.conf
 
-  # Create a local DNS server that maps all *.local.devgo.vip to this environment when not connected to the internet.
+  # Create a local DNS server that maps all *.local.wpenv.net to this environment when not connected to the internet.
   # Append `--log-queries --log-facility=-` to the command to enable verbose logging to stderr of all lookups.
   dnsmasq:
     image: andyshinn/dnsmasq:2.83
-    ports:
-      - "53:53/udp"
+    # Enable only when needed.
+    # ports:
+    #  - "53:53/udp"
     cap_add:
       - NET_ADMIN
-    command: --address=/${DEV_URL:-local.devgo.vip}/${DOCKER_HOST_IP:-"127.0.0.1"} --server=1.1.1.1
+    command: --address=/${DEV_URL:-local.wpenv.net}/${DOCKER_HOST_IP:-"127.0.0.1"} --server=1.1.1.1
 
   # Generate SSL certs for the local development environment.
   mkcert:
     build: ./local/docker/mkcert
     volumes:
       - cert_data:/root/.local/share/mkcert
-    command: mkcert -cert-file "${DEV_URL:-local.devgo.vip}.crt" -key-file "${DEV_URL:-local.devgo.vip}.key" "${DEV_URL:-local.devgo.vip}" "*.${DEV_URL:-local.devgo.vip}"
+    command: mkcert -cert-file "${DEV_URL:-local.wpenv.net}.crt" -key-file "${DEV_URL:-local.wpenv.net}.key" "${DEV_URL:-local.wpenv.net}" "*.${DEV_URL:-local.wpenv.net}"
 
   # Sync VIP MySQL container and it's configurations - https://github.com/Automattic/vip-cli/blob/549a45a37bc254a39dba9ed23ac88174a35aa1da/assets/dev-env.lando.template.yml.ejs#L74-L75
   db:
@@ -52,7 +53,7 @@ services:
     depends_on:
       - db
     environment:
-      VIRTUAL_HOST: phpmyadmin.${DEV_URL:-local.devgo.vip}
+      VIRTUAL_HOST: phpmyadmin.${DEV_URL:-local.wpenv.net}
       PMA_HOST: db
       PMA_USER: root
       PMA_PASSWORD: root
@@ -61,7 +62,7 @@ services:
   mailhog:
     image: mailhog/mailhog:v1.0.1
     environment:
-      VIRTUAL_HOST: mail.${DEV_URL:-local.devgo.vip}
+      VIRTUAL_HOST: mail.${DEV_URL:-local.wpenv.net}
       VIRTUAL_PORT: 8025
 
   # For WP object caching.
@@ -74,7 +75,7 @@ services:
     volumes:
       - webgrind_data:/tmp
     environment:
-      VIRTUAL_HOST: webgrind.${DEV_HOSTNAME:-local.devgo.vip}
+      VIRTUAL_HOST: webgrind.${DEV_HOSTNAME:-local.wpenv.net}
 
   # Enable VIP ElasticSearch https://docs.wpvip.com/technical-references/elasticsearch/
   elasticsearch:
@@ -98,14 +99,13 @@ services:
       - .:/var/www/html/wp-content
       - ./vip-config:/var/www/html/vip-config # Match the VIP production setup where vip-config is mapped to the root directory.
       - webgrind_data:/tmp
-    command: bash -c "wp core multisite-install --url=${DEV_URL:-local.devgo.vip} --allow-root && docker-entrypoint.sh apache2-foreground"
     environment:
-      VIRTUAL_HOST: ${DEV_URL:-local.devgo.vip}, *.${DEV_URL:-local.devgo.vip}
+      VIRTUAL_HOST: ${DEV_URL:-local.wpenv.net}, *.${DEV_URL:-local.wpenv.net}
       SMTPSERVER: mailhog
-      EMAIL: local@${DEV_URL:-local.devgo.vip}
+      EMAIL: local@${DEV_URL:-local.wpenv.net}
       XDEBUG_MODE: debug,coverage # Append `profile` to enable profiling or leave empty to disable all.
       XDEBUG_CONFIG: client_host=host.docker.internal discover_client_host=0 # Required for MacOS only.
-      WP_PHPUNIT__TESTS_CONFIG: local/public/wp-tests-config.php
+      WP_PHPUNIT__TESTS_CONFIG: /var/www/html/wp-tests-config.php
 
 volumes:
   db_data:

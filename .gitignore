@@ -3,6 +3,7 @@
 /plugins/vendor/
 /console.log
 /.env
+/debug.log
 
 # Uploads directory
 /uploads/

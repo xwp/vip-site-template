@@ -2,8 +2,7 @@
 /**
  * Bootstrap all must-use plugins.
  *
- * Use wpcom_vip_load_plugin( 'plugin-name' ); to always
- * enable certain plugins from wp-content/plugins.
+ * @package XWP\Vip_Site_Template
  */
 
 /**
@@ -23,3 +22,8 @@ foreach ( $mu_plugin_files as $mu_plugin_file ) {
 		require_once $mu_plugin_file_path;
 	}
 }
+
+/**
+ * Use wpcom_vip_load_plugin( 'plugin-name' ); to always
+ * enable certain plugins from wp-content/plugins.
+ */

@@ -1,6 +1,8 @@
 <?php
 /**
  * Plugin Name: Jetpack Config
+ *
+ * @package XWP\Vip_Site_Template
  */
 
 /**

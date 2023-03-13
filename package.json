@@ -1,31 +1,31 @@
 {
-  "private": true,
-  "engines": {
-    "node": "^16"
-  },
-  "scripts": {
-    "preinstall": "composer install",
-    "prepare": "git config core.hooksPath ./local/git-hooks",
-    "lint": "npm-run-all lint-*",
-    "lint-composer": "composer verify",
-    "lint-php": "composer lint",
-    "release": "composer release",
-    "clean": "rm -rf node_modules plugins/vendor local/public/wp",
-    "vip": "vip @devgo-vip",
-    "cli": "docker-compose run --rm --user=1000 --workdir=/var/www/html wordpress",
-    "test": "npm run cli -- composer test --working-dir=wp-content",
-    "start": "docker-compose up --detach --remove-orphans --build",
-    "start-debug": "docker-compose up --remove-orphans --build",
-    "stop": "docker-compose down",
-    "stop-all": "docker stop $(docker ps --all --quiet)",
-    "logs": "docker-compose logs --follow",
-    "setup": "npm run cli -- wp core install",
-    "deploy-staging": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
-    "deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master"
-  },
-  "devDependencies": {
-    "@automattic/vip": "^2.26.2",
-    "lint-staged": "^13.1.2",
-    "npm-run-all": "^4.1.5"
-  }
+	"private": true,
+	"engines": {
+		"node": "^16"
+	},
+	"scripts": {
+		"preinstall": "composer install",
+		"prepare": "git config core.hooksPath ./local/git-hooks",
+		"lint": "npm-run-all lint-*",
+		"lint-composer": "composer verify",
+		"lint-php": "composer lint",
+		"release": "composer release",
+		"clean": "rm -rf node_modules plugins/vendor local/public/wp",
+		"vip": "vip @devgo-vip",
+		"cli": "docker-compose run --rm --user=1000 --workdir=/var/www/html wordpress",
+		"test": "npm run cli -- composer test --working-dir=wp-content",
+		"start": "docker-compose up --detach --remove-orphans --build",
+		"start-debug": "docker-compose up --remove-orphans --build",
+		"stop": "docker-compose down",
+		"stop-all": "docker stop $(docker ps --all --quiet)",
+		"logs": "docker-compose logs --follow",
+		"setup": "npm run cli -- wp core multisite-install",
+		"deploy-staging": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
+		"deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master"
+	},
+	"devDependencies": {
+		"@automattic/vip": "^2.26.2",
+		"lint-staged": "^13.1.2",
+		"npm-run-all": "^4.1.5"
+	}
 }

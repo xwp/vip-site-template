@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1cfdfac63606b6f2fa9b40714380686e",
+    "content-hash": "8c4903521605ee6b9283a39347e0482e",
     "packages": [
         {
             "name": "composer/installers",
@@ -183,12 +183,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/vip-go-mu-plugins-built.git",
-                "reference": "0f07ddcdf4760b85698e8f99d31776a93b3ee94c"
+                "reference": "cbb776a6c4993377aea48c347bd7aef06a9aea06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/vip-go-mu-plugins-built/zipball/0f07ddcdf4760b85698e8f99d31776a93b3ee94c",
-                "reference": "0f07ddcdf4760b85698e8f99d31776a93b3ee94c",
+                "url": "https://api.github.com/repos/Automattic/vip-go-mu-plugins-built/zipball/cbb776a6c4993377aea48c347bd7aef06a9aea06",
+                "reference": "cbb776a6c4993377aea48c347bd7aef06a9aea06",
                 "shasum": ""
             },
             "require": {
@@ -201,7 +201,7 @@
             "support": {
                 "source": "https://github.com/Automattic/vip-go-mu-plugins-built/tree/master"
             },
-            "time": "2022-11-03T02:47:01+00:00"
+            "time": "2023-03-08T20:56:02+00:00"
         },
         {
             "name": "automattic/vipwpcs",

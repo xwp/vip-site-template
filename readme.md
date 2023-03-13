@@ -1,6 +1,6 @@
 # VIP Go Site Boilerplate
 
-[![Build Status](https://travis-ci.com/xwp/vip-go-site.svg?branch=master)](https://travis-ci.com/xwp/vip-go-site)
+[![Build Status](https://app.travis-ci.com/xwp/vip-site-template.svg?branch=master)](https://app.travis-ci.com/xwp/vip-site-template)
 
 
 Site setup, development environment and deploy tooling for [WordPress VIP Go](https://wpvip.com/documentation/vip-go/):
@@ -32,7 +32,7 @@ Site setup, development environment and deploy tooling for [WordPress VIP Go](ht
 
 We suggest using [Homebrew](https://brew.sh) on macOS or [Chocolatey](https://chocolatey.org) for Windows to install the project dependencies.
 
-	brew install git php@7.4 composer node@16 mkcert
+	brew install git php@8.0 composer node@16 mkcert
 	brew install --cask docker
 
 
@@ -54,6 +54,8 @@ A user-friendly Git client such as [GitHub Desktop](https://desktop.github.com) 
 
 **Important:** This section can be deleted once you've completed the initial setup from the VIP Go Site template.
 
+The site project generated from this template is designed to be hosted under the [WP VIP GitHub organization](https://github.com/wpcomvip) which is why it uses Travis for deployments since VIP repositories currently don't support GitHub actions.
+
 ### VIP Platform Configuration
 
 The following configuration must be requested from VIP Go to use this site repository:
@@ -67,7 +69,7 @@ The following configuration must be requested from VIP Go to use this site repos
 
 2. Create a fresh local Git repository from this reference repository:
 
-		composer create-project xwp/vip-go-site --stability dev
+		composer create-project xwp/vip-site-template --stability dev
 
 3. Add your theme and plugins as Composer dependencies:
 
@@ -75,7 +77,7 @@ The following configuration must be requested from VIP Go to use this site repos
 
 	or by manually copying them to `themes` or `plugins`. Remember to start tracking those directories by excluding them in `themes/.gitignore` and `plugins/.gitignore`.
 
-4. Adjust the repository URLs used in `package.json` scripts and this README file match your project.
+4. Adjust strings and URLs in all files match your project. Search and replace the following strings: `xwp/vip-site-template`, `wpcomvip/devgo-vip`, `XWP\Vip_Site_Template`, `local.wpenv.net`.
 
 4. Add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
 
@@ -109,9 +111,9 @@ The following configuration must be requested from VIP Go to use this site repos
 
 	with the configuration from `local/public/wp-cli.yml`.
 
-6. Visit [local.devgo.vip](https://local.devgo.vip) to view the development environment. WordPress username `devgo` and password `devgo`.
+6. Visit [local.wpenv.net](https://local.wpenv.net) to view the development environment. WordPress username `devgo` and password `devgo`.
 
-7. Visit [mail.local.devgo.vip](https://mail.local.devgo.vip) to view all emails sent by WordPress.
+7. Visit [mail.local.wpenv.net](https://mail.local.wpenv.net) to view all emails sent by WordPress.
 
 The local development environment uses a self-signed SSL sertificate for HTTPS so the "Your connection is not private" error can be ignored to visit the site.
 
