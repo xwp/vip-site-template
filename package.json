@@ -21,7 +21,8 @@
 		"logs": "docker-compose logs --follow",
 		"setup": "npm run cli -- wp core multisite-install",
 		"deploy-staging": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
-		"deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master"
+		"deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master",
+		"nr-deployment-marker": "node local/scripts/new-relic-deployment-markers.js"
 	},
 	"devDependencies": {
 		"@automattic/vip": "^2.26.2",
