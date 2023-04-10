@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 // run this command with the following arguments:
 // -s, --search: The search term to use to find the entity GUIDs to create deployment markers for.
-// -a, --api_key: The API key to use to authenticate with New Relic.
+// -a, --api_key: The API key to use to authenticate with New Relic, follow the instructions here to create one: https://docs.newrelic.com/docs/apis/get-started/intro-apis/types-new-relic-api-keys#user-api-key
 // -c, --commit: The commit hash to use for the deployment marker.
 // -u, --user: The user to use for the deployment marker.
 // -d, --description: The description to use for the deployment marker.
