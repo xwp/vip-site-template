@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0704307a8990c137bf85afeff70ba07",
+    "content-hash": "ed8349f58f94a374ce30d3a3415f31a5",
     "packages": [
         {
             "name": "automattic/newspack-katharine",
