@@ -1,0 +1,262 @@
+@use '../../../shared/sass/colors';
+@use '../../../shared/sass/mixins';
+@use '../../../shared/sass/variables';
+
+.wpbnbd--frequency-based {
+	background: colors.$color__background-body;
+	border: 1px solid variables.$color__border;
+	color: colors.$color__text-main;
+	position: relative;
+	width: 100%;
+
+	input[type='radio'] {
+		left: -99999em;
+		position: absolute;
+	}
+
+	input[readonly] {
+		background-color: colors.$color__background-screen;
+		color: #666;
+	}
+
+	.freq-label,
+	.tier-label,
+	.input-container {
+		display: block;
+		font-weight: bold;
+		cursor: pointer;
+	}
+
+	.freq-label {
+		box-sizing: border-box;
+		overflow: hidden;
+		white-space: nowrap;
+		width: 100%;
+		z-index: 1;
+	}
+
+	button {
+		margin: 0 0.76rem 0.76rem;
+
+		@include mixins.media( tablet ) {
+			margin: 0 1.5rem 1.5rem;
+		}
+	}
+	.wpbnbd {
+		&__button {
+			text-transform: uppercase;
+		}
+	}
+
+	.thanks {
+		color: colors.$color__text-light;
+		font-size: variables.$font__size-sm;
+		margin: 0.38rem 0.76rem 0.76rem;
+		display: none;
+
+		@include mixins.media( mobile ) {
+			display: block;
+		}
+		@include mixins.media( tablet ) {
+			margin-left: 1.5rem;
+			margin-right: 1.5rem;
+		}
+	}
+}
+
+.wpbnbd.tiered {
+	.tiers {
+		margin: 0.38rem;
+		display: none;
+		flex-wrap: wrap;
+		position: relative;
+
+		@include mixins.media( tablet ) {
+			margin: 1.12rem 1.12rem 0.38rem;
+		}
+
+		.tier-label {
+			border: 1px solid variables.$color__border;
+			border-radius: 5px;
+			margin: 0.38rem;
+			padding: 0.38rem 0.76rem;
+
+			&:hover {
+				background: colors.$color__background-screen;
+			}
+		}
+
+		input[type='radio'] {
+			&:focus + .tier-label {
+				background: colors.$color__background-screen;
+				outline: 1px dotted currentcolor;
+				outline-offset: -4px;
+			}
+
+			&:checked + .tier-label {
+				background-color: colors.$color__gray;
+				border-color: transparent;
+				color: colors.$color__background-body;
+			}
+		}
+
+		// other-donate-label
+		.odl {
+			font-weight: bold;
+			left: 0.38rem;
+			position: absolute;
+			bottom: calc( 1.6em + 1.1rem + 2px );
+		}
+
+		input.other-input {
+			~ .money-input,
+			// other-donate-label
+			~ .odl {
+				display: none;
+			}
+
+			&:checked ~ .money-input {
+				display: flex;
+			}
+
+			&:checked ~ .odl {
+				display: block;
+			}
+
+			&:checked + label {
+				margin-bottom: calc( 3.2em + 1.86rem + 2px );
+			}
+		}
+	}
+
+	.money-input {
+		bottom: 0.38rem;
+		left: 0.38rem;
+		position: absolute;
+	}
+}
+
+.wpbnbd.untiered {
+	.input-container {
+		margin: 0.76rem;
+		display: none;
+
+		@include mixins.media( tablet ) {
+			margin: 1.5rem 1.5rem 0.76rem;
+		}
+	}
+
+	input[type='radio']:checked ~ .input-container {
+		display: block;
+	}
+}
+
+.wpbnbd .money-input {
+	display: flex;
+	align-items: center;
+	position: relative;
+	max-width: 200px;
+	background-color: colors.$color__background-input;
+	border-radius: 3px;
+	border: 1px solid variables.$color__border;
+
+	&:focus-within {
+		border-color: colors.$color__text-input-focus;
+		outline: thin solid rgba( colors.$color__text-input-focus, 0.15 );
+		outline-offset: -4px;
+	}
+
+	.currency {
+		cursor: default;
+		font-size: variables.$font__size-sm;
+		padding-left: 0.5em;
+	}
+
+	input[type='number'] {
+		border: none;
+		outline: none;
+		box-shadow: none;
+		background: none;
+		max-width: 174px;
+
+		&:focus {
+			border: none;
+			outline: none;
+			box-shadow: none;
+		}
+	}
+}
+
+.wpbnbd .frequencies {
+	position: relative;
+	font-size: variables.$font__size-xs;
+	@include mixins.media( mobile ) {
+		font-size: variables.$font__size-sm;
+	}
+
+	padding-top: 2.65em;
+}
+
+.wpbnbd .frequency {
+	.freq-label {
+		position: absolute;
+		top: 0;
+		left: 0;
+		border-width: 0 0 1px;
+	}
+
+	input[type='radio'] {
+		&:checked {
+			+ .freq-label {
+				color: inherit;
+				border-bottom-color: transparent;
+
+				&:hover {
+					background: colors.$color__background-body;
+				}
+			}
+
+			~ .tiers {
+				display: flex;
+			}
+		}
+
+		&:focus + .freq-label {
+			text-decoration: underline;
+			text-decoration-style: dotted;
+			text-decoration-thickness: 1px;
+		}
+	}
+
+	&:nth-of-type( 3 ) .freq-label {
+		left: 66.66%;
+	}
+}
+
+.wpbnbd-frequencies {
+	&--2 {
+		&.wpbnbd .frequency {
+			.freq-label {
+				width: 50%;
+			}
+			&:nth-of-type( 2 ) .freq-label {
+				border-left-width: 1px;
+				left: 50%;
+				top: 0;
+			}
+		}
+	}
+	&--3 {
+		&.wpbnbd .frequency {
+			.freq-label {
+				width: 33.33%;
+			}
+			&:nth-of-type( 2 ) .freq-label {
+				border-left-width: 1px;
+				border-right-width: 1px;
+				left: 33.33%;
+				top: 0;
+			}
+		}
+	}
+}

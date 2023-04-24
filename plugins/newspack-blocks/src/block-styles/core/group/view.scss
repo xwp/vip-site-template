@@ -1,0 +1,12 @@
+@use '../../../shared/sass/variables';
+@use '../../../shared/sass/mixins';
+
+.wp-block-group {
+	&.is-style-border {
+		border: 1px solid variables.$color__border;
+
+		&:not( .has-background ) {
+			padding: 20px 30px;
+		}
+	}
+}

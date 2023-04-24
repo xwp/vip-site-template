@@ -1,0 +1,99 @@
+{
+	"name": "donate",
+	"category": "newspack",
+	"attributes": {
+		"className": {
+			"type": "string"
+		},
+		"manual": {
+			"type": "boolean"
+		},
+		"tiered": {
+			"type": "boolean",
+			"default": true
+		},
+		"amounts": {
+			"type": "object",
+			"default": {}
+		},
+		"disabledFrequencies": {
+			"type": "object",
+			"default": {}
+		},
+		"thanksText": {
+			"type": "string",
+			"default": "Your contribution is appreciated."
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "Donate Now"
+		},
+		"buttonWithCCText": {
+			"type": "string",
+			"default": "Donate with card"
+		},
+		"paymentRequestType": {
+			"type": "string",
+			"default": "donate"
+		},
+		"defaultFrequency": {
+			"type": "string",
+			"default": "month"
+		},
+		"campaign": {
+			"type": "string"
+		},
+		"buttonColor": {
+			"type": "string",
+			"default": "#dd3333"
+		},
+		"suggestedAmounts": {
+			"type": "array"
+		},
+		"suggestedAmountUntiered": {
+			"type": "number"
+		},
+		"minimumDonation": {
+			"type": "number"
+		},
+		"layoutOption": {
+			"type": "string",
+			"default": "frequency"
+		},
+		"useModalCheckout": {
+			"type": "boolean",
+			"default": true
+		},
+		"tiersBasedOptions": {
+			"type": "array",
+			"default": [
+				{
+					"heading": "Small",
+					"description": "",
+					"buttonText": "Select",
+					"recommendLabel": ""
+				},
+				{
+					"heading": "Medium",
+					"description": "",
+					"buttonText": "Select",
+					"recommendLabel": "BEST VALUE"
+				},
+				{
+					"heading": "Large",
+					"description": "",
+					"buttonText": "Select",
+					"recommendLabel": ""
+				}
+			]
+		},
+		"additionalFields": {
+			"type": "array",
+			"default": []
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": false
+	}
+}

@@ -1,0 +1,119 @@
+@use '../../../shared/sass/colors';
+@use '../../../shared/sass/variables';
+
+@use './style-variations';
+
+@keyframes spin {
+	0% {
+		transform: rotate( 0deg );
+	}
+	50% {
+		transform: rotate( 180deg );
+	}
+	100% {
+		transform: rotate( 360deg );
+	}
+}
+
+.wpbnbd {
+	&__button {
+		border: 0 solid variables.$color__border;
+		background: colors.$color__background-body;
+		color: colors.$color__text-light;
+		line-height: variables.$font__line-height-body;
+		text-overflow: ellipsis;
+		text-align: center;
+		&--active,
+		&:focus,
+		&:hover {
+			color: colors.$color__text-main;
+		}
+	}
+
+	mark {
+		background-color: transparent;
+	}
+}
+
+.newspack-blocks-donate-checkout-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba( 0, 0, 0, 0.75 );
+	z-index: 99999;
+	&__content {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate( -50%, -50% );
+		width: calc( 100vw - 32px );
+		max-width: 580px;
+		min-height: 200px;
+		max-height: calc( 100vh - 32px );
+		background: colors.$color__background-body;
+		border-radius: 5px;
+		> *:not( .newspack-blocks-donate-checkout-modal__close ) {
+			width: 100%;
+			height: 100%;
+			border: 0;
+			border-radius: 5px;
+		}
+	}
+	&__spinner {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate( -50%, -50% );
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #fff;
+		border-radius: 5px;
+		> span {
+			width: 25px;
+			height: 25px;
+			border: 2px solid colors.$color__background-body;
+			border-top-color: colors.$color__text-light;
+			border-radius: 50%;
+			animation: spin 1s infinite linear;
+		}
+	}
+	&__close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 8px;
+		border: 0;
+		background: transparent;
+		color: colors.$color__text-main;
+		cursor: pointer;
+		&:focus,
+		&:hover {
+			color: colors.$color__text-light;
+		}
+		svg {
+			display: block;
+		}
+	}
+}
+
+@media ( max-width: 600px ) {
+	.newspack-blocks-donate-checkout-modal {
+		&__content {
+			max-width: 100%;
+			width: 100%;
+			border-radius: 0;
+			top: auto;
+			bottom: 0;
+			left: 0;
+			transform: none;
+			> *:not( .newspack-blocks-donate-checkout-modal__close ) {
+				border-radius: 0;
+			}
+		}
+	}
+}

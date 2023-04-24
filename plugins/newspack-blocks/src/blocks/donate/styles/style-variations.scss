@@ -1,0 +1,315 @@
+@use '../../../shared/sass/colors';
+@use '../../../shared/sass/mixins';
+@use '../../../shared/sass/variables';
+
+/* Default Style */
+
+.wpbnbd.is-style-default {
+	.wpbnbd {
+		&__button {
+			padding: 0.38rem 0.76rem;
+			&:focus,
+			&:hover {
+				background: colors.$color__background-screen;
+			}
+		}
+		&__tiers {
+			&__selection {
+				> button {
+					flex: 1;
+				}
+			}
+		}
+	}
+}
+
+/* Alternate Style */
+
+.wpbnbd.is-style-alternate {
+	border-color: colors.$color__background-screen;
+	border-radius: 5px;
+
+	.thanks {
+		margin: 1.12rem;
+	}
+
+	.money-input {
+		max-width: 100%;
+
+		input[type='number'] {
+			max-width: 100%;
+			width: 100%;
+		}
+	}
+
+	&.untiered {
+		.input-container {
+			margin: 1.12rem;
+		}
+	}
+
+	&.tiered {
+		.tiers {
+			.tier-label {
+				background: colors.$color__background-screen;
+				border-color: colors.$color__background-screen;
+				margin: 0;
+				text-align: center;
+			}
+		}
+
+		.money-input {
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+	}
+
+	.frequencies {
+		@include mixins.media( tablet ) {
+			padding-top: calc( 1.14rem + 1.6em + 4px );
+		}
+	}
+
+	.freq-label,
+	.wpbnbd__tiers__selection {
+		background: colors.$color__background-screen;
+		border-color: colors.$color__background-screen;
+	}
+	.wpbnbd__tiers__selection {
+		width: min-content;
+		margin-left: auto;
+		margin-right: auto;
+		padding: 5px;
+		border-radius: 5px;
+		.wpbnbd__button {
+			color: colors.$color__text-main;
+			padding: 0 15px;
+		}
+	}
+	.freq-label {
+		border-width: 1px;
+		padding: calc( 0.57rem + 1px ) 0.5rem;
+		@include mixins.media( mobile ) {
+			padding: calc( 0.57rem + 1px ) 0.76rem;
+		}
+	}
+
+	.wpbnbd__button {
+		border: none;
+		border: 0.19rem solid transparent;
+	}
+
+	// Tiers-based version.
+	.wpbnbd__button--active,
+	// Frequency-based version.
+	.frequency input[type='radio']:checked + .freq-label::after {
+		background: white;
+		border-radius: 5px;
+		border: 0.19rem solid white;
+		box-shadow: 0 0 0 1px variables.$color__border;
+	}
+
+	.frequency {
+		input[type='radio']:checked {
+			+ .freq-label {
+				&::after {
+					box-sizing: content-box;
+					bottom: 0.19rem;
+					content: '';
+					display: block;
+					left: 0.19rem;
+					position: absolute;
+					right: 0.19rem;
+					top: 0.19rem;
+					z-index: -1;
+				}
+				&:hover {
+					background: colors.$color__background-screen;
+				}
+			}
+			~ .tiers {
+				display: grid;
+				grid-gap: 0.28rem;
+				grid-template-columns: repeat( 2, 1fr );
+				margin: 1.12rem;
+
+				@include mixins.media( mobile ) {
+					grid-template-columns: repeat( 4, 1fr );
+					grid-gap: 0.56rem;
+				}
+			}
+		}
+	}
+
+	&.is-style-default {
+		button {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+			margin: 0 -1px -1px;
+			width: calc( 100% + 2px );
+		}
+	}
+}
+
+/* Minimal Style */
+
+.wpbnbd.is-style-minimal {
+	border: none;
+
+	form:not( [data-is-streamlined-form] ) {
+		text-align: center;
+	}
+
+	.thanks {
+		margin: 1.12rem 0;
+	}
+
+	.money-input {
+		max-width: 100%;
+
+		input[type='number'] {
+			max-width: 100%;
+			width: 100%;
+		}
+	}
+
+	&.untiered {
+		.input-container {
+			margin: 0.56rem 0 1.12rem;
+			text-align: left;
+		}
+	}
+
+	// Tiers-based version.
+	.wpbnbd__tiers {
+		&__selection {
+			.wpbnbd__button {
+				position: relative;
+				border: none;
+				padding: 8px;
+				min-width: 50%;
+				&::after {
+					position: absolute;
+					content: '';
+					display: block;
+					height: 1px;
+					background: variables.$color__border;
+					width: 100%;
+					left: 0;
+					bottom: 0;
+				}
+				&--active {
+					&::after {
+						height: 3px;
+						background: colors.$color__text-main;
+					}
+				}
+			}
+		}
+
+		&__back-button {
+			margin-bottom: 10px;
+		}
+	}
+
+	&.tiered {
+		.tiers {
+			.tier-label {
+				align-items: center;
+				display: grid;
+				background: transparent;
+				border: none;
+				color: colors.$color__text-light;
+				font-family: inherit;
+				font-weight: inherit;
+				grid-gap: 0.25rem;
+				grid-template-columns: auto 1fr;
+				margin: 0;
+				padding: 0;
+				text-align: left;
+
+				&::before {
+					background: white;
+					border: 1px solid variables.$color__border;
+					border-radius: 100%;
+					box-shadow: inset 0 0 0 3px white;
+					content: '';
+					display: block;
+					height: 20px;
+					padding: 3px;
+					width: 20px;
+				}
+
+				&:hover {
+					color: inherit;
+				}
+			}
+
+			input[type='radio']:checked + .tier-select-label {
+				background: none;
+				color: inherit;
+
+				&::before {
+					background: currentcolor;
+				}
+			}
+		}
+
+		.money-input {
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+	}
+
+	.frequencies {
+		padding-top: calc( 0.76rem + 1.6em + 4px );
+	}
+
+	.freq-label {
+		background: transparent;
+		border: none;
+		box-shadow: 0 3px 0 white, 0 4px 0 0 variables.$color__border;
+		padding: 0.38rem 0;
+		transition: none;
+
+		@include mixins.media( tablet ) {
+			padding-left: 0.76rem;
+			padding-right: 0.76rem;
+		}
+
+		&::before {
+			border-width: 1px;
+			border-color: variables.$color__border;
+		}
+	}
+
+	.frequency {
+		input[type='radio']:checked {
+			+ .freq-label {
+				box-shadow: 0 4px 0 currentcolor;
+			}
+
+			~ .tiers {
+				display: flex;
+				flex-wrap: wrap;
+				grid-gap: 1.12rem;
+				justify-content: center;
+				margin: 1.12rem 0;
+
+				@include mixins.media( mobile ) {
+					display: grid;
+					grid-gap: 0.56rem;
+					grid-template-columns: repeat( 4, 1fr );
+				}
+			}
+		}
+	}
+	&:not( .wpbnbd--platform-stripe ) {
+		button[type='submit'] {
+			margin: 0 auto;
+			min-width: 50%;
+		}
+	}
+}

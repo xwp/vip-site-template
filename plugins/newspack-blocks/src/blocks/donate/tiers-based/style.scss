@@ -1,0 +1,173 @@
+@use '../../../shared/sass/colors';
+@use '../../../shared/sass/variables';
+
+.wpbnbd--tiers-based {
+	.wpbnbd {
+		&__button {
+			border-width: 1px;
+			border-color: transparent;
+			border-radius: 0;
+			background: none;
+			&--active {
+				border-color: variables.$color__border;
+			}
+		}
+		&__tiers {
+			&__view {
+				&--hidden {
+					display: none;
+				}
+				.wp-block-newspack-blocks-donate__stripe,
+				.stripe-payment__messages > div {
+					margin: 0 !important;
+				}
+			}
+			&__selection {
+				display: flex;
+				justify-content: center;
+				margin-bottom: 14px;
+				button {
+					font-size: 13px;
+					white-space: nowrap;
+				}
+			}
+			&__options {
+				display: flex;
+				margin-left: -10px;
+				margin-right: -10px;
+
+				// Slider.
+				&__dots {
+					display: none;
+				}
+				@media screen and ( max-width: 600px ) {
+					overflow-x: scroll;
+					scroll-snap-type: x mandatory;
+					scroll-padding: 10%;
+					&__dots {
+						display: flex;
+						justify-content: center;
+						margin-top: 1em;
+						list-style: none;
+						li {
+							height: 8px;
+							width: 36px;
+							border-radius: 50px;
+							background: variables.$color__border;
+							margin: 0 5px;
+						}
+					}
+				}
+			}
+			&__tier {
+				// Slider.
+				flex: 1;
+				@media screen and ( max-width: 600px ) {
+					width: 80%;
+					flex: 0 0 auto;
+				}
+
+				display: flex;
+				scroll-snap-align: start;
+				flex-direction: column;
+				margin-left: 10px;
+				margin-right: 10px;
+				padding: 19px 14px;
+				background: colors.$color__background-body;
+				border: 1px solid variables.$color__border;
+				border-radius: 5px;
+				&--recommended {
+					border: 2px solid colors.$color__text-main;
+				}
+			}
+			&__top {
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 7px;
+			}
+			&__heading {
+				font-size: 16px;
+				font-weight: bold;
+				margin: 0;
+			}
+			&__recommend-label {
+				height: 17px;
+				padding: 2px 7px;
+				margin: 0;
+				background-color: colors.$color__gray;
+				color: white;
+				border-radius: 2px;
+				font-size: 11px;
+			}
+			&__amount {
+				margin-bottom: 16px;
+				&__number {
+					display: inline;
+					font-size: 29px;
+				}
+				&__frequency {
+					font-size: 13px;
+				}
+			}
+			button[type='submit'] {
+				border-radius: 3px;
+				border: 2px solid;
+				font-size: 14px;
+				line-height: 1;
+				padding: 10px 16px;
+				margin-bottom: 16px;
+			}
+			&__description {
+				flex: 1;
+				line-height: 1.4;
+				font-size: 13px;
+			}
+
+			&__back-button {
+				background: none;
+				padding: 0;
+				margin-bottom: 13px;
+				color: colors.$color__text-light;
+				span {
+					text-decoration: underline;
+				}
+				&:hover,
+				&:focus {
+					color: colors.$color__text-main;
+					background: none;
+				}
+			}
+			&__tier-tile {
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 17px;
+				padding: 5px 14px 16px;
+				border: 2px solid colors.$color__text-main;
+				border-radius: 4px;
+				h2 {
+					font-size: 0.8em;
+					margin-top: 13px;
+				}
+				h3 {
+					display: inline-block;
+					font-size: 19px;
+					padding-top: 6px;
+					margin: 0 0 7px;
+				}
+				> div {
+					text-align: right;
+				}
+				[data-amount] {
+					font-weight: bold;
+					font-size: 1.4em;
+				}
+				[data-frequency] {
+					font-size: 0.7em;
+				}
+				&__note {
+					font-size: 0.6em;
+				}
+			}
+		}
+	}
+}

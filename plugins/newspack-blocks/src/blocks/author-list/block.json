@@ -1,0 +1,87 @@
+{
+	"name": "author-list",
+	"category": "newspack",
+	"attributes": {
+		"className": {
+			"type": "string",
+			"default": ""
+		},
+		"columns": {
+			"type": "number",
+			"default": 2
+		},
+		"exclude": {
+			"type": "array",
+			"default": []
+		},
+		"excludeEmpty": {
+			"type": "boolean",
+			"default": false
+		},
+		"layout": {
+			"type": "string",
+			"default": "list"
+		},
+		"textSize": {
+			"type": "string",
+			"default": "medium"
+		},
+		"authorRoles": {
+			"type": "array",
+			"default": [
+				"Administrator",
+				"Editor",
+				"Author",
+				"Contributor"
+			]
+		},
+		"authorType": {
+			"type": "string",
+			"default": "all"
+		},
+		"showBio": {
+			"type": "boolean",
+			"default": true
+		},
+		"showSocial": {
+			"type": "boolean",
+			"default": true
+		},
+		"showEmail": {
+			"type": "boolean",
+			"default": true
+		},
+		"showArchiveLink": {
+			"type": "boolean",
+			"default": true
+		},
+		"showSeparators": {
+			"type": "boolean",
+			"default": false
+		},
+		"separatorSections": {
+			"type": "boolean",
+			"default": false
+		},
+		"showAvatar": {
+			"type": "boolean",
+			"default": true
+		},
+		"avatarAlignment": {
+			"type": "string",
+			"default": "left"
+		},
+		"avatarBorderRadius": {
+			"type": "string",
+			"default": "50%"
+		},
+		"avatarSize": {
+			"type": "number",
+			"default": 128
+		},
+		"avatarHideDefault": {
+			"type": "boolean",
+			"default": false
+		}
+	}
+}

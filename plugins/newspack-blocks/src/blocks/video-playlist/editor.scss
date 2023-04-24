@@ -1,0 +1,17 @@
+@use '../../shared/sass/colors';
+@use '../../shared/sass/placeholder';
+
+/**
+ * Prevents interaction with the player until the block is focused.
+ */
+.wpbnbvp__overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.wpbnbvp-preview {
+	position: relative;
+}

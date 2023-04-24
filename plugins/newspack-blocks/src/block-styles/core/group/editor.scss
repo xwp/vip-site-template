@@ -1,0 +1,23 @@
+@use '../../../shared/sass/variables';
+@use '../../../shared/sass/mixins';
+
+.block-editor-block-list__layout
+	.block-editor-block-list__block[data-align='left']
+	.block-editor-block-list__block-edit
+	.block-editor-block-list__block-edit,
+.block-editor-block-list__layout
+	.block-editor-block-list__block[data-align='right']
+	.block-editor-block-list__block-edit
+	.block-editor-block-list__block-edit {
+	float: none;
+}
+
+.wp-block-group {
+	&.is-style-border {
+		border: 1px solid variables.$color__border;
+
+		&:not( .has-background ) {
+			padding: 20px 30px;
+		}
+	}
+}

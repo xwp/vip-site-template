@@ -1,0 +1,34 @@
+{
+	"name": "iframe",
+	"category": "newspack",
+	"attributes": {
+		"className": {
+			"type": "string",
+			"default": ""
+		},
+		"src": {
+			"type": "string",
+			"default": ""
+		},
+		"archiveFolder": {
+			"type": "string",
+			"default": ""
+		},
+		"height": {
+			"type": "string",
+			"default": "600px"
+		},
+		"width": {
+			"type": "string",
+			"default": "100%"
+		},
+		"isFullScreen": {
+			"type": "boolean",
+			"default": false
+		},
+		"mode": {
+			"type": "string",
+			"default": "iframe"
+		}
+	}
+}

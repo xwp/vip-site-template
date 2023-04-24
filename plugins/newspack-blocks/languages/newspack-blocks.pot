@@ -1,0 +1,705 @@
+# Copyright (C) 2021 Automattic
+# This file is distributed under the same license as the Newspack Blocks plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Newspack Blocks 1.0.0-alpha.28\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/newspack-blocks\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-02-17T19:56:23+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: newspack-blocks\n"
+
+#. Plugin Name of the plugin
+msgid "Newspack Blocks"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://newspack.blog/"
+msgstr ""
+
+#. Description of the plugin
+msgid "A collection of blocks for news publishers."
+msgstr ""
+
+#. Author of the plugin
+msgid "Automattic"
+msgstr ""
+
+#: class-newspack-blocks.php:505
+msgid "Common"
+msgstr ""
+
+#. translators: separates last two sponsor names; needs a space on either side.
+#: class-newspack-blocks.php:592
+msgid " and "
+msgstr ""
+
+#. translators: separates all but the last two sponsor names; needs a space at the end.
+#: class-newspack-blocks.php:595
+msgid ", "
+msgstr ""
+
+#: newspack-blocks-patterns.php:17
+#: newspack-blocks-patterns.php:35
+#: newspack-blocks-patterns.php:53
+#: newspack-blocks-patterns.php:71
+#: newspack-blocks-patterns.php:89
+#: newspack-blocks-patterns.php:107
+#: newspack-blocks-patterns.php:125
+#: newspack-blocks-patterns.php:143
+#: newspack-blocks-patterns.php:161
+#: newspack-blocks-patterns.php:179
+#: newspack-blocks-patterns.php:197
+#: newspack-blocks-patterns.php:215
+#: newspack-blocks-patterns.php:233
+#: newspack-blocks-patterns.php:251
+#: newspack-blocks-patterns.php:269
+#: newspack-blocks-patterns.php:287
+#: newspack-blocks-patterns.php:305
+#: newspack-blocks-patterns.php:323
+#: newspack-blocks-patterns.php:341
+#: newspack-blocks-patterns.php:359
+#: dist/editor.js:2
+#: src/blocks/homepage-articles/index.js:29
+msgid "Homepage Posts"
+msgstr ""
+
+#: newspack-blocks-patterns.php:20
+#: newspack-blocks-patterns.php:391
+#: newspack-blocks-patterns.php:506
+msgid "Style 1"
+msgstr ""
+
+#: newspack-blocks-patterns.php:38
+#: newspack-blocks-patterns.php:417
+#: newspack-blocks-patterns.php:543
+msgid "Style 2"
+msgstr ""
+
+#: newspack-blocks-patterns.php:56
+#: newspack-blocks-patterns.php:443
+#: newspack-blocks-patterns.php:578
+msgid "Style 3"
+msgstr ""
+
+#: newspack-blocks-patterns.php:74
+#: newspack-blocks-patterns.php:469
+msgid "Style 4"
+msgstr ""
+
+#: newspack-blocks-patterns.php:92
+msgid "Style 5"
+msgstr ""
+
+#: newspack-blocks-patterns.php:110
+msgid "Style 6"
+msgstr ""
+
+#: newspack-blocks-patterns.php:128
+msgid "Style 7"
+msgstr ""
+
+#: newspack-blocks-patterns.php:146
+msgid "Style 8"
+msgstr ""
+
+#: newspack-blocks-patterns.php:164
+msgid "Style 9"
+msgstr ""
+
+#: newspack-blocks-patterns.php:182
+msgid "Style 10"
+msgstr ""
+
+#: newspack-blocks-patterns.php:200
+msgid "Style 11"
+msgstr ""
+
+#: newspack-blocks-patterns.php:218
+msgid "Style 12"
+msgstr ""
+
+#: newspack-blocks-patterns.php:236
+msgid "Style 13"
+msgstr ""
+
+#: newspack-blocks-patterns.php:254
+msgid "Style 14"
+msgstr ""
+
+#: newspack-blocks-patterns.php:272
+msgid "Style 15"
+msgstr ""
+
+#: newspack-blocks-patterns.php:290
+msgid "Style 16"
+msgstr ""
+
+#: newspack-blocks-patterns.php:308
+msgid "Style 17"
+msgstr ""
+
+#: newspack-blocks-patterns.php:326
+msgid "Style 18"
+msgstr ""
+
+#: newspack-blocks-patterns.php:344
+msgid "Style 19"
+msgstr ""
+
+#: newspack-blocks-patterns.php:362
+msgid "Style 20"
+msgstr ""
+
+#: newspack-blocks-patterns.php:380
+#: newspack-blocks-patterns.php:406
+#: newspack-blocks-patterns.php:432
+#: newspack-blocks-patterns.php:458
+msgid "Subscribe"
+msgstr ""
+
+#: newspack-blocks-patterns.php:386
+#: newspack-blocks-patterns.php:412
+#: newspack-blocks-patterns.php:438
+#: newspack-blocks-patterns.php:464
+msgid "Subscribe to our newsletter"
+msgstr ""
+
+#: newspack-blocks-patterns.php:495
+#: newspack-blocks-patterns.php:530
+#: newspack-blocks-patterns.php:567
+msgid "Donation"
+msgstr ""
+
+#: newspack-blocks-patterns.php:501
+#: newspack-blocks-patterns.php:537
+#: newspack-blocks-patterns.php:573
+msgid "Support our publication"
+msgstr ""
+
+#: newspack-blocks-patterns.php:538
+msgid "With the support of readers like you, we provide thoughtfully researched articles for a more informed and connected community. This is your chance to support credible, community-based, public-service journalism. Please join us!"
+msgstr ""
+
+#. translators: %d: Slide number.
+#: src/blocks/carousel/view.php:225
+msgid "Go to slide %d"
+msgstr ""
+
+#: src/blocks/carousel/view.php:243
+#: src/blocks/carousel/view.php:258
+msgid "Next Slide"
+msgstr ""
+
+#: src/blocks/carousel/view.php:244
+#: src/blocks/carousel/view.php:257
+msgid "Previous Slide"
+msgstr ""
+
+#: src/blocks/carousel/view.php:293
+#: src/blocks/carousel/view.php:316
+msgid "Pause Slideshow"
+msgstr ""
+
+#: src/blocks/carousel/view.php:294
+#: src/blocks/carousel/view.php:322
+msgid "Play Slideshow"
+msgstr ""
+
+#: src/blocks/donate/view.php:39
+#: dist/editor.js:2
+msgid "One-time"
+msgstr ""
+
+#: src/blocks/donate/view.php:40
+#: dist/editor.js:2
+msgid "Monthly"
+msgstr ""
+
+#: src/blocks/donate/view.php:41
+#: dist/editor.js:2
+msgid "Annually"
+msgstr ""
+
+#: src/blocks/donate/view.php:92
+#: src/blocks/donate/view.php:188
+#: dist/editor.js:2
+msgid "Donation amount"
+msgstr ""
+
+#: src/blocks/donate/view.php:110
+#: src/blocks/donate/view.php:209
+#: dist/editor.js:2
+msgid "Your contribution is appreciated."
+msgstr ""
+
+#: src/blocks/donate/view.php:182
+#: dist/editor.js:2
+msgid "Other"
+msgstr ""
+
+#: src/blocks/donate/view.php:258
+#: dist/editor.js:2
+#: src/blocks/donate/index.js:66
+msgid "Donate now!"
+msgstr ""
+
+#: src/blocks/homepage-articles/view.php:145
+#: dist/editor.js:2
+msgid "Load more posts"
+msgstr ""
+
+#: src/blocks/homepage-articles/view.php:150
+msgid "Loading..."
+msgstr ""
+
+#: src/blocks/homepage-articles/view.php:153
+msgid "Something went wrong. Please refresh the page and/or try again."
+msgstr ""
+
+#: src/blocks/homepage-articles/view.php:224
+#: dist/editor.js:2
+#: src/shared/js/utils.js:18
+msgctxt "post author"
+msgid "by"
+msgstr ""
+
+#: src/blocks/homepage-articles/view.php:247
+#: dist/editor.js:2
+#: src/shared/js/utils.js:30
+#: src/shared/js/utils.js:67
+msgctxt "post author"
+msgid " and "
+msgstr ""
+
+#: dist/carousel/view.js:1
+#: dist/editor.js:2
+#: src/blocks/carousel/create-swiper.js:90
+msgid "Slide %s"
+msgstr ""
+
+#. translators: current slide number and the total number of slides
+#: dist/carousel/view.js:1
+#: dist/editor.js:2
+#: src/blocks/carousel/create-swiper.js:126
+msgid "Slide %s of %s"
+msgstr ""
+
+#: dist/carousel/view.js:1
+#: dist/editor.js:2
+#: src/blocks/carousel/create-swiper.js:134
+msgid "Image: %s, "
+msgstr ""
+
+#: dist/carousel/view.js:1
+#: dist/editor.js:2
+#: src/blocks/carousel/create-swiper.js:168
+msgid "Playing"
+msgstr ""
+
+#: dist/carousel/view.js:1
+#: dist/editor.js:2
+#: src/blocks/carousel/create-swiper.js:173
+msgid "Paused"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "(no title)"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "(no name)"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Choose Specific Posts"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Posts"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Begin typing post title, click autocomplete result to select."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Authors"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Categories"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Tags"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Hide Advanced Filters"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show Advanced Filters"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Excluded Tags"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Small"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "S"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Medium"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "M"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Large"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "L"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Extra Large"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "XL"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Display Settings"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Columns"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "This blog is private, therefore the \"Load more posts\" feature is not active."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show \"Load more posts\" Button"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Featured Image Settings"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show Featured Image"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show Featured Image Caption"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Stack on mobile"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Featured Image Size"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Minimum height"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Sets a minimum height for the block, using a percentage of the screen's current height."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Post Control Settings"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show Subtitle"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show Excerpt"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Max number of words in excerpt"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Add a \"Read More\" link"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "\"Read More\" link text"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Type Scale"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Color Settings"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Text Color"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Post Meta Settings"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/carousel/edit.js:258
+msgid "Show Date"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/carousel/edit.js:265
+msgid "Show Category"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/carousel/edit.js:272
+msgid "Show Author"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/carousel/edit.js:280
+msgid "Show Author Avatar"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Post Types"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "List View"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Grid View"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show media on top"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show media on left"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show media on right"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show media behind"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Landscape Image Shape"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "portrait Image Shape"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Square Image Shape"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Uncropped"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Write header…"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Sorry, no posts were found."
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/homepage-articles/index.js:48
+msgid "posts"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/homepage-articles/index.js:49
+msgid "articles"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/homepage-articles/index.js:50
+msgid "latest"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/homepage-articles/index.js:52
+msgid "A block for displaying homepage posts."
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/homepage-articles/index.js:54
+msgctxt "block style"
+msgid "Default"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/homepage-articles/index.js:55
+msgctxt "block style"
+msgid "Borders"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Newspack Patterns"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Loading patterns"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/carousel/edit.js:255
+msgid "Article Meta Settings"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Button text…"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Error"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Go to donation settings to troubleshoot."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Not ready"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "You have not set up your donation settings yet. You need to do that before you can use the Donate Block."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Set up donation settings."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Tiered"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Configure manually"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "The Donate Block allows you to collect donations from readers. The fields are automatically defined based on your donation settings."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Edit donation settings."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Manual Settings"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Campaign"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Campaign ID"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/donate/index.js:19
+msgid "Donate"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/donate/index.js:37
+msgid "donate"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/donate/index.js:38
+msgid "memberships"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/donate/index.js:39
+msgid "subscriptions"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/donate/index.js:41
+msgid "Enable donations."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "No videos found"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Settings"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Videos"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "The maximum number of videos to pull from posts."
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/video-playlist/index.js:18
+msgid "YouTube Video Playlist"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/video-playlist/index.js:36
+msgid "video"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/video-playlist/index.js:37
+msgid "playlist"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/video-playlist/index.js:38
+msgid "youtube"
+msgstr ""
+
+#: dist/editor.js:2
+#: src/blocks/video-playlist/index.js:40
+msgid "Embed a playlist of latest YouTube videos."
+msgstr ""

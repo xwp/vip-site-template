@@ -1,0 +1,84 @@
+@use '../../shared/sass/variables';
+@use '../../shared/sass/mixins';
+
+.editor-styles-wrapper {
+	.components-form-file-upload {
+		display: flex;
+	}
+
+	.wp-block-newspack-blocks-iframe-notice {
+		margin: 0;
+		width: 100%;
+	}
+
+	.wp-block-newspack-blocks-iframe {
+		.wp-block-newspack-blocks-iframe__input {
+			border-radius: 2px;
+			margin: 0 8px 0 0;
+			flex: 1 1 auto;
+		}
+
+		.components-placeholder__fieldset {
+			> * {
+				width: 100%;
+				margin-bottom: 1.5rem;
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+}
+
+.wp-block-newspack-blocks-iframe__url-input-container {
+	.wp-block-newspack-blocks-iframe__button {
+		margin-bottom: 0;
+	}
+}
+
+.wp-block-newspack-blocks-iframe__url-input-form {
+	display: flex;
+
+	input[type='url'].wp-block-newspack-blocks-iframe__url-input-form__url-input-field {
+		width: 100%;
+		min-width: 200px;
+
+		@include mixins.media( tablet ) {
+			width: 300px;
+		}
+
+		flex-grow: 1;
+		border: none;
+		border-radius: 0;
+		margin: 2px;
+	}
+}
+
+.wp-block-newspack-blocks-iframe__url-input-form__url-input-submit-button {
+	flex-shrink: 1;
+}
+
+.wp-block-newspack-blocks-iframe__button {
+	margin-bottom: 0.5rem;
+}
+
+.wp-block-newspack-blocks-iframe__cancel-button.is-link {
+	margin: 1em;
+	display: block;
+}
+
+.wp-block-newspack-blocks-iframe.is-appender {
+	min-height: 0;
+
+	&:hover {
+		cursor: pointer;
+		box-shadow: 0 0 0 1px var( --wp-admin-theme-color );
+	}
+}
+
+.wp-block-newspack-blocks-iframe__unit-control {
+	display: grid;
+	grid-template-columns: repeat( 2, 1fr );
+	grid-gap: 1em;
+}

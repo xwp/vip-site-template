@@ -1,0 +1,3 @@
+{
+  "production": [ "author-list", "author-profile", "carousel", "donate", "homepage-articles", "video-playlist", "iframe" ]
+}

@@ -1,0 +1,46 @@
+.wp-block-newspack-blocks-author-list {
+	.newspack-blocks__author-list-container {
+		list-style: none;
+		margin-left: 0;
+		margin-right: 0;
+		padding-left: 0;
+		padding-right: 0;
+
+		.newspack-blocks__author-list-item {
+			display: inline-block;
+			margin-bottom: 2.5rem;
+			width: 100%;
+		}
+	}
+
+	.is-columns {
+		column-width: auto;
+		page-break-inside: avoid;
+		break-inside: avoid;
+	}
+
+	.columns-2 {
+		column-count: 2;
+	}
+
+	.columns-3 {
+		column-count: 3;
+	}
+
+	.columns-4 {
+		column-count: 4;
+	}
+
+	.columns-5 {
+		column-count: 5;
+	}
+
+	.columns-6 {
+		column-count: 6;
+	}
+
+	h2.newspack-blocks__author-list-separator {
+		margin-bottom: 0;
+		margin-top: 0;
+	}
+}

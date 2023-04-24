@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Newspack Blocks 1.0.0-alpha.25\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/newspack-blocks\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-02-20T12:23:39+00:00\n"
+"PO-Revision-Date: 2020-11-12 10:33+0000\n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-Domain: newspack-blocks\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. Plugin Name of the plugin
+msgid "Newspack Blocks"
+msgstr "Newspack Blocks"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://newspack.blog/"
+msgstr "https://newspack.blog/"
+
+#. Description of the plugin
+msgid "A collection of blocks for news publishers."
+msgstr "Une collection de blocs pour les éditeurs d’informations."
+
+#. Author of the plugin
+msgid "Automattic"
+msgstr "Automattic"
+
+#. translators: %s: post author.
+#: src/blocks/carousel/view.php:157
+msgctxt "post author"
+msgid "by %s"
+msgstr "par %s"
+
+#. translators: %d: Slide number.
+#: src/blocks/carousel/view.php:192
+msgid "Go to slide %d"
+msgstr "Allez à la diapositive %d"
+
+#: src/blocks/carousel/view.php:209
+msgid "Next Slide"
+msgstr "Diapositive suivante"
+
+#: src/blocks/carousel/view.php:210
+msgid "Previous Slide"
+msgstr "Diapositive précédente"
+
+#: src/blocks/carousel/view.php:244
+msgid "Pause Slideshow"
+msgstr "Mettre le diaporama en pause"
+
+#: src/blocks/carousel/view.php:250
+msgid "Play Slideshow"
+msgstr "Démarrer le diaporama"
+
+#: src/blocks/donate/view.php:33
+#: dist/editor.js:2
+msgid "One-time"
+msgstr "Une fois"
+
+#: src/blocks/donate/view.php:34
+#: dist/editor.js:2
+msgid "Monthly"
+msgstr "Mensuel"
+
+#: src/blocks/donate/view.php:35
+#: dist/editor.js:2
+msgid "Annually"
+msgstr "Annuel"
+
+#: src/blocks/donate/view.php:84
+#: src/blocks/donate/view.php:181
+#: dist/editor.js:2
+msgid "Donation amount"
+msgstr "Montant du don"
+
+#: src/blocks/donate/view.php:102
+#: src/blocks/donate/view.php:202
+#: dist/editor.js:2
+msgid "Your contribution is appreciated."
+msgstr "Votre contribution est appréciée."
+
+#: src/blocks/donate/view.php:105
+#: src/blocks/donate/view.php:205
+#: dist/editor.js:2
+msgid "Donate now!"
+msgstr "Faites un don !"
+
+#: src/blocks/donate/view.php:175
+#: dist/editor.js:2
+msgid "Other"
+msgstr "Autre"
+
+#: src/blocks/homepage-articles/view.php:125
+#: dist/editor.js:2
+msgid "Load more posts"
+msgstr "Charger plus d’articles"
+
+#: src/blocks/homepage-articles/view.php:130
+msgid "Loading..."
+msgstr "Chargement…"
+
+#: src/blocks/homepage-articles/view.php:133
+msgid "Something went wrong. Please refresh the page and/or try again."
+msgstr "Un problème est survenu. Veuillez actualiser la page et / ou réessayer."
+
+#: src/blocks/homepage-articles/view.php:203
+#: dist/editor.js:2
+msgctxt "post author"
+msgid "by"
+msgstr "par"
+
+#: src/blocks/homepage-articles/view.php:221
+#: dist/editor.js:2
+msgctxt "post author"
+msgid " and "
+msgstr " et "

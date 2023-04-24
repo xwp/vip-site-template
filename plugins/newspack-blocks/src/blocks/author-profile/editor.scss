@@ -1,0 +1,57 @@
+@use 'view';
+@use '../../shared/sass/mixins';
+
+.editor-styles-wrapper {
+	.wp-block-newspack-blocks-author-profile {
+		.components-notice {
+			margin: 0 0 2rem;
+			width: 100%;
+		}
+
+		.is-loading {
+			align-items: center;
+			display: flex;
+
+			.components-spinner {
+				margin-right: 0;
+				margin-top: 0;
+			}
+		}
+
+		a.no-op {
+			pointer-events: none;
+		}
+
+		p {
+			font-size: 1em;
+		}
+
+		&__bio {
+			@include mixins.media( mobile ) {
+				flex: 4;
+
+				h3 {
+					margin-top: 0;
+				}
+			}
+		}
+
+		&__social-links {
+			list-style: none;
+			margin: -8px;
+			padding: 0;
+
+			li {
+				margin: 8px;
+			}
+		}
+	}
+
+	.wp-block-group {
+		&.has-text-color {
+			.wp-block-newspack-blocks-author-profile a {
+				color: inherit;
+			}
+		}
+	}
+}

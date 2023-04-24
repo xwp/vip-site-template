@@ -1,0 +1,460 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Newspack Blocks\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/newspack-blocks\n"
+"POT-Creation-Date: 2020-02-20T12:23:39+00:00\n"
+"PO-Revision-Date: 2020-02-18 13:48-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: newspack-blocks.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+
+#. Plugin Name of the plugin
+msgid "Newspack Blocks"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://newspack.blog/"
+msgstr ""
+
+#. Description of the plugin
+msgid "A collection of blocks for news publishers."
+msgstr ""
+
+#. Author of the plugin
+msgid "Automattic"
+msgstr ""
+
+#. translators: %s: post author.
+#: src/blocks/carousel/view.php:157
+msgctxt "post author"
+msgid "by %s"
+msgstr "von %s"
+
+#. translators: %d: Slide number.
+#: src/blocks/carousel/view.php:192
+msgid "Go to slide %d"
+msgstr "Gehe zu Bild %d"
+
+#: src/blocks/carousel/view.php:209
+msgid "Next Slide"
+msgstr "Nächste Folie"
+
+#: src/blocks/carousel/view.php:210
+msgid "Previous Slide"
+msgstr "Vorheriger Slide"
+
+#: src/blocks/carousel/view.php:244
+msgid "Pause Slideshow"
+msgstr "Diashow pausieren"
+
+#: src/blocks/carousel/view.php:250
+msgid "Play Slideshow"
+msgstr "Diashow abspielen"
+
+#: src/blocks/donate/view.php:33 dist/editor.js:2
+msgid "One-time"
+msgstr "Einmal"
+
+#: src/blocks/donate/view.php:34 dist/editor.js:2
+msgid "Monthly"
+msgstr "Monatlich"
+
+#: src/blocks/donate/view.php:35 dist/editor.js:2
+msgid "Annually"
+msgstr "Jährlich"
+
+#: src/blocks/donate/view.php:84 src/blocks/donate/view.php:181
+#: dist/editor.js:2
+msgid "Donation amount"
+msgstr "Spendenbetrag"
+
+#: src/blocks/donate/view.php:102 src/blocks/donate/view.php:202
+#: dist/editor.js:2
+msgid "Your contribution is appreciated."
+msgstr "Herzlichen Dank für Ihre Unterstützung."
+
+#: src/blocks/donate/view.php:105 src/blocks/donate/view.php:205
+#: dist/editor.js:2
+msgid "Donate now!"
+msgstr "Jetzt spenden!"
+
+#: src/blocks/donate/view.php:175 dist/editor.js:2
+msgid "Other"
+msgstr "Andere"
+
+#: src/blocks/homepage-articles/view.php:125 dist/editor.js:2
+msgid "Load more posts"
+msgstr "Mehr Beiträge laden"
+
+#: src/blocks/homepage-articles/view.php:130
+msgid "Loading..."
+msgstr "Lade..."
+
+#: src/blocks/homepage-articles/view.php:133
+msgid "Something went wrong. Please refresh the page and/or try again."
+msgstr ""
+
+#: src/blocks/homepage-articles/view.php:203 dist/editor.js:2
+msgctxt "post author"
+msgid "by"
+msgstr "von"
+
+#: src/blocks/homepage-articles/view.php:221 dist/editor.js:2
+msgctxt "post author"
+msgid " and "
+msgstr " und "
+
+#: dist/editor.js:2
+msgid "(no title)"
+msgstr "(kein Titel)"
+
+#: dist/editor.js:2
+msgid "(no name)"
+msgstr "(kein Name)"
+
+#: dist/editor.js:2
+msgid "Choose Specific Posts"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Posts"
+msgstr "Beiträge"
+
+#: dist/editor.js:2
+msgid "Begin typing post title, click autocomplete result to select."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Authors"
+msgstr "Autoren"
+
+#: dist/editor.js:2
+msgid "Categories"
+msgstr "Kategorien"
+
+#: dist/editor.js:2
+msgid "Tags"
+msgstr "Schlagwörter"
+
+#: dist/editor.js:2
+msgid "Hide Advanced Filters"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show Advanced Filters"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Excluded Tags"
+msgstr ""
+
+#: dist/editor.js:2 src/blocks/carousel/edit.js:237
+msgid "Article Meta Settings"
+msgstr ""
+
+#: dist/editor.js:2 src/blocks/carousel/edit.js:240
+msgid "Show Date"
+msgstr "Datum anzeigen"
+
+#: dist/editor.js:2 src/blocks/carousel/edit.js:247
+msgid "Show Category"
+msgstr "Kategorie anzeigen"
+
+#: dist/editor.js:2 src/blocks/carousel/edit.js:254
+msgid "Show Author"
+msgstr "Autor anzeigen"
+
+#: dist/editor.js:2 src/blocks/carousel/edit.js:262
+msgid "Show Author Avatar"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Small"
+msgstr "Klein"
+
+#: dist/editor.js:2
+msgid "S"
+msgstr "S"
+
+#: dist/editor.js:2
+msgid "Medium"
+msgstr "Mittel"
+
+#: dist/editor.js:2
+msgid "M"
+msgstr "M"
+
+#: dist/editor.js:2
+msgid "Large"
+msgstr "Groß"
+
+#: dist/editor.js:2
+msgid "L"
+msgstr "L"
+
+#: dist/editor.js:2
+msgid "Extra Large"
+msgstr "Extra Groß"
+
+#: dist/editor.js:2
+msgid "XL"
+msgstr "XL"
+
+#: dist/editor.js:2
+msgid "Display Settings"
+msgstr "Anzeigeneinstellungen"
+
+#: dist/editor.js:2
+msgid "Columns"
+msgstr "Spalten"
+
+#: dist/editor.js:2
+msgid "Show \"More\" Button"
+msgstr "\"Mehr Lesen\" anzeigen"
+
+#: dist/editor.js:2
+msgid "Featured Image Settings"
+msgstr "Beitragsbild-Einstellungen"
+
+#: dist/editor.js:2
+msgid "Show Featured Image"
+msgstr "Beitragsbild anzeigen"
+
+#: dist/editor.js:2
+msgid "Show Featured Image Caption"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Stack on mobile"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Featured Image Size"
+msgstr "Größe des Beitragbildes"
+
+#: dist/editor.js:2
+msgid "Minimum height"
+msgstr "Mindesthöhe"
+
+#: dist/editor.js:2
+msgid ""
+"Sets a minimum height for the block, using a percentage of the screen's "
+"current height."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Post Control Settings"
+msgstr ""
+
+#: dist/editor.js:2
+#, fuzzy
+msgid "Show Subtitle"
+msgstr "Datum anzeigen"
+
+#: dist/editor.js:2
+msgid "Show Excerpt"
+msgstr "Textauszug anzeigen"
+
+#: dist/editor.js:2
+msgid "Type Scale"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Color Settings"
+msgstr "Farbeinstellungen"
+
+#: dist/editor.js:2
+msgid "Text Color"
+msgstr "Textfarbe"
+
+#: dist/editor.js:2
+msgid "Post Meta Settings"
+msgstr "Post Meta SET"
+
+#: dist/editor.js:2
+msgid "List View"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Grid View"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show media on top"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show media on left"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show media on right"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Show media behind"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Landscape Image Shape"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "portrait Image Shape"
+msgstr ""
+
+#: dist/editor.js:2
+#, fuzzy
+msgid "Square Image Shape"
+msgstr "Größe des Beitragbildes"
+
+#: dist/editor.js:2
+msgid "Uncropped"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Write header…"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Sorry, no posts were found."
+msgstr "Entschuldigung, wir konnten keine Beiträge finden."
+
+#: dist/editor.js:2 src/blocks/homepage-articles/index.js:29
+msgid "Homepage Posts"
+msgstr ""
+
+#: dist/editor.js:2 src/blocks/homepage-articles/index.js:45
+msgid "posts"
+msgstr "Beiträge"
+
+#: dist/editor.js:2 src/blocks/homepage-articles/index.js:46
+msgid "articles"
+msgstr "Artikel"
+
+#: dist/editor.js:2 src/blocks/homepage-articles/index.js:47
+msgid "latest"
+msgstr "letzten"
+
+#: dist/editor.js:2 src/blocks/homepage-articles/index.js:49
+msgid "A block for displaying homepage posts."
+msgstr ""
+
+#: dist/editor.js:2 src/blocks/homepage-articles/index.js:51
+msgctxt "block style"
+msgid "Default"
+msgstr "Standard"
+
+#: dist/editor.js:2 src/blocks/homepage-articles/index.js:52
+msgctxt "block style"
+msgid "Borders"
+msgstr "Rahmen"
+
+#: dist/editor.js:2
+msgid "Error"
+msgstr "Fehler"
+
+#: dist/editor.js:2
+msgid "Go to donation settings to troubleshoot."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Not ready"
+msgstr "Nicht bereit"
+
+#: dist/editor.js:2
+msgid ""
+"You have not set up your donation settings yet. You need to do that before "
+"you can use the Donate Block."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Set up donation settings."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Tiered"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Donate Block"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Configure manually"
+msgstr ""
+
+#: dist/editor.js:2
+msgid ""
+"The Donate Block allows you to collect donations from readers. The fields "
+"are automatically defined based on your donation settings."
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Edit donation settings."
+msgstr ""
+
+#: dist/editor.js:2
+#, fuzzy
+msgid "Manual Settings"
+msgstr "Farbeinstellungen"
+
+#: dist/editor.js:2
+msgid "Campaign"
+msgstr ""
+
+#: dist/editor.js:2
+msgid "Campaign ID"
+msgstr ""
+
+#: dist/editor.js:2 src/blocks/donate/index.js:19
+msgid "Donate"
+msgstr "Spenden"
+
+#: dist/editor.js:2 src/blocks/donate/index.js:34
+msgid "donate"
+msgstr "Spenden"
+
+#: dist/editor.js:2 src/blocks/donate/index.js:35
+msgid "memberships"
+msgstr "Mitgliedschaften"
+
+#: dist/editor.js:2 src/blocks/donate/index.js:36
+msgid "subscriptions"
+msgstr "Abonnements"
+
+#: dist/editor.js:2 src/blocks/donate/index.js:38
+msgid "Enable donations."
+msgstr ""
+
+#~ msgid "by"
+#~ msgstr "von"
+
+#~ msgid "Slideshow Settings"
+#~ msgstr "Slideshow Einstellungen"
+
+#~ msgid "Autoplay"
+#~ msgstr "Autoplay"
+
+#~ msgid "slideshow"
+#~ msgstr "Diaschau"
+
+#~ msgid "carousel"
+#~ msgstr "Karussell"

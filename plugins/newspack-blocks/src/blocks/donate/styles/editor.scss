@@ -1,0 +1,246 @@
+@use '~@wordpress/base-styles/colors' as wp-colors;
+@use '../../../shared/sass/colors';
+@use '../../../shared/sass/variables';
+
+@use '../streamlined/style' as streamlined;
+@use '../frequency-based/style' as frequency-based;
+@use '../tiers-based/style' as tiers-based;
+
+.wp-block-newspack-blocks-donate {
+	&__tier--frequency {
+		position: relative;
+	}
+
+	&__panel-inputs {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		margin-bottom: 21px;
+		input,
+		span {
+			min-width: 0;
+		}
+		span {
+			margin-bottom: 7px;
+			display: inline-block;
+			width: 48%;
+		}
+		input {
+			max-width: 100%;
+		}
+	}
+
+	button {
+		font-size: variables.$font__size-sm;
+		font-weight: bold;
+		outline: none;
+	}
+	button:not( .wpbnbd__button ),
+	button[type='submit'] {
+		border: none;
+	}
+	button[type='submit'] {
+		border-radius: 5px;
+		box-sizing: border-box;
+		color: colors.$color__background-body;
+		line-height: 3;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	.stripe-payment {
+		&__methods {
+			> * {
+				line-height: 46px !important;
+			}
+		}
+		&__request-button {
+			display: flex;
+			align-items: center;
+			gap: 0.8em;
+			font-size: 0.8em;
+			border-radius: 5px;
+			color: colors.$color__secondary;
+			border: colors.$color__secondary 1px dashed;
+			padding: 0 20px;
+			opacity: 0.5;
+			.components-base-control__field {
+				margin: 0;
+			}
+		}
+	}
+}
+
+.wp-block-newspack-blocks-donate.wpbnbd--frequency-based.tiered {
+	.tiers {
+		input.frequency-input {
+			~ input[type='number'] {
+				position: absolute;
+				max-width: 81px;
+				top: -31px;
+				z-index: 9;
+				left: 5px;
+				display: none;
+			}
+
+			&:checked ~ input[type='number'] {
+				display: flex;
+			}
+		}
+	}
+}
+
+.block-editor-block-list__layout
+	.block-editor-block-list__block
+	.wp-block-newspack-blocks-donate.tiered.is-style-minimal
+	.wp-block-newspack-blocks-donate__tiers
+	input[type='radio']:checked
+	+ .tier-select-label {
+	background: transparent;
+	color: colors.$color__text-main;
+}
+
+.components-frequency-donations {
+	p {
+		margin-bottom: 8px;
+	}
+
+	.components-base-control {
+		margin-bottom: 0;
+
+		&:last-child {
+			margin-bottom: 0;
+
+			.components-base-control__field {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	&__minimum-donation {
+		margin-top: 16px;
+	}
+
+	&__error {
+		color: colors.$color__error;
+	}
+}
+
+.newspack-blocks-donate {
+	&__layout-selector {
+		display: grid;
+		gap: 8px;
+		grid-template-columns: repeat( 2, 1fr );
+		margin-bottom: 1.8em;
+
+		.components-button {
+			justify-content: center;
+
+			&.is-secondary {
+				box-shadow: inset 0 0 0 1px wp-colors.$gray-400;
+				color: wp-colors.$gray-900;
+			}
+		}
+	}
+
+	&__notice {
+		margin: 0 0 20px;
+	}
+}
+
+.newspack-blocks-additional-fields-editor {
+	&__field {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 10px;
+		border: 1px solid wp-colors.$gray-300;
+		& + & {
+			border-top: none;
+		}
+		&:first-of-type {
+			border-top-left-radius: 3px;
+			border-top-right-radius: 3px;
+		}
+		&:last-of-type {
+			margin-bottom: 20px;
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
+		}
+		&__left-section {
+			display: flex;
+			align-items: center;
+			> div {
+				display: flex;
+				flex-direction: column;
+				button {
+					padding: 0 !important;
+					height: 15px;
+					min-width: 0 !important;
+					width: 24px;
+				}
+			}
+			> span {
+				padding-left: 10px;
+			}
+			&__icon {
+				margin-right: 8px;
+			}
+		}
+	}
+	&__field-edited {
+		&__help,
+		&__validation-message {
+			font-size: 12px;
+			line-height: 1.4;
+		}
+		&__help {
+			margin-bottom: 20px;
+		}
+		&__validation-message {
+			margin-bottom: 8px;
+			color: wp-colors.$alert-red !important;
+		}
+		&__width {
+			margin-bottom: 20px;
+			div:first-child {
+				margin-bottom: 8px;
+			}
+		}
+		&--name input {
+			font-family: monospace !important;
+		}
+		&--invalid input {
+			border-color: wp-colors.$alert-red !important;
+		}
+	}
+	&__modal {
+		max-width: 400px !important;
+	}
+	&__options-popover {
+		.components-popover__content {
+			padding: 6px;
+			max-width: 196px;
+		}
+		.components-button {
+			padding: 11px 13px;
+			text-decoration: none;
+			&:not( .is-destructive ) {
+				color: wp-colors.$gray-900;
+			}
+			&:focus {
+				box-shadow: none;
+				outline: none;
+			}
+		}
+	}
+	&__edit-buttons {
+		display: flex;
+		justify-content: flex-end;
+		button + button {
+			margin-left: 10px;
+		}
+	}
+	.components-base-control {
+		margin-bottom: 0;
+	}
+}
