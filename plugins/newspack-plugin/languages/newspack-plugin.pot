@@ -1,0 +1,2929 @@
+# Copyright (C) 2020 Automattic
+# This file is distributed under the GPL2.
+msgid ""
+msgstr ""
+"Project-Id-Version: Newspack 1.0.0-alpha.21\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/newspack-plugin\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-12-21T12:58:44+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.5.0-alpha-59d879d\n"
+"X-Domain: newspack\n"
+
+#. Plugin Name of the plugin
+#: includes/wizards/class-dashboard.php:138
+#: assets/wizards/readerRevenue/views/platform/index.js:64
+msgid "Newspack"
+msgstr ""
+
+#. Description of the plugin
+msgid "An advanced open-source publishing and revenue-generating platform for news organizations."
+msgstr ""
+
+#. Author of the plugin
+msgid "Automattic"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://newspack.com/"
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:392
+#: includes/api/class-wizards-controller.php:131
+msgid "You cannot view this resource."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:422
+#: includes/api/class-plugins-controller.php:442
+#: includes/api/class-plugins-controller.php:462
+#: includes/api/class-plugins-controller.php:482
+#: includes/api/class-plugins-controller.php:502
+#: includes/api/class-plugins-controller.php:522
+#: includes/api/class-wizards-controller.php:151
+#: includes/class-profile.php:169
+#: includes/wizards/class-wizard.php:138
+#: includes/wizards/class-wizard.php:157
+msgid "You cannot use this resource."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:543
+#: includes/api/class-wizards-controller.php:171
+msgid "Resource does not exist."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:589
+msgid "The name of the plugin."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:595
+msgid "The description of the plugin."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:601
+msgid "The author of the plugin."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:607
+msgid "The version of the plugin (if available)."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:613
+msgid "The URL of the plugin site."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:619
+msgid "The URL of the plugin author."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:625
+msgid "The textdomain of the plugin (if available)."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:631
+msgid "The path for the textdomain of the plugin (if available)."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:637
+msgid "The location of the plugin download."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:643
+msgid "The status of the plugin."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:650
+msgid "The slug of the plugin."
+msgstr ""
+
+#: includes/api/class-plugins-controller.php:656
+msgid "The edit link of the plugin."
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:113
+msgid "Premium"
+msgstr ""
+
+#. translators: %s - plugin name
+#: includes/class-admin-plugins-screen.php:119
+msgid "Install %s"
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:121
+msgid "Install"
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:135
+msgid "Sorry, you are not allowed to install plugins."
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:140
+#: includes/class-admin-plugins-screen.php:146
+#: includes/class-plugin-manager.php:561
+msgid "Invalid plugin."
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:173
+msgid "Plugin installed."
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:175
+#: includes/class-admin-plugins-screen.php:187
+msgid "Dismiss."
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:185
+msgid "Failed to install plugin:"
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:264
+msgid "The following plugins are required by Newspack but are not active: "
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:267
+msgid "The following plugins are not supported by Newspack: "
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:270
+msgid "The Newspack Theme is not currently active."
+msgstr ""
+
+#: includes/class-admin-plugins-screen.php:274
+msgid "You are using the Disqus comment system without the Newspack Disqus AMP plugin. The comments form will not display on AMP pages. Correct this "
+msgstr ""
+
+#: includes/class-donations.php:44
+msgid "The required plugins are not installed and activated. Install and/or activate them to access this feature."
+msgstr ""
+
+#: includes/class-donations.php:65
+msgid "Donate"
+msgstr ""
+
+#. translators: %s: Product name
+#: includes/class-donations.php:213
+#: includes/class-donations.php:321
+msgid "%s: Monthly"
+msgstr ""
+
+#. translators: %s: Product name
+#: includes/class-donations.php:233
+#: includes/class-donations.php:315
+msgid "%s: Yearly"
+msgstr ""
+
+#. translators: %s: Product name
+#: includes/class-donations.php:253
+#: includes/class-donations.php:326
+msgid "%s: One-Time"
+msgstr ""
+
+#: includes/class-donations.php:454
+msgid "With the support of readers like you, we provide thoughtfully researched articles for a more informed and connected community. This is your chance to support credible, community-based, public-service journalism. Please join us!"
+msgstr ""
+
+#: includes/class-donations.php:455
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:191
+msgid "Donation"
+msgstr ""
+
+#: includes/class-donations.php:456
+msgid "Edit and add to this content to tell your publication's story and explain the benefits of becoming a member. This is a good place to mention any special member privileges, let people know that donations are tax-deductible, or provide any legal information."
+msgstr ""
+
+#: includes/class-donations.php:482
+msgid "Support our publication"
+msgstr ""
+
+#: includes/class-donations.php:484
+msgid "Support quality journalism by joining us today!"
+msgstr ""
+
+#: includes/class-donations.php:503
+msgid "Join"
+msgstr ""
+
+#: includes/class-handoff-banner.php:71
+msgid "Return to Newspack after completing configuration"
+msgstr ""
+
+#: includes/class-handoff-banner.php:72
+msgid "Back to Newspack"
+msgstr ""
+
+#: includes/class-plugin-manager.php:140
+#: tests/unit-tests/plugin-manager.php:58
+#: assets/wizards/health-check/views/configuration/index.js:42
+msgid "Jetpack"
+msgstr ""
+
+#: includes/class-plugin-manager.php:141
+#: tests/unit-tests/plugin-manager.php:59
+msgid "Bring the power of the WordPress.com cloud to your self-hosted WordPress. Jetpack enables you to connect your blog to a WordPress.com account to use the powerful features normally only available to WordPress.com users."
+msgstr ""
+
+#: includes/class-plugin-manager.php:150
+msgid "Connects WooCommerce to Mailchimp to sync your store data, send targeted campaigns to your customers, and sell more stuff."
+msgstr ""
+
+#: includes/class-plugin-manager.php:165
+msgid "Newspack Ads"
+msgstr ""
+
+#: includes/class-plugin-manager.php:166
+msgid "Ads integration."
+msgstr ""
+
+#: includes/class-plugin-manager.php:173
+msgid "Newspack Blocks"
+msgstr ""
+
+#: includes/class-plugin-manager.php:174
+msgid "A collection of blocks for news publishers."
+msgstr ""
+
+#: includes/class-plugin-manager.php:181
+msgid "Newspack Content Converter"
+msgstr ""
+
+#: includes/class-plugin-manager.php:182
+msgid "Batch conversion of Classic->Gutenberg post conversion."
+msgstr ""
+
+#: includes/class-plugin-manager.php:337
+msgid "Super Cool Ad Inserter Plugin"
+msgstr ""
+
+#: includes/class-plugin-manager.php:338
+msgid "This WordPress plugin gives site administrators a way to insert widgets such as ads, newsletter signups, or calls to action into posts at set intervals."
+msgstr ""
+
+#: includes/class-plugin-manager.php:362
+msgid "WooCommerce"
+msgstr ""
+
+#: includes/class-plugin-manager.php:363
+#: includes/class-plugin-manager.php:395
+msgid "An eCommerce toolkit that helps you sell anything. Beautifully."
+msgstr ""
+
+#: includes/class-plugin-manager.php:371
+msgid "WooCommerce Stripe Gateway"
+msgstr ""
+
+#: includes/class-plugin-manager.php:372
+msgid "Take credit card payments on your store using Stripe."
+msgstr ""
+
+#: includes/class-plugin-manager.php:380
+msgid "WooCommerce Name Your Price"
+msgstr ""
+
+#: includes/class-plugin-manager.php:381
+msgid "WooCommerce Name Your Price allows customers to set their own price for products or donations."
+msgstr ""
+
+#: includes/class-plugin-manager.php:387
+msgid "WooCommerce One Page Checkout"
+msgstr ""
+
+#: includes/class-plugin-manager.php:388
+msgid "Super fast sales with WooCommerce. Add to cart, checkout & pay all on the one page!"
+msgstr ""
+
+#: includes/class-plugin-manager.php:394
+msgid "WooCommerce Subscriptions"
+msgstr ""
+
+#: includes/class-plugin-manager.php:402
+msgid "Convert and retain customers with automated marketing that does the hard work for you."
+msgstr ""
+
+#: includes/class-plugin-manager.php:408
+msgid "AutomateWoo - Refer A Friend"
+msgstr ""
+
+#: includes/class-plugin-manager.php:409
+msgid "Boost your organic sales by adding a customer referral program to your WooCommerce store."
+msgstr ""
+
+#: includes/class-plugin-manager.php:437
+msgid "Simple performant cookie consent notice that supports AMP, granular cookie control and live preview customization."
+msgstr ""
+
+#: includes/class-plugin-manager.php:581
+msgid "The plugin is already active."
+msgstr ""
+
+#: includes/class-plugin-manager.php:601
+#: includes/class-plugin-manager.php:715
+msgid "The plugin is not installed."
+msgstr ""
+
+#: includes/class-plugin-manager.php:611
+msgid "The plugin is not active."
+msgstr ""
+
+#: includes/class-plugin-manager.php:616
+msgid "Failed to deactivate plugin."
+msgstr ""
+
+#: includes/class-plugin-manager.php:692
+msgid "Plugins cannot be installed."
+msgstr ""
+
+#: includes/class-plugin-manager.php:710
+msgid "Plugins cannot be uninstalled."
+msgstr ""
+
+#: includes/class-plugin-manager.php:736
+msgid "The plugin could not be uninstalled."
+msgstr ""
+
+#: includes/class-plugin-manager.php:749
+msgid "The plugin directory already exists."
+msgstr ""
+
+#: includes/class-plugin-manager.php:756
+msgid "Plugin not found."
+msgstr ""
+
+#: includes/class-plugin-manager.php:762
+msgid "Newspack cannot install this plugin. You will need to get it from the plugin's site and install it manually."
+msgstr ""
+
+#. translators: %s: plugin URL
+#: includes/class-plugin-manager.php:765
+msgid "Newspack cannot install this plugin. You will need to get it from <a href=\"%s\">the plugin's site</a> and install it manually."
+msgstr ""
+
+#: includes/class-pwa.php:35
+msgid "Site is not served over https. Progressive web app features will not work."
+msgstr ""
+
+#: includes/class-pwa.php:39
+msgid "No site icon specified. Visitors will not be able to install the site as an app."
+msgstr ""
+
+#: includes/class-salesforce.php:369
+msgid "No sObject type given."
+msgstr ""
+
+#: includes/class-settings.php:64
+msgid "Setup Wizard"
+msgstr ""
+
+#: includes/class-settings.php:66
+msgid "Components Demo"
+msgstr ""
+
+#: includes/class-settings.php:90
+msgid "Debug Mode"
+msgstr ""
+
+#: includes/class-settings.php:97
+msgid "Reset Newspack"
+msgstr ""
+
+#: includes/class-settings.php:105
+msgid "Reset WordPress.com authentication"
+msgstr ""
+
+#: includes/class-starter-content.php:245
+msgid "Newspack Placeholder Logo"
+msgstr ""
+
+#: includes/class-theme-manager.php:40
+msgid "Themes cannot be installed."
+msgstr ""
+
+#: includes/class-theme-manager.php:46
+msgid "Invalid theme slug."
+msgstr ""
+
+#: includes/class-theme-manager.php:77
+msgid "Newspack theme installation failed."
+msgstr ""
+
+#: includes/class-webhooks.php:62
+msgid "No valid WooCommerce order data."
+msgstr ""
+
+#: includes/class-webhooks.php:73
+msgid "No valid transaction or contact data."
+msgstr ""
+
+#: includes/class-webhooks.php:80
+msgid "No valid contact email address."
+msgstr ""
+
+#: includes/class-webhooks.php:89
+msgid "Could not communicate with Salesforce."
+msgstr ""
+
+#: includes/class-webhooks.php:113
+msgid "Could not create or update Salesforce data."
+msgstr ""
+
+#: includes/configuration_managers/class-configuration-manager.php:32
+msgid "The plugin is not managed by Newspack."
+msgstr ""
+
+#: includes/configuration_managers/class-configuration-managers.php:75
+msgid "No configuration manager exists for this plugin."
+msgstr ""
+
+#: includes/configuration_managers/class-jetpack-configuration-manager.php:57
+msgid "The Jetpack plugin is not installed and activated. Install and/or activate it to access this feature."
+msgstr ""
+
+#: includes/configuration_managers/class-jetpack-configuration-manager.php:70
+msgid "Sorry, something is wrong with your Jetpack connection."
+msgstr ""
+
+#: includes/configuration_managers/class-newspack-ads-configuration-manager.php:137
+msgid "The Newspack Ads plugin is not installed and activated. Install and/or activate it to access this feature."
+msgstr ""
+
+#: includes/configuration_managers/class-newspack-popups-configuration-manager.php:185
+msgid "The Newspack Popups plugin is not installed and activated. Install and/or activate it to access this feature."
+msgstr ""
+
+#: includes/configuration_managers/class-wordpress-seo-configuration-manager.php:80
+msgid "Yoast plugin is not installed and activated. Install and/or activate it to access this feature."
+msgstr ""
+
+#: includes/popups-analytics/class-popups-analytics-utils.php:160
+msgid "Please authenticate with Google Analytics to view Campaign analytics."
+msgstr ""
+
+#: includes/popups-analytics/class-popups-analytics-utils.php:162
+msgid "Google Analytics data fetching error."
+msgstr ""
+
+#: includes/popups-analytics/class-popups-analytics-utils.php:165
+msgid "Connect Site Kit plugin to view Campaign Analytics."
+msgstr ""
+
+#: includes/util.php:47
+msgid "Afghan afghani"
+msgstr ""
+
+#: includes/util.php:48
+msgid "Albanian lek"
+msgstr ""
+
+#: includes/util.php:49
+msgid "Algerian dinar"
+msgstr ""
+
+#: includes/util.php:50
+msgid "Angolan kwanza"
+msgstr ""
+
+#: includes/util.php:51
+msgid "Argentine peso"
+msgstr ""
+
+#: includes/util.php:52
+msgid "Armenian dram"
+msgstr ""
+
+#: includes/util.php:53
+msgid "Aruban florin"
+msgstr ""
+
+#: includes/util.php:54
+msgid "Australian dollar"
+msgstr ""
+
+#: includes/util.php:55
+msgid "Azerbaijani manat"
+msgstr ""
+
+#: includes/util.php:56
+msgid "Bahamian dollar"
+msgstr ""
+
+#: includes/util.php:57
+msgid "Bahraini dinar"
+msgstr ""
+
+#: includes/util.php:58
+msgid "Bangladeshi taka"
+msgstr ""
+
+#: includes/util.php:59
+msgid "Barbadian dollar"
+msgstr ""
+
+#: includes/util.php:60
+msgid "Belarusian ruble (old)"
+msgstr ""
+
+#: includes/util.php:61
+msgid "Belarusian ruble"
+msgstr ""
+
+#: includes/util.php:62
+msgid "Belize dollar"
+msgstr ""
+
+#: includes/util.php:63
+msgid "Bermudian dollar"
+msgstr ""
+
+#: includes/util.php:64
+msgid "Bhutanese ngultrum"
+msgstr ""
+
+#: includes/util.php:65
+msgid "Bitcoin"
+msgstr ""
+
+#: includes/util.php:66
+msgid "Bol&iacute;var soberano"
+msgstr ""
+
+#: includes/util.php:67
+msgid "Bolivian boliviano"
+msgstr ""
+
+#: includes/util.php:68
+msgid "Bosnia and Herzegovina convertible mark"
+msgstr ""
+
+#: includes/util.php:69
+msgid "Botswana pula"
+msgstr ""
+
+#: includes/util.php:70
+msgid "Brazilian real"
+msgstr ""
+
+#: includes/util.php:71
+msgid "Brunei dollar"
+msgstr ""
+
+#: includes/util.php:72
+msgid "Bulgarian lev"
+msgstr ""
+
+#: includes/util.php:73
+msgid "Burmese kyat"
+msgstr ""
+
+#: includes/util.php:74
+msgid "Burundian franc"
+msgstr ""
+
+#: includes/util.php:75
+msgid "CFP franc"
+msgstr ""
+
+#: includes/util.php:76
+msgid "Cambodian riel"
+msgstr ""
+
+#: includes/util.php:77
+msgid "Canadian dollar"
+msgstr ""
+
+#: includes/util.php:78
+msgid "Cape Verdean escudo"
+msgstr ""
+
+#: includes/util.php:79
+msgid "Cayman Islands dollar"
+msgstr ""
+
+#: includes/util.php:80
+msgid "Central African CFA franc"
+msgstr ""
+
+#: includes/util.php:81
+msgid "Chilean peso"
+msgstr ""
+
+#: includes/util.php:82
+msgid "Chinese yuan"
+msgstr ""
+
+#: includes/util.php:83
+msgid "Colombian peso"
+msgstr ""
+
+#: includes/util.php:84
+msgid "Comorian franc"
+msgstr ""
+
+#: includes/util.php:85
+msgid "Congolese franc"
+msgstr ""
+
+#: includes/util.php:86
+msgid "Costa Rican col&oacute;n"
+msgstr ""
+
+#: includes/util.php:87
+msgid "Croatian kuna"
+msgstr ""
+
+#: includes/util.php:88
+msgid "Cuban convertible peso"
+msgstr ""
+
+#: includes/util.php:89
+msgid "Cuban peso"
+msgstr ""
+
+#: includes/util.php:90
+msgid "Czech koruna"
+msgstr ""
+
+#: includes/util.php:91
+msgid "Danish krone"
+msgstr ""
+
+#: includes/util.php:92
+msgid "Djiboutian franc"
+msgstr ""
+
+#: includes/util.php:93
+msgid "Dominican peso"
+msgstr ""
+
+#: includes/util.php:94
+msgid "East Caribbean dollar"
+msgstr ""
+
+#: includes/util.php:95
+msgid "Egyptian pound"
+msgstr ""
+
+#: includes/util.php:96
+msgid "Eritrean nakfa"
+msgstr ""
+
+#: includes/util.php:97
+msgid "Ethiopian birr"
+msgstr ""
+
+#: includes/util.php:98
+msgid "Euro"
+msgstr ""
+
+#: includes/util.php:99
+msgid "Falkland Islands pound"
+msgstr ""
+
+#: includes/util.php:100
+msgid "Fijian dollar"
+msgstr ""
+
+#: includes/util.php:101
+msgid "Gambian dalasi"
+msgstr ""
+
+#: includes/util.php:102
+msgid "Georgian lari"
+msgstr ""
+
+#: includes/util.php:103
+msgid "Ghana cedi"
+msgstr ""
+
+#: includes/util.php:104
+msgid "Gibraltar pound"
+msgstr ""
+
+#: includes/util.php:105
+msgid "Guatemalan quetzal"
+msgstr ""
+
+#: includes/util.php:106
+msgid "Guernsey pound"
+msgstr ""
+
+#: includes/util.php:107
+msgid "Guinean franc"
+msgstr ""
+
+#: includes/util.php:108
+msgid "Guyanese dollar"
+msgstr ""
+
+#: includes/util.php:109
+msgid "Haitian gourde"
+msgstr ""
+
+#: includes/util.php:110
+msgid "Honduran lempira"
+msgstr ""
+
+#: includes/util.php:111
+msgid "Hong Kong dollar"
+msgstr ""
+
+#: includes/util.php:112
+msgid "Hungarian forint"
+msgstr ""
+
+#: includes/util.php:113
+msgid "Icelandic kr&oacute;na"
+msgstr ""
+
+#: includes/util.php:114
+msgid "Indian rupee"
+msgstr ""
+
+#: includes/util.php:115
+msgid "Indonesian rupiah"
+msgstr ""
+
+#: includes/util.php:116
+msgid "Iranian rial"
+msgstr ""
+
+#: includes/util.php:117
+msgid "Iranian toman"
+msgstr ""
+
+#: includes/util.php:118
+msgid "Iraqi dinar"
+msgstr ""
+
+#: includes/util.php:119
+msgid "Israeli new shekel"
+msgstr ""
+
+#: includes/util.php:120
+msgid "Jamaican dollar"
+msgstr ""
+
+#: includes/util.php:121
+msgid "Japanese yen"
+msgstr ""
+
+#: includes/util.php:122
+msgid "Jersey pound"
+msgstr ""
+
+#: includes/util.php:123
+msgid "Jordanian dinar"
+msgstr ""
+
+#: includes/util.php:124
+msgid "Kazakhstani tenge"
+msgstr ""
+
+#: includes/util.php:125
+msgid "Kenyan shilling"
+msgstr ""
+
+#: includes/util.php:126
+msgid "Kuwaiti dinar"
+msgstr ""
+
+#: includes/util.php:127
+msgid "Kyrgyzstani som"
+msgstr ""
+
+#: includes/util.php:128
+msgid "Lao kip"
+msgstr ""
+
+#: includes/util.php:129
+msgid "Lebanese pound"
+msgstr ""
+
+#: includes/util.php:130
+msgid "Lesotho loti"
+msgstr ""
+
+#: includes/util.php:131
+msgid "Liberian dollar"
+msgstr ""
+
+#: includes/util.php:132
+msgid "Libyan dinar"
+msgstr ""
+
+#: includes/util.php:133
+msgid "Macanese pataca"
+msgstr ""
+
+#: includes/util.php:134
+msgid "Macedonian denar"
+msgstr ""
+
+#: includes/util.php:135
+msgid "Malagasy ariary"
+msgstr ""
+
+#: includes/util.php:136
+msgid "Malawian kwacha"
+msgstr ""
+
+#: includes/util.php:137
+msgid "Malaysian ringgit"
+msgstr ""
+
+#: includes/util.php:138
+msgid "Maldivian rufiyaa"
+msgstr ""
+
+#: includes/util.php:139
+msgid "Manx pound"
+msgstr ""
+
+#: includes/util.php:140
+msgid "Mauritanian ouguiya"
+msgstr ""
+
+#: includes/util.php:141
+msgid "Mauritian rupee"
+msgstr ""
+
+#: includes/util.php:142
+msgid "Mexican peso"
+msgstr ""
+
+#: includes/util.php:143
+msgid "Moldovan leu"
+msgstr ""
+
+#: includes/util.php:144
+msgid "Mongolian t&ouml;gr&ouml;g"
+msgstr ""
+
+#: includes/util.php:145
+msgid "Moroccan dirham"
+msgstr ""
+
+#: includes/util.php:146
+msgid "Mozambican metical"
+msgstr ""
+
+#: includes/util.php:147
+msgid "Namibian dollar"
+msgstr ""
+
+#: includes/util.php:148
+msgid "Nepalese rupee"
+msgstr ""
+
+#: includes/util.php:149
+msgid "Netherlands Antillean guilder"
+msgstr ""
+
+#: includes/util.php:150
+msgid "New Taiwan dollar"
+msgstr ""
+
+#: includes/util.php:151
+msgid "New Zealand dollar"
+msgstr ""
+
+#: includes/util.php:152
+msgid "Nicaraguan c&oacute;rdoba"
+msgstr ""
+
+#: includes/util.php:153
+msgid "Nigerian naira"
+msgstr ""
+
+#: includes/util.php:154
+msgid "North Korean won"
+msgstr ""
+
+#: includes/util.php:155
+msgid "Norwegian krone"
+msgstr ""
+
+#: includes/util.php:156
+msgid "Omani rial"
+msgstr ""
+
+#: includes/util.php:157
+msgid "Pakistani rupee"
+msgstr ""
+
+#: includes/util.php:158
+msgid "Panamanian balboa"
+msgstr ""
+
+#: includes/util.php:159
+msgid "Papua New Guinean kina"
+msgstr ""
+
+#: includes/util.php:160
+msgid "Paraguayan guaran&iacute;"
+msgstr ""
+
+#: includes/util.php:161
+msgid "Philippine peso"
+msgstr ""
+
+#: includes/util.php:162
+msgid "Polish z&#x142;oty"
+msgstr ""
+
+#: includes/util.php:163
+msgid "Pound sterling"
+msgstr ""
+
+#: includes/util.php:164
+msgid "Qatari riyal"
+msgstr ""
+
+#: includes/util.php:165
+msgid "Romanian leu"
+msgstr ""
+
+#: includes/util.php:166
+msgid "Russian ruble"
+msgstr ""
+
+#: includes/util.php:167
+msgid "Rwandan franc"
+msgstr ""
+
+#: includes/util.php:168
+msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe dobra"
+msgstr ""
+
+#: includes/util.php:169
+msgid "Saint Helena pound"
+msgstr ""
+
+#: includes/util.php:170
+msgid "Samoan t&#x101;l&#x101;"
+msgstr ""
+
+#: includes/util.php:171
+msgid "Saudi riyal"
+msgstr ""
+
+#: includes/util.php:172
+msgid "Serbian dinar"
+msgstr ""
+
+#: includes/util.php:173
+msgid "Seychellois rupee"
+msgstr ""
+
+#: includes/util.php:174
+msgid "Sierra Leonean leone"
+msgstr ""
+
+#: includes/util.php:175
+msgid "Singapore dollar"
+msgstr ""
+
+#: includes/util.php:176
+msgid "Sol"
+msgstr ""
+
+#: includes/util.php:177
+msgid "Solomon Islands dollar"
+msgstr ""
+
+#: includes/util.php:178
+msgid "Somali shilling"
+msgstr ""
+
+#: includes/util.php:179
+msgid "South African rand"
+msgstr ""
+
+#: includes/util.php:180
+msgid "South Korean won"
+msgstr ""
+
+#: includes/util.php:181
+msgid "South Sudanese pound"
+msgstr ""
+
+#: includes/util.php:182
+msgid "Sri Lankan rupee"
+msgstr ""
+
+#: includes/util.php:183
+msgid "Sudanese pound"
+msgstr ""
+
+#: includes/util.php:184
+msgid "Surinamese dollar"
+msgstr ""
+
+#: includes/util.php:185
+msgid "Swazi lilangeni"
+msgstr ""
+
+#: includes/util.php:186
+msgid "Swedish krona"
+msgstr ""
+
+#: includes/util.php:187
+msgid "Swiss franc"
+msgstr ""
+
+#: includes/util.php:188
+msgid "Syrian pound"
+msgstr ""
+
+#: includes/util.php:189
+msgid "Tajikistani somoni"
+msgstr ""
+
+#: includes/util.php:190
+msgid "Tanzanian shilling"
+msgstr ""
+
+#: includes/util.php:191
+msgid "Thai baht"
+msgstr ""
+
+#: includes/util.php:192
+msgid "Tongan pa&#x2bb;anga"
+msgstr ""
+
+#: includes/util.php:193
+msgid "Transnistrian ruble"
+msgstr ""
+
+#: includes/util.php:194
+msgid "Trinidad and Tobago dollar"
+msgstr ""
+
+#: includes/util.php:195
+msgid "Tunisian dinar"
+msgstr ""
+
+#: includes/util.php:196
+msgid "Turkish lira"
+msgstr ""
+
+#: includes/util.php:197
+msgid "Turkmenistan manat"
+msgstr ""
+
+#: includes/util.php:198
+msgid "Ugandan shilling"
+msgstr ""
+
+#: includes/util.php:199
+msgid "Ukrainian hryvnia"
+msgstr ""
+
+#: includes/util.php:200
+msgid "United Arab Emirates dirham"
+msgstr ""
+
+#: includes/util.php:201
+msgid "United States (US) dollar"
+msgstr ""
+
+#: includes/util.php:202
+msgid "Uruguayan peso"
+msgstr ""
+
+#: includes/util.php:203
+msgid "Uzbekistani som"
+msgstr ""
+
+#: includes/util.php:204
+msgid "Vanuatu vatu"
+msgstr ""
+
+#: includes/util.php:205
+msgid "Venezuelan bol&iacute;var"
+msgstr ""
+
+#: includes/util.php:206
+msgid "Vietnamese &#x111;&#x1ed3;ng"
+msgstr ""
+
+#: includes/util.php:207
+msgid "West African CFA franc"
+msgstr ""
+
+#: includes/util.php:208
+msgid "Yemeni rial"
+msgstr ""
+
+#: includes/util.php:209
+msgid "Zambian kwacha"
+msgstr ""
+
+#: includes/util.php:221
+msgid "Afghanistan"
+msgstr ""
+
+#: includes/util.php:222
+msgid "&#197;land Islands"
+msgstr ""
+
+#: includes/util.php:223
+msgid "Albania"
+msgstr ""
+
+#: includes/util.php:224
+msgid "Algeria"
+msgstr ""
+
+#: includes/util.php:225
+msgid "American Samoa"
+msgstr ""
+
+#: includes/util.php:226
+msgid "Andorra"
+msgstr ""
+
+#: includes/util.php:227
+msgid "Angola"
+msgstr ""
+
+#: includes/util.php:228
+msgid "Anguilla"
+msgstr ""
+
+#: includes/util.php:229
+msgid "Antarctica"
+msgstr ""
+
+#: includes/util.php:230
+msgid "Antigua and Barbuda"
+msgstr ""
+
+#: includes/util.php:231
+msgid "Argentina"
+msgstr ""
+
+#: includes/util.php:232
+msgid "Armenia"
+msgstr ""
+
+#: includes/util.php:233
+msgid "Aruba"
+msgstr ""
+
+#: includes/util.php:234
+msgid "Australia"
+msgstr ""
+
+#: includes/util.php:235
+msgid "Austria"
+msgstr ""
+
+#: includes/util.php:236
+msgid "Azerbaijan"
+msgstr ""
+
+#: includes/util.php:237
+msgid "Bahamas"
+msgstr ""
+
+#: includes/util.php:238
+msgid "Bahrain"
+msgstr ""
+
+#: includes/util.php:239
+msgid "Bangladesh"
+msgstr ""
+
+#: includes/util.php:240
+msgid "Barbados"
+msgstr ""
+
+#: includes/util.php:241
+msgid "Belarus"
+msgstr ""
+
+#: includes/util.php:242
+msgid "Belgium"
+msgstr ""
+
+#: includes/util.php:243
+msgid "Belau"
+msgstr ""
+
+#: includes/util.php:244
+msgid "Belize"
+msgstr ""
+
+#: includes/util.php:245
+msgid "Benin"
+msgstr ""
+
+#: includes/util.php:246
+msgid "Bermuda"
+msgstr ""
+
+#: includes/util.php:247
+msgid "Bhutan"
+msgstr ""
+
+#: includes/util.php:248
+msgid "Bolivia"
+msgstr ""
+
+#: includes/util.php:249
+msgid "Bonaire, Saint Eustatius and Saba"
+msgstr ""
+
+#: includes/util.php:250
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: includes/util.php:251
+msgid "Botswana"
+msgstr ""
+
+#: includes/util.php:252
+msgid "Bouvet Island"
+msgstr ""
+
+#: includes/util.php:253
+msgid "Brazil"
+msgstr ""
+
+#: includes/util.php:254
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: includes/util.php:255
+msgid "Brunei"
+msgstr ""
+
+#: includes/util.php:256
+msgid "Bulgaria"
+msgstr ""
+
+#: includes/util.php:257
+msgid "Burkina Faso"
+msgstr ""
+
+#: includes/util.php:258
+msgid "Burundi"
+msgstr ""
+
+#: includes/util.php:259
+msgid "Cambodia"
+msgstr ""
+
+#: includes/util.php:260
+msgid "Cameroon"
+msgstr ""
+
+#: includes/util.php:261
+msgid "Canada"
+msgstr ""
+
+#: includes/util.php:262
+msgid "Cape Verde"
+msgstr ""
+
+#: includes/util.php:263
+msgid "Cayman Islands"
+msgstr ""
+
+#: includes/util.php:264
+msgid "Central African Republic"
+msgstr ""
+
+#: includes/util.php:265
+msgid "Chad"
+msgstr ""
+
+#: includes/util.php:266
+msgid "Chile"
+msgstr ""
+
+#: includes/util.php:267
+msgid "China"
+msgstr ""
+
+#: includes/util.php:268
+msgid "Christmas Island"
+msgstr ""
+
+#: includes/util.php:269
+msgid "Cocos (Keeling) Islands"
+msgstr ""
+
+#: includes/util.php:270
+msgid "Colombia"
+msgstr ""
+
+#: includes/util.php:271
+msgid "Comoros"
+msgstr ""
+
+#: includes/util.php:272
+msgid "Congo (Brazzaville)"
+msgstr ""
+
+#: includes/util.php:273
+msgid "Congo (Kinshasa)"
+msgstr ""
+
+#: includes/util.php:274
+msgid "Cook Islands"
+msgstr ""
+
+#: includes/util.php:275
+msgid "Costa Rica"
+msgstr ""
+
+#: includes/util.php:276
+msgid "Croatia"
+msgstr ""
+
+#: includes/util.php:277
+msgid "Cuba"
+msgstr ""
+
+#: includes/util.php:278
+msgid "Cura&ccedil;ao"
+msgstr ""
+
+#: includes/util.php:279
+msgid "Cyprus"
+msgstr ""
+
+#: includes/util.php:280
+msgid "Czech Republic"
+msgstr ""
+
+#: includes/util.php:281
+msgid "Denmark"
+msgstr ""
+
+#: includes/util.php:282
+msgid "Djibouti"
+msgstr ""
+
+#: includes/util.php:283
+msgid "Dominica"
+msgstr ""
+
+#: includes/util.php:284
+msgid "Dominican Republic"
+msgstr ""
+
+#: includes/util.php:285
+msgid "Ecuador"
+msgstr ""
+
+#: includes/util.php:286
+msgid "Egypt"
+msgstr ""
+
+#: includes/util.php:287
+msgid "El Salvador"
+msgstr ""
+
+#: includes/util.php:288
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: includes/util.php:289
+msgid "Eritrea"
+msgstr ""
+
+#: includes/util.php:290
+msgid "Estonia"
+msgstr ""
+
+#: includes/util.php:291
+msgid "Ethiopia"
+msgstr ""
+
+#: includes/util.php:292
+msgid "Falkland Islands"
+msgstr ""
+
+#: includes/util.php:293
+msgid "Faroe Islands"
+msgstr ""
+
+#: includes/util.php:294
+msgid "Fiji"
+msgstr ""
+
+#: includes/util.php:295
+msgid "Finland"
+msgstr ""
+
+#: includes/util.php:296
+msgid "France"
+msgstr ""
+
+#: includes/util.php:297
+msgid "French Guiana"
+msgstr ""
+
+#: includes/util.php:298
+msgid "French Polynesia"
+msgstr ""
+
+#: includes/util.php:299
+msgid "French Southern Territories"
+msgstr ""
+
+#: includes/util.php:300
+msgid "Gabon"
+msgstr ""
+
+#: includes/util.php:301
+msgid "Gambia"
+msgstr ""
+
+#: includes/util.php:302
+msgid "Georgia"
+msgstr ""
+
+#: includes/util.php:303
+msgid "Germany"
+msgstr ""
+
+#: includes/util.php:304
+msgid "Ghana"
+msgstr ""
+
+#: includes/util.php:305
+msgid "Gibraltar"
+msgstr ""
+
+#: includes/util.php:306
+msgid "Greece"
+msgstr ""
+
+#: includes/util.php:307
+msgid "Greenland"
+msgstr ""
+
+#: includes/util.php:308
+msgid "Grenada"
+msgstr ""
+
+#: includes/util.php:309
+msgid "Guadeloupe"
+msgstr ""
+
+#: includes/util.php:310
+msgid "Guam"
+msgstr ""
+
+#: includes/util.php:311
+msgid "Guatemala"
+msgstr ""
+
+#: includes/util.php:312
+msgid "Guernsey"
+msgstr ""
+
+#: includes/util.php:313
+msgid "Guinea"
+msgstr ""
+
+#: includes/util.php:314
+msgid "Guinea-Bissau"
+msgstr ""
+
+#: includes/util.php:315
+msgid "Guyana"
+msgstr ""
+
+#: includes/util.php:316
+msgid "Haiti"
+msgstr ""
+
+#: includes/util.php:317
+msgid "Heard Island and McDonald Islands"
+msgstr ""
+
+#: includes/util.php:318
+msgid "Honduras"
+msgstr ""
+
+#: includes/util.php:319
+msgid "Hong Kong"
+msgstr ""
+
+#: includes/util.php:320
+msgid "Hungary"
+msgstr ""
+
+#: includes/util.php:321
+msgid "Iceland"
+msgstr ""
+
+#: includes/util.php:322
+msgid "India"
+msgstr ""
+
+#: includes/util.php:323
+msgid "Indonesia"
+msgstr ""
+
+#: includes/util.php:324
+msgid "Iran"
+msgstr ""
+
+#: includes/util.php:325
+msgid "Iraq"
+msgstr ""
+
+#: includes/util.php:326
+msgid "Ireland"
+msgstr ""
+
+#: includes/util.php:327
+msgid "Isle of Man"
+msgstr ""
+
+#: includes/util.php:328
+msgid "Israel"
+msgstr ""
+
+#: includes/util.php:329
+msgid "Italy"
+msgstr ""
+
+#: includes/util.php:330
+msgid "Ivory Coast"
+msgstr ""
+
+#: includes/util.php:331
+msgid "Jamaica"
+msgstr ""
+
+#: includes/util.php:332
+msgid "Japan"
+msgstr ""
+
+#: includes/util.php:333
+msgid "Jersey"
+msgstr ""
+
+#: includes/util.php:334
+msgid "Jordan"
+msgstr ""
+
+#: includes/util.php:335
+msgid "Kazakhstan"
+msgstr ""
+
+#: includes/util.php:336
+msgid "Kenya"
+msgstr ""
+
+#: includes/util.php:337
+msgid "Kiribati"
+msgstr ""
+
+#: includes/util.php:338
+msgid "Kuwait"
+msgstr ""
+
+#: includes/util.php:339
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: includes/util.php:340
+msgid "Laos"
+msgstr ""
+
+#: includes/util.php:341
+msgid "Latvia"
+msgstr ""
+
+#: includes/util.php:342
+msgid "Lebanon"
+msgstr ""
+
+#: includes/util.php:343
+msgid "Lesotho"
+msgstr ""
+
+#: includes/util.php:344
+msgid "Liberia"
+msgstr ""
+
+#: includes/util.php:345
+msgid "Libya"
+msgstr ""
+
+#: includes/util.php:346
+msgid "Liechtenstein"
+msgstr ""
+
+#: includes/util.php:347
+msgid "Lithuania"
+msgstr ""
+
+#: includes/util.php:348
+msgid "Luxembourg"
+msgstr ""
+
+#: includes/util.php:349
+msgid "Macao S.A.R., China"
+msgstr ""
+
+#: includes/util.php:350
+msgid "North Macedonia"
+msgstr ""
+
+#: includes/util.php:351
+msgid "Madagascar"
+msgstr ""
+
+#: includes/util.php:352
+msgid "Malawi"
+msgstr ""
+
+#: includes/util.php:353
+msgid "Malaysia"
+msgstr ""
+
+#: includes/util.php:354
+msgid "Maldives"
+msgstr ""
+
+#: includes/util.php:355
+msgid "Mali"
+msgstr ""
+
+#: includes/util.php:356
+msgid "Malta"
+msgstr ""
+
+#: includes/util.php:357
+msgid "Marshall Islands"
+msgstr ""
+
+#: includes/util.php:358
+msgid "Martinique"
+msgstr ""
+
+#: includes/util.php:359
+msgid "Mauritania"
+msgstr ""
+
+#: includes/util.php:360
+msgid "Mauritius"
+msgstr ""
+
+#: includes/util.php:361
+msgid "Mayotte"
+msgstr ""
+
+#: includes/util.php:362
+msgid "Mexico"
+msgstr ""
+
+#: includes/util.php:363
+msgid "Micronesia"
+msgstr ""
+
+#: includes/util.php:364
+msgid "Moldova"
+msgstr ""
+
+#: includes/util.php:365
+msgid "Monaco"
+msgstr ""
+
+#: includes/util.php:366
+msgid "Mongolia"
+msgstr ""
+
+#: includes/util.php:367
+msgid "Montenegro"
+msgstr ""
+
+#: includes/util.php:368
+msgid "Montserrat"
+msgstr ""
+
+#: includes/util.php:369
+msgid "Morocco"
+msgstr ""
+
+#: includes/util.php:370
+msgid "Mozambique"
+msgstr ""
+
+#: includes/util.php:371
+msgid "Myanmar"
+msgstr ""
+
+#: includes/util.php:372
+msgid "Namibia"
+msgstr ""
+
+#: includes/util.php:373
+msgid "Nauru"
+msgstr ""
+
+#: includes/util.php:374
+msgid "Nepal"
+msgstr ""
+
+#: includes/util.php:375
+msgid "Netherlands"
+msgstr ""
+
+#: includes/util.php:376
+msgid "New Caledonia"
+msgstr ""
+
+#: includes/util.php:377
+msgid "New Zealand"
+msgstr ""
+
+#: includes/util.php:378
+msgid "Nicaragua"
+msgstr ""
+
+#: includes/util.php:379
+msgid "Niger"
+msgstr ""
+
+#: includes/util.php:380
+msgid "Nigeria"
+msgstr ""
+
+#: includes/util.php:381
+msgid "Niue"
+msgstr ""
+
+#: includes/util.php:382
+msgid "Norfolk Island"
+msgstr ""
+
+#: includes/util.php:383
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: includes/util.php:384
+msgid "North Korea"
+msgstr ""
+
+#: includes/util.php:385
+msgid "Norway"
+msgstr ""
+
+#: includes/util.php:386
+msgid "Oman"
+msgstr ""
+
+#: includes/util.php:387
+msgid "Pakistan"
+msgstr ""
+
+#: includes/util.php:388
+msgid "Palestinian Territory"
+msgstr ""
+
+#: includes/util.php:389
+msgid "Panama"
+msgstr ""
+
+#: includes/util.php:390
+msgid "Papua New Guinea"
+msgstr ""
+
+#: includes/util.php:391
+msgid "Paraguay"
+msgstr ""
+
+#: includes/util.php:392
+msgid "Peru"
+msgstr ""
+
+#: includes/util.php:393
+msgid "Philippines"
+msgstr ""
+
+#: includes/util.php:394
+msgid "Pitcairn"
+msgstr ""
+
+#: includes/util.php:395
+msgid "Poland"
+msgstr ""
+
+#: includes/util.php:396
+msgid "Portugal"
+msgstr ""
+
+#: includes/util.php:397
+msgid "Puerto Rico"
+msgstr ""
+
+#: includes/util.php:398
+msgid "Qatar"
+msgstr ""
+
+#: includes/util.php:399
+msgid "Reunion"
+msgstr ""
+
+#: includes/util.php:400
+msgid "Romania"
+msgstr ""
+
+#: includes/util.php:401
+msgid "Russia"
+msgstr ""
+
+#: includes/util.php:402
+msgid "Rwanda"
+msgstr ""
+
+#: includes/util.php:403
+msgid "Saint Barth&eacute;lemy"
+msgstr ""
+
+#: includes/util.php:404
+msgid "Saint Helena"
+msgstr ""
+
+#: includes/util.php:405
+msgid "Saint Kitts and Nevis"
+msgstr ""
+
+#: includes/util.php:406
+msgid "Saint Lucia"
+msgstr ""
+
+#: includes/util.php:407
+msgid "Saint Martin (French part)"
+msgstr ""
+
+#: includes/util.php:408
+msgid "Saint Martin (Dutch part)"
+msgstr ""
+
+#: includes/util.php:409
+msgid "Saint Pierre and Miquelon"
+msgstr ""
+
+#: includes/util.php:410
+msgid "Saint Vincent and the Grenadines"
+msgstr ""
+
+#: includes/util.php:411
+msgid "San Marino"
+msgstr ""
+
+#: includes/util.php:412
+msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe"
+msgstr ""
+
+#: includes/util.php:413
+msgid "Saudi Arabia"
+msgstr ""
+
+#: includes/util.php:414
+msgid "Senegal"
+msgstr ""
+
+#: includes/util.php:415
+msgid "Serbia"
+msgstr ""
+
+#: includes/util.php:416
+msgid "Seychelles"
+msgstr ""
+
+#: includes/util.php:417
+msgid "Sierra Leone"
+msgstr ""
+
+#: includes/util.php:418
+msgid "Singapore"
+msgstr ""
+
+#: includes/util.php:419
+msgid "Slovakia"
+msgstr ""
+
+#: includes/util.php:420
+msgid "Slovenia"
+msgstr ""
+
+#: includes/util.php:421
+msgid "Solomon Islands"
+msgstr ""
+
+#: includes/util.php:422
+msgid "Somalia"
+msgstr ""
+
+#: includes/util.php:423
+msgid "South Africa"
+msgstr ""
+
+#: includes/util.php:424
+msgid "South Georgia/Sandwich Islands"
+msgstr ""
+
+#: includes/util.php:425
+msgid "South Korea"
+msgstr ""
+
+#: includes/util.php:426
+msgid "South Sudan"
+msgstr ""
+
+#: includes/util.php:427
+msgid "Spain"
+msgstr ""
+
+#: includes/util.php:428
+msgid "Sri Lanka"
+msgstr ""
+
+#: includes/util.php:429
+msgid "Sudan"
+msgstr ""
+
+#: includes/util.php:430
+msgid "Suriname"
+msgstr ""
+
+#: includes/util.php:431
+msgid "Svalbard and Jan Mayen"
+msgstr ""
+
+#: includes/util.php:432
+msgid "Swaziland"
+msgstr ""
+
+#: includes/util.php:433
+msgid "Sweden"
+msgstr ""
+
+#: includes/util.php:434
+msgid "Switzerland"
+msgstr ""
+
+#: includes/util.php:435
+msgid "Syria"
+msgstr ""
+
+#: includes/util.php:436
+msgid "Taiwan"
+msgstr ""
+
+#: includes/util.php:437
+msgid "Tajikistan"
+msgstr ""
+
+#: includes/util.php:438
+msgid "Tanzania"
+msgstr ""
+
+#: includes/util.php:439
+msgid "Thailand"
+msgstr ""
+
+#: includes/util.php:440
+msgid "Timor-Leste"
+msgstr ""
+
+#: includes/util.php:441
+msgid "Togo"
+msgstr ""
+
+#: includes/util.php:442
+msgid "Tokelau"
+msgstr ""
+
+#: includes/util.php:443
+msgid "Tonga"
+msgstr ""
+
+#: includes/util.php:444
+msgid "Trinidad and Tobago"
+msgstr ""
+
+#: includes/util.php:445
+msgid "Tunisia"
+msgstr ""
+
+#: includes/util.php:446
+msgid "Turkey"
+msgstr ""
+
+#: includes/util.php:447
+msgid "Turkmenistan"
+msgstr ""
+
+#: includes/util.php:448
+msgid "Turks and Caicos Islands"
+msgstr ""
+
+#: includes/util.php:449
+msgid "Tuvalu"
+msgstr ""
+
+#: includes/util.php:450
+msgid "Uganda"
+msgstr ""
+
+#: includes/util.php:451
+msgid "Ukraine"
+msgstr ""
+
+#: includes/util.php:452
+msgid "United Arab Emirates"
+msgstr ""
+
+#: includes/util.php:453
+msgid "United Kingdom (UK)"
+msgstr ""
+
+#: includes/util.php:454
+msgid "United States (US)"
+msgstr ""
+
+#: includes/util.php:455
+msgid "United States (US) Minor Outlying Islands"
+msgstr ""
+
+#: includes/util.php:456
+msgid "Uruguay"
+msgstr ""
+
+#: includes/util.php:457
+msgid "Uzbekistan"
+msgstr ""
+
+#: includes/util.php:458
+msgid "Vanuatu"
+msgstr ""
+
+#: includes/util.php:459
+msgid "Vatican"
+msgstr ""
+
+#: includes/util.php:460
+msgid "Venezuela"
+msgstr ""
+
+#: includes/util.php:461
+msgid "Vietnam"
+msgstr ""
+
+#: includes/util.php:462
+msgid "Virgin Islands (British)"
+msgstr ""
+
+#: includes/util.php:463
+msgid "Virgin Islands (US)"
+msgstr ""
+
+#: includes/util.php:464
+msgid "Wallis and Futuna"
+msgstr ""
+
+#: includes/util.php:465
+msgid "Western Sahara"
+msgstr ""
+
+#: includes/util.php:466
+msgid "Samoa"
+msgstr ""
+
+#: includes/util.php:467
+msgid "Yemen"
+msgstr ""
+
+#: includes/util.php:468
+msgid "Zambia"
+msgstr ""
+
+#: includes/util.php:469
+msgid "Zimbabwe"
+msgstr ""
+
+#: includes/wizards/class-advertising-wizard.php:80
+msgid "Advertising"
+msgstr ""
+
+#: includes/wizards/class-advertising-wizard.php:89
+msgid "Monetize your content through ads"
+msgstr ""
+
+#: includes/wizards/class-advertising-wizard.php:98
+#: includes/wizards/class-analytics-wizard.php:91
+#: includes/wizards/class-engagement-wizard.php:75
+#: includes/wizards/class-health-check-wizard.php:68
+#: includes/wizards/class-popups-wizard.php:68
+#: includes/wizards/class-reader-revenue-wizard.php:58
+#: includes/wizards/class-seo-wizard.php:68
+#: includes/wizards/class-setup-wizard.php:76
+#: includes/wizards/class-syndication-wizard.php:67
+msgid "10 minutes"
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:73
+#: assets/wizards/analytics/index.js:46
+msgid "Analytics"
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:82
+#: assets/wizards/analytics/index.js:47
+msgid "Track traffic and activity"
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:220
+msgid "none"
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:264
+msgid "Category"
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:271
+msgid "Author"
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:278
+msgid "Word count"
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:285
+msgid "Publish date"
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:318
+msgid "Please authenticate with the Site Kit plugin."
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:327
+msgid "Please re-authorize"
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:329
+msgid "Site Kit plugin"
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:331
+msgid "to allow updating Google Analytics settings."
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:342
+msgid "Please connect Analytics in the Site Kit plugin."
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:345
+msgid "Please install the Site Kit plugin."
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:364
+#: includes/wizards/class-analytics-wizard.php:382
+msgid "Error retrieving custom dimensions."
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:439
+msgid "Error when creating custom dimension."
+msgstr ""
+
+#: includes/wizards/class-analytics-wizard.php:494
+msgid "Error when setting custom events."
+msgstr ""
+
+#: includes/wizards/class-components-demo.php:53
+msgid "Components demo"
+msgstr ""
+
+#: includes/wizards/class-components-demo.php:62
+msgid "A temporary demo of components used to build Newspack"
+msgstr ""
+
+#: includes/wizards/class-components-demo.php:71
+msgid "2 minutes"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:61
+msgid "Customize the look and feel of your site"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:67
+msgid "Generate revenue from your customers"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:73
+msgid "Monetize your content through ads"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:79
+msgid "Distribute your content across multiple websites"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:85
+msgid "Track traffic and activity"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:91
+msgid "Configure basic SEO settings"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:97
+msgid "Verify and correct site health issues"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:147
+msgid "The Newspack hub"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:156
+msgid "1 day"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:173
+msgid "Dashboard"
+msgstr ""
+
+#: includes/wizards/class-dashboard.php:173
+#: includes/wizards/class-setup-wizard.php:60
+msgid "Setup"
+msgstr ""
+
+#: includes/wizards/class-engagement-wizard.php:57
+msgid "Engagement"
+msgstr ""
+
+#: includes/wizards/class-engagement-wizard.php:66
+msgid "Newsletters, commenting, social, recirculation"
+msgstr ""
+
+#: includes/wizards/class-engagement-wizard.php:147
+msgid "Invalid argument: max age must be a number greater than zero."
+msgstr ""
+
+#: includes/wizards/class-health-check-wizard.php:50
+msgid "Health Check"
+msgstr ""
+
+#: includes/wizards/class-health-check-wizard.php:59
+msgid "Verify and improve the health of the site."
+msgstr ""
+
+#: includes/wizards/class-popups-wizard.php:50
+msgid "Campaigns"
+msgstr ""
+
+#: includes/wizards/class-popups-wizard.php:59
+msgid "Reach your readers with configurable campaigns"
+msgstr ""
+
+#: includes/wizards/class-reader-revenue-wizard.php:40
+msgid "Reader Revenue"
+msgstr ""
+
+#: includes/wizards/class-reader-revenue-wizard.php:49
+msgid "Generate revenue from your customers."
+msgstr ""
+
+#: includes/wizards/class-reader-revenue-wizard.php:383
+msgid "Test Publishable Key and Test Secret Key are required to use Stripe in test mode."
+msgstr ""
+
+#: includes/wizards/class-reader-revenue-wizard.php:392
+msgid "Publishable Key and Secret Key are required to use Stripe."
+msgstr ""
+
+#: includes/wizards/class-reader-revenue-wizard.php:635
+msgid "The WooCommerce plugin is not installed and activated. Install and/or activate it to access this feature."
+msgstr ""
+
+#: includes/wizards/class-seo-wizard.php:50
+msgid "SEO"
+msgstr ""
+
+#: includes/wizards/class-seo-wizard.php:59
+msgid "Configure basic SEO settings."
+msgstr ""
+
+#: includes/wizards/class-setup-wizard.php:68
+msgid "Setup Newspack."
+msgstr ""
+
+#: includes/wizards/class-site-design-wizard.php:41
+msgid "Site Design"
+msgstr ""
+
+#: includes/wizards/class-site-design-wizard.php:50
+msgid "Customize the look and feel of your site."
+msgstr ""
+
+#: includes/wizards/class-site-design-wizard.php:59
+msgid "5 minutes"
+msgstr ""
+
+#: includes/wizards/class-syndication-wizard.php:49
+#: assets/wizards/syndication/index.js:38
+msgid "Syndication"
+msgstr ""
+
+#: includes/wizards/class-syndication-wizard.php:58
+msgid "Distribute your content."
+msgstr ""
+
+#: assets/components/src/action-card-sections/index.js:13
+msgid "All"
+msgstr ""
+
+#: assets/components/src/action-card-sections/index.js:41
+msgid "Filter:"
+msgstr ""
+
+#: assets/components/src/preview-box/index.js:13
+#: assets/wizards/popups/views/preview/index.js:81
+msgid "Preview"
+msgstr ""
+
+#: assets/components/src/text-control/index.js:31
+msgid "(required)"
+msgstr ""
+
+#: assets/components/src/with-wizard-screen/index.js:48
+msgid "Newspack is in debug mode."
+msgstr ""
+
+#: assets/wizards/advertising/views/ad-unit/index.js:97
+msgid "Add Size"
+msgstr ""
+
+#: assets/wizards/advertising/views/header-code/index.js:41
+msgid "Google Ad Manager Network Code"
+msgstr ""
+
+#: assets/wizards/analytics/index.js:25
+msgid "Plugins"
+msgstr ""
+
+#: assets/wizards/analytics/index.js:30
+msgid "Custom Dimensions"
+msgstr ""
+
+#: assets/wizards/analytics/index.js:34
+msgid "Custom Events"
+msgstr ""
+
+#: assets/wizards/componentsDemo/index.js:103
+#: assets/wizards/componentsDemo/index.js:110
+msgid "Preview Newspack Blog"
+msgstr ""
+
+#: assets/wizards/engagement/views/commenting/index.js:17
+msgid "WordPress comments"
+msgstr ""
+
+#: assets/wizards/engagement/views/commenting/index.js:25
+#: assets/wizards/engagement/views/commenting/index.js:28
+msgid "Disqus"
+msgstr ""
+
+#: assets/wizards/engagement/views/commenting/index.js:41
+#: assets/wizards/engagement/views/commenting/index.js:44
+msgid "The Coral Project"
+msgstr ""
+
+#: assets/wizards/engagement/views/related-content/index.js:31
+msgid "Recirculation Settings"
+msgstr ""
+
+#: assets/wizards/engagement/views/related-content/index.js:36
+msgid "These extra settings apply to Related Posts shown by Jetpack."
+msgstr ""
+
+#: assets/wizards/engagement/views/related-content/index.js:39
+msgid "Configure Related Posts in Jetpack"
+msgstr ""
+
+#: assets/wizards/engagement/views/related-content/index.js:47
+msgid "If set, posts will be shown as related content only if published within the past number of months. If 0, any published post can be shown, regardless of publish date."
+msgstr ""
+
+#: assets/wizards/engagement/views/related-content/index.js:51
+msgid "Maximum age of related content, in months"
+msgstr ""
+
+#: assets/wizards/health-check/views/configuration/index.js:45
+msgid "Jetpack is connected."
+msgstr ""
+
+#: assets/wizards/health-check/views/configuration/index.js:46
+msgid "Jetpack is not connected. "
+msgstr ""
+
+#: assets/wizards/health-check/views/configuration/index.js:48
+#: assets/wizards/health-check/views/configuration/index.js:59
+msgid "Connect"
+msgstr ""
+
+#: assets/wizards/health-check/views/configuration/index.js:53
+msgid "Google Site Kit"
+msgstr ""
+
+#: assets/wizards/health-check/views/configuration/index.js:56
+msgid "Site Kit is connected."
+msgstr ""
+
+#: assets/wizards/health-check/views/configuration/index.js:57
+msgid "Site Kit is not connected. "
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/consts.js:7
+msgid "Last 7 days"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/consts.js:8
+msgid "Last 14 days"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/consts.js:9
+msgid "Last 28 days"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/consts.js:10
+msgid "Last 90 days"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/Filters.js:14
+msgid "All Prompts"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/Filters.js:21
+msgid "All Events"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/Info.js:30
+msgid "n/a"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/Info.js:35
+msgid "All:"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/Info.js:45
+msgid "Seen"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/Info.js:47
+msgid "Conversion Rate"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/Info.js:51
+msgid "Form Submissions"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/Info.js:56
+msgid "Click-through Rate"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/Info.js:60
+msgid "Link Clicks"
+msgstr ""
+
+#: assets/wizards/popups/views/analytics/Info.js:83
+msgid "These are aggregated metrics for multiple campaigns. Some of them might not have links or forms, which can skew the displayed rates."
+msgstr ""
+
+#: assets/wizards/popups/views/preview/index.js:54
+msgid "View your site as a reader in a selected segment, or with campaigns in selected groups. Choose a reader segment and/or one or more groups, then click the \"Preview\" button to view your site as a reader in that segment. Only the campaigns that match the selected segment and group(s) will be shown."
+msgstr ""
+
+#: assets/wizards/popups/views/preview/index.js:61
+msgid "Default (no segment)"
+msgstr ""
+
+#: assets/wizards/popups/views/preview/index.js:66
+msgid "Segment"
+msgstr ""
+
+#: assets/wizards/popups/views/preview/index.js:74
+msgid "Groups"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SegmentsList.js:26
+msgid "Add new"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SegmentsList.js:39
+msgid "Created on"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SegmentsList.js:45
+msgid "More options"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SegmentsList.js:64
+msgid "Edit"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SegmentsList.js:71
+msgid "Delete"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SegmentsList.js:110
+msgid "You have no saved audience segments."
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SegmentsList.js:112
+msgid "Create audience segments to target visitors by engagement, activity, and more."
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:108
+msgid "Untitled Segment"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:114
+msgid "Articles read"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:115
+msgid "Number of articles read in the last 30 day period."
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:121
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:155
+msgid "Min."
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:124
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:158
+msgid "Min. posts"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:134
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:168
+msgid "Max."
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:137
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:171
+msgid "Max. posts"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:145
+msgid "Articles read in session"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:146
+msgid "Number of articles read in the current session (45 minutes)."
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:178
+msgid "Newsletter"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:182
+msgid "Is subscribed to newsletter"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:187
+msgid "Is not subscribed to newsletter"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:192
+msgid "(if using WooCommerce checkout)"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:197
+msgid "Has donated"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:202
+msgid "Hasn't donated"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:206
+msgid "Referrer"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:207
+msgid "Segment based on traffic source."
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:211
+msgid "google.com, facebook.com"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:212
+msgid "A comma-separated list of domains."
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:218
+msgid "Category Affinity"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:219
+msgid "Most read categories of reader."
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:233
+msgid "This segment would reach"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:238
+msgid "of recorded visitors. "
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:245
+msgid "Cancel"
+msgstr ""
+
+#: assets/wizards/popups/views/segmentation/SingleSegment.js:248
+msgid "Save"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/nrh-settings/index.js:29
+msgid "NRH Organization ID"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/nrh-settings/index.js:36
+msgid "NRH Salesforce Campaign ID"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/platform/index.js:59
+msgid "Select Reader Revenue Platform"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/platform/index.js:62
+msgid "-- Select Your Platform --"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/platform/index.js:68
+msgid "News Revenue Hub"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:110
+msgid "We couldn’t establish a connection to Salesforce. Please verify your Consumer Key and Secret and try connecting again."
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:125
+msgid "We couldn’t validate the connection with Salesforce. Please verify the status of the Connected App in Salesforce."
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:155
+msgid "Connected App settings"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:161
+msgid "Your site is connected to Salesforce."
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:169
+msgid "To connect with Salesforce, create or choose a Connected App for this site in your Salesforce dashboard. Make sure to paste the the full URL for this page into the “Callback URL” field in the Connected App’s settings. "
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:174
+msgid "Learn how to create a Connected App"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:179
+msgid "Enter your Consumer Key and Secret below, then click “Connect” to authorize access to your Salesforce account."
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:189
+msgid "To reconnect your site in case of issues, or to connect to a different Salesforce account, click “Reset\" below. You will need to re-enter your Consumer Key and Secret before you can re-connect to Salesforce."
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:198
+msgid "We couldn’t connect to Salesforce. Please verify that you entered the correct Consumer Key and Secret and try again. If you just created your Connected App or edited the Callback URL settings, it may take up to an hour before we can establish a connection."
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:209
+#: assets/wizards/readerRevenue/views/salesforce/index.js:223
+msgid "Your"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:209
+#: assets/wizards/readerRevenue/views/salesforce/index.js:223
+msgid "Enter your"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:210
+msgid " Salesforce Consumer Key"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/salesforce/index.js:224
+msgid " Salesforce Consumer Secret"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/services/index.js:27
+msgid "Donations"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/services/index.js:28
+msgid "Set up a donations page and accept one-time or recurring payments from your readers."
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/services/index.js:32
+#: assets/wizards/readerRevenue/views/services/index.js:41
+msgid "Configure"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/services/index.js:36
+msgid "Salesforce"
+msgstr ""
+
+#: assets/wizards/readerRevenue/views/services/index.js:37
+msgid "Integrate Salesforce to capture contact information when readers donate to your organization."
+msgstr ""
+
+#: assets/wizards/seo/views/environment/index.js:25
+msgid "Environment"
+msgstr ""
+
+#: assets/wizards/seo/views/environment/index.js:28
+msgid "Site under construction"
+msgstr ""
+
+#: assets/wizards/seo/views/environment/index.js:31
+msgid "Site is under construction and should not be indexed."
+msgstr ""
+
+#: assets/wizards/seo/views/social/index.js:26
+msgid "Social profiles"
+msgstr ""
+
+#: assets/wizards/seo/views/social/index.js:28
+msgid "To let search engines know which social profiles are associated to this site, enter your site social profiles data below."
+msgstr ""
+
+#: assets/wizards/seo/views/social/index.js:35
+msgid "Facebook page URL"
+msgstr ""
+
+#: assets/wizards/seo/views/social/index.js:40
+msgid "Twitter username"
+msgstr ""
+
+#: assets/wizards/seo/views/social/index.js:45
+msgid "Instagram URL"
+msgstr ""
+
+#: assets/wizards/seo/views/social/index.js:50
+msgid "LinkedIn URL"
+msgstr ""
+
+#: assets/wizards/seo/views/social/index.js:55
+msgid "YouTube URL"
+msgstr ""
+
+#: assets/wizards/seo/views/social/index.js:60
+msgid "Pinterest URL"
+msgstr ""
+
+#: assets/wizards/seo/views/tools/index.js:25
+msgid "Webmaster tools verification"
+msgstr ""
+
+#: assets/wizards/seo/views/tools/index.js:27
+msgid "You can use the boxes below to verify with the different Webmaster Tools. This feature will add a verification meta tag on your home page. Follow the links to the different Webmaster Tools and look for instructions for the meta tag verification method to get the verification code."
+msgstr ""
+
+#: assets/wizards/seo/views/tools/index.js:33
+msgid "Google"
+msgstr ""
+
+#. translators: hyperlink to Google Search Console
+#: assets/wizards/seo/views/tools/index.js:39
+msgid "Get your Google verification code in <a href=\"%s\">Google Search Console</a>."
+msgstr ""
+
+#: assets/wizards/seo/views/tools/index.js:50
+msgid "Bing"
+msgstr ""
+
+#. translators: hyperlink to Bing Webmaster Tools
+#: assets/wizards/seo/views/tools/index.js:56
+msgid "Get your Bing verification code in <a href=\"%s\">Bing Webmaster Tool</a>."
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:39
+msgid "Header"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:42
+msgid "Solid background"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:43
+msgid "Use the primary color as the header background."
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:49
+msgid "Center logo"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:50
+msgid "Center the logo in the header."
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:56
+msgid "Short header"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:57
+msgid "Display the header as a shorter, simpler version"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:62
+#: assets/wizards/site-design/views/theme-mods/index.js:64
+msgid "Author bio"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:65
+msgid "Display an author bio under individual posts."
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:71
+msgid "Author email"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:72
+msgid "Display the author email with bio on individual posts."
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:77
+msgid "Length"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:78
+msgid "Truncates the author bio on single posts to this approximate character length, but without breaking a word. The full bio appears on the author archive page."
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:88
+msgid "Featured Image"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:90
+msgid "Default position"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:93
+msgid "Large"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:94
+msgid "Small"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:95
+msgid "Behind article title"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:96
+msgid "Beside article title"
+msgstr ""
+
+#: assets/wizards/site-design/views/theme-mods/index.js:97
+msgid "Hidden"
+msgstr ""
+
+#: assets/wizards/support/views/loading/index.js:21
+msgid "Loading..."
+msgstr ""
+
+#: assets/wizards/updates/index.js:36
+msgid "Updates to the Newspack plugins and theme"
+msgstr ""
+
+#: assets/wizards/updates/views/devInfo/index.js:64
+msgid "Something went wrong when fetching"
+msgstr ""
+
+#: assets/wizards/updates/views/devInfo/index.js:64
+msgid "data."
+msgstr ""
+
+#: assets/wizards/updates/views/devInfo/index.js:88
+msgid "fixing"
+msgstr ""
+
+#: assets/wizards/updates/views/devInfo/index.js:89
+msgid "adding"
+msgstr ""
+
+#: assets/wizards/updates/views/devInfo/index.js:99
+msgid "was released"
+msgstr ""
+
+#: assets/wizards/updates/views/devInfo/index.js:101
+msgid " and "
+msgstr ""

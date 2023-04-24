@@ -1,0 +1,62 @@
+{
+  "cookies": {
+    "_ga": {
+      "value": "$IF(LINKER_PARAM(_gl, _ga),GA1.0.LINKER_PARAM(_gl, _ga),)"
+    }
+  },
+  "linkers": {
+    "_gl": {
+      "enabled": true,
+      "ids": {
+        "_ga": "${clientId}"
+      },
+      "proxyOnly": false
+    }
+  },
+  "triggers": {
+    "page_view": {
+      "enabled": "${DEFAULT_PAGEVIEW_ENABLED}",
+      "on": "visible",
+      "request": "ga4Pageview"
+    },
+    "doubleClick": {
+      "enabled": "${DEFAULT_PAGEVIEW_ENABLED}",
+      "on": "visible",
+      "request": "ga4Dc"
+    }
+  },
+  "vars": {
+    "documentLocation": "SOURCE_URL",
+    "clientId": "CLIENT_ID(AMP_ECID_GOOGLE,,_ga,true)",
+    "dataSource": "AMP"
+  },
+  "extraUrlParams": {
+    "sid": "$CALC(SESSION_TIMESTAMP, 1000, divide, true)",
+    "sct": "SESSION_COUNT",
+    "seg": "$IF($EQUALS(SESSION_ENGAGED, true),1,0)",
+    "_et": "$CALC(TOTAL_ENGAGED_TIME,1000, multiply)",
+    "gcs": "$IF($EQUALS(${GOOGLE_CONSENT_ENABLED},TRUE),G10$IF($EQUALS(CONSENT_STATE,sufficient),1,0),)"
+  },
+  "extraUrlParamsReplaceMap": {
+    "user__str_": "up.",
+    "user__num_": "upn.",
+    "event__str_": "ep.",
+    "event__num_": "epn."
+  },
+  "requestOrigin": "https://www.google-analytics.com",
+  "requests": {
+    "ga4IsFirstVisit": "$IF($EQUALS($CALC(SESSION_COUNT,$CALC(${timestamp},SESSION_TIMESTAMP, subtract), add),0),_fv,__nfv)",
+    "ga4IsSessionStart": "$IF($EQUALS($CALC(${timestamp},SESSION_TIMESTAMP, subtract),-1),_ss,__nss)",
+    "ga4SharedPayload": "v=2&tid=${GA4_MEASUREMENT_ID}&ds=${dataSource}&_p=${pageViewId}&cid=${clientId}&ul=${browserLanguage}&sr=${screenWidth}x${screenHeight}&_s=${requestCount}&dl=${documentLocation}&dr=${externalReferrer}&dt=${title}&${ga4IsFirstVisit}=1&${ga4IsSessionStart}=1",
+    "ga4Pageview": {
+      "baseUrl": "/g/collect?${ga4SharedPayload}&en=page_view"
+    },
+    "ga4Event": {
+      "baseUrl": "/g/collect?${ga4SharedPayload}&en=${ga4_event_name}"
+    },
+    "ga4Dc": {
+      "origin": "https://stats.g.doubleclick.net",
+      "baseUrl": "/g/collect?v=2&tid=${GA4_MEASUREMENT_ID}&cid=${clientId}&aip=1"
+    }
+  }
+}

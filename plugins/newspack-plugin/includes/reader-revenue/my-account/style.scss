@@ -1,0 +1,87 @@
+@use 'sass:color';
+@use '~@wordpress/base-styles/colors' as wp-colors;
+
+.woocommerce-account {
+	.newspack-wc-message,
+	.woocommerce-message,
+	.woocommerce-info,
+	.woocommerce-error {
+		background: color.adjust( wp-colors.$alert-green, $lightness: 42% );
+		border: 1px solid wp-colors.$alert-green;
+		color: inherit;
+		display: block;
+		font-family: inherit;
+		font-size: 0.8rem;
+		line-height: 1.5;
+		margin-bottom: 2rem;
+		margin-top: 0;
+		padding: 0.6875em;
+		position: relative;
+
+		&--error,
+		&.woocommerce-error {
+			background: color.adjust( wp-colors.$alert-red, $lightness: 51% );
+			border-color: wp-colors.$alert-red;
+			color: inherit;
+		}
+
+		p {
+			margin-bottom: 0;
+			margin-top: 0;
+
+			+ p {
+				margin-top: 0.5em;
+			}
+		}
+	}
+
+	.woocommerce-Button {
+		margin-top: 8px;
+	}
+
+	.woocommerce-info {
+		background: white;
+		border-color: var( --newspack-primary-color );
+	}
+
+	.edit-account {
+		input {
+			&:disabled {
+				background-color: wp-colors.$gray-100;
+				color: wp-colors.$gray-700;
+			}
+		}
+	}
+
+	/* WooCommerce Subscriptions styles. */
+	&.woocommerce-view-subscription {
+		.order_details {
+			border: none;
+			font-weight: normal;
+
+			thead {
+				background-color: #eee;
+			}
+
+			th {
+				border: none;
+				padding: 10px;
+			}
+
+			tr {
+				border-bottom: 1px solid #515151;
+			}
+
+			td {
+				border: none;
+				padding: 10px;
+			}
+		}
+
+		.wcs-switch-link.button {
+			display: inline-block;
+			margin-left: 0.5rem;
+			vertical-align: middle;
+		}
+	}
+}

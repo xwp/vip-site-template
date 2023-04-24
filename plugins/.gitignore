@@ -1,5 +1,7 @@
 # Track plugins not managed via Composer only.
-*
+*/**
 !.gitkeep
 !.gitignore
 
+# Don't ignore newspack-plugin
+!/newspack-plugin/**

@@ -1,0 +1,74 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "newspack/reader-registration",
+	"title": "Reader Registration",
+	"category": "newspack",
+	"description": "Register a reader with their email.",
+	"textdomain": "newspack",
+	"attributes": {
+		"title": {
+			"type": "string"
+		},
+		"description": {
+			"type": "string"
+		},
+		"placeholder": {
+			"type": "string",
+			"default": "Email Address"
+		},
+		"label": {
+			"type": "string",
+			"default": "Sign up",
+			"required": true
+		},
+		"privacyLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"newsletterSubscription": {
+			"type": "boolean",
+			"default": true
+		},
+		"displayListDescription": {
+			"type": "boolean",
+			"default": true
+		},
+		"hideSubscriptionInput": {
+			"type": "boolean",
+			"default": false
+		},
+		"newsletterTitle": {
+			"type": "string",
+			"default": "Newsletters"
+		},
+		"newsletterLabel": {
+			"type": "string",
+			"default": "Subscribe to our newsletter"
+		},
+		"lists": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "string"
+			}
+		},
+		"haveAccountLabel": {
+			"type": "string",
+			"default": "Already have an account?"
+		},
+		"signInLabel": {
+			"type": "string",
+			"default": "Sign in"
+		},
+		"signedInLabel": {
+			"type": "string",
+			"default": "An account was already registered with this email. Please check your inbox for an authentication link."
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": true,
+		"multiple": false
+	}
+}

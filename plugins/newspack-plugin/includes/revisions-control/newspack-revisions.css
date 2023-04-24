@@ -1,0 +1,20 @@
+.revisions-tickmarks>div.newspack-major:after {
+	content: "";
+	width: 6px;
+	height: 6px;
+	top: 0;
+	left: 0;
+	display: block;
+	border-radius: 100%;
+	margin-left: -3px;
+	margin-top: -10px;
+}
+
+.major-label {
+	display: none;
+	font-weight: bold;
+}
+
+.diff-meta-to.newspack-major .major-label {
+	display: inline;
+}
