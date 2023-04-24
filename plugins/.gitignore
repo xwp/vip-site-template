@@ -6,3 +6,4 @@
 # Don't ignore newspack-plugin
 !/newspack-plugin/**
 !/newspack-blocks/**
+!/newspack-ads/**
