@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d88a6f4336fe210383a0a8379fa9e16",
+    "content-hash": "be14571b22fe382efaf51c307783c580",
     "packages": [
         {
             "name": "automattic/newspack-katharine",
@@ -228,6 +228,24 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/google-site-kit/"
+        },
+        {
+            "name": "wpackagist-plugin/super-cool-ad-inserter",
+            "version": "0.6.3",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/super-cool-ad-inserter/",
+                "reference": "tags/0.6.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/super-cool-ad-inserter.0.6.3.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/super-cool-ad-inserter/"
         },
         {
             "name": "wpackagist-theme/twentytwenty",
