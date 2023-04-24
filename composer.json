@@ -58,6 +58,7 @@
 		"wpackagist-plugin/ads-txt": "^1.4",
 		"wpackagist-plugin/google-site-kit": "^1.98",
 		"wpackagist-plugin/super-cool-ad-inserter": "^0.6.3",
+		"wpackagist-plugin/wordpress-seo": "^20.5",
 		"wpackagist-theme/twentytwenty": "^2.1"
 	},
 	"require-dev": {
