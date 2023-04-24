@@ -1,0 +1,334 @@
+{
+    "prompts": [
+        {
+            "status": "draft",
+            "title": "Inline Donation (secondary)",
+            "content": "<!-- wp:separator -->\n<hr class=\"wp-block-separator has-alpha-channel-opacity\"\/>\n<!-- \/wp:separator -->\n\n<!-- wp:heading -->\n<h2>Support our work<\/h2>\n<!-- \/wp:heading -->\n\n<!-- wp:paragraph -->\n<p>As an independent publication, we rely on donations to fund our journalism<\/p>\n<!-- \/wp:paragraph -->\n\n<!-- wp:newspack-blocks\/donate {\"className\":\"is-style-alternate\",\"amounts\":{\"once\":[9,20,90,20],\"month\":[7,15,30,15],\"year\":[84,180,360,180]},\"disabledFrequencies\":{\"once\":false,\"month\":false,\"year\":false},\"minimumDonation\":5} \/-->",
+            "options": {
+                "background_color": "#FFFFFF",
+                "display_title": false,
+                "hide_border": false,
+                "large_border": false,
+                "frequency": "always",
+                "frequency_max": 0,
+                "frequency_start": 0,
+                "frequency_between": 0,
+                "frequency_reset": "month",
+                "overlay_color": "#000000",
+                "overlay_opacity": "30",
+                "overlay_size": "medium",
+                "no_overlay_background": false,
+                "placement": "inline",
+                "trigger_type": "scroll",
+                "trigger_delay": "3",
+                "trigger_scroll_progress": "100",
+                "trigger_blocks_count": 0,
+                "archive_insertion_posts_count": 1,
+                "archive_insertion_is_repeating": false,
+                "selected_segment_id": "",
+                "post_types": [
+                    "post"
+                ],
+                "archive_page_types": [
+                    "category",
+                    "tag",
+                    "author",
+                    "date",
+                    "post-type",
+                    "taxonomy"
+                ],
+                "additional_classes": "",
+                "excluded_categories": [],
+                "excluded_tags": []
+            },
+            "categories": [],
+            "tags": false,
+            "campaign_groups": [
+                {
+                    "id": 30,
+                    "name": "Reader Activation Defaults"
+                }
+            ]
+        },
+        {
+            "status": "draft",
+            "title": "Registration Overlay",
+            "content": "<!-- wp:newspack\/reader-registration {\"title\":\"Sign Up\",\"description\":\"Sign up for our free newsletters to receive the latest news.\"} -->\n<div class=\"wp-block-newspack-reader-registration\"><\/div>\n<!-- \/wp:newspack\/reader-registration -->",
+            "options": {
+                "background_color": "#FFFFFF",
+                "display_title": false,
+                "hide_border": false,
+                "large_border": false,
+                "frequency": "custom",
+                "frequency_max": 0,
+                "frequency_start": 0,
+                "frequency_between": "3",
+                "frequency_reset": "day",
+                "overlay_color": "#000000",
+                "overlay_opacity": "30",
+                "overlay_size": "medium",
+                "no_overlay_background": false,
+                "placement": "center",
+                "trigger_type": "time",
+                "trigger_delay": "2",
+                "trigger_scroll_progress": 0,
+                "trigger_blocks_count": "3",
+                "archive_insertion_posts_count": 1,
+                "archive_insertion_is_repeating": false,
+                "selected_segment_id": "639b337fdbf33",
+                "post_types": [
+                    "post",
+                    "page",
+                    "product",
+                    "newspack_nl_cpt"
+                ],
+                "archive_page_types": [
+                    "category",
+                    "tag",
+                    "author",
+                    "date",
+                    "post-type",
+                    "taxonomy"
+                ],
+                "additional_classes": "",
+                "excluded_categories": [],
+                "excluded_tags": []
+            },
+            "categories": [],
+            "tags": false,
+            "campaign_groups": [
+                {
+                    "id": 30,
+                    "name": "Reader Activation Defaults"
+                }
+            ]
+        },
+        {
+            "status": "draft",
+            "title": "Inline Newsletter Signup (secondary)",
+            "content": "<!-- wp:paragraph -->\n<p>Sign up for our free newsletter to receive the latest news</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:newspack-newsletters/subscribe /-->",
+            "options": {
+                "background_color": "#FFFFFF",
+                "display_title": false,
+                "hide_border": false,
+                "large_border": false,
+                "frequency": "always",
+                "frequency_max": 0,
+                "frequency_start": 0,
+                "frequency_between": 0,
+                "frequency_reset": "month",
+                "overlay_color": "#000000",
+                "overlay_opacity": "30",
+                "overlay_size": "medium",
+                "no_overlay_background": false,
+                "placement": "inline",
+                "trigger_type": "blocks_count",
+                "trigger_delay": "3",
+                "trigger_scroll_progress": 0,
+                "trigger_blocks_count": 2,
+                "archive_insertion_posts_count": 1,
+                "archive_insertion_is_repeating": false,
+                "selected_segment_id": "639b333b41025,639b337fdbf33",
+                "post_types": [
+                    "post"
+                ],
+                "archive_page_types": [
+                    "category",
+                    "tag",
+                    "author",
+                    "date",
+                    "post-type",
+                    "taxonomy"
+                ],
+                "additional_classes": "",
+                "excluded_categories": [],
+                "excluded_tags": []
+            },
+            "categories": [],
+            "tags": false,
+            "campaign_groups": [
+                {
+                    "id": 30,
+                    "name": "Reader Activation Defaults"
+                }
+            ]
+        },
+        {
+            "status": "draft",
+            "title": "Newsletter Sign-up Overlay",
+            "content": "<!-- wp:heading -->\n<h2>Stay in the know<\/h2>\n<!-- \/wp:heading -->\n\n<!-- wp:paragraph -->\n<p>Sign up for our free newsletters to receive the latest news directly in your inbox.<\/p>\n<!-- \/wp:paragraph -->\n\n<!-- wp:newspack-newsletters\/subscribe \/-->",
+            "options": {
+                "background_color": "#FFFFFF",
+                "display_title": false,
+                "hide_border": false,
+                "large_border": false,
+                "frequency": "custom",
+                "frequency_max": 0,
+                "frequency_start": 0,
+                "frequency_between": "3",
+                "frequency_reset": "day",
+                "overlay_color": "#000000",
+                "overlay_opacity": "30",
+                "overlay_size": "medium",
+                "no_overlay_background": false,
+                "placement": "center",
+                "trigger_type": "time",
+                "trigger_delay": "2",
+                "trigger_scroll_progress": 0,
+                "trigger_blocks_count": "3",
+                "archive_insertion_posts_count": 1,
+                "archive_insertion_is_repeating": false,
+                "selected_segment_id": "639b333b41025",
+                "post_types": [
+                    "post",
+                    "page",
+                    "product",
+                    "newspack_nl_cpt"
+                ],
+                "archive_page_types": [
+                    "category",
+                    "tag",
+                    "author",
+                    "date",
+                    "post-type",
+                    "taxonomy"
+                ],
+                "additional_classes": "",
+                "excluded_categories": [],
+                "excluded_tags": []
+            },
+            "categories": [],
+            "tags": false,
+            "campaign_groups": [
+                {
+                    "id": 30,
+                    "name": "Reader Activation Defaults"
+                }
+            ]
+        },
+        {
+            "status": "draft",
+            "title": "Donation Overlay",
+            "content": "<!-- wp:heading -->\n<h2>Support our work<\/h2>\n<!-- \/wp:heading -->\n\n<!-- wp:paragraph -->\n<p>As an independent publication, we rely on donations to fund our journalism<\/p>\n<!-- \/wp:paragraph -->\n\n<!-- wp:newspack-blocks\/donate {\"className\":\"is-style-alternate\",\"amounts\":{\"once\":[9,20,90,20],\"month\":[7,15,30,15],\"year\":[84,180,360,180]},\"disabledFrequencies\":{\"once\":false,\"month\":false,\"year\":false},\"minimumDonation\":5} \/-->",
+            "options": {
+                "background_color": "#FFFFFF",
+                "display_title": false,
+                "hide_border": false,
+                "large_border": false,
+                "frequency": "custom",
+                "frequency_max": 0,
+                "frequency_start": 0,
+                "frequency_between": "3",
+                "frequency_reset": "day",
+                "overlay_color": "#000000",
+                "overlay_opacity": "30",
+                "overlay_size": "medium",
+                "no_overlay_background": false,
+                "placement": "center",
+                "trigger_type": "time",
+                "trigger_delay": "2",
+                "trigger_scroll_progress": 0,
+                "trigger_blocks_count": "3",
+                "archive_insertion_posts_count": 1,
+                "archive_insertion_is_repeating": false,
+                "selected_segment_id": "639b3315239f0",
+                "post_types": [
+                    "post",
+                    "page",
+                    "product",
+                    "newspack_nl_cpt"
+                ],
+                "archive_page_types": [
+                    "category",
+                    "tag",
+                    "author",
+                    "date",
+                    "post-type",
+                    "taxonomy"
+                ],
+                "additional_classes": "",
+                "excluded_categories": [],
+                "excluded_tags": []
+            },
+            "categories": [],
+            "tags": false,
+            "campaign_groups": [
+                {
+                    "id": 30,
+                    "name": "Reader Activation Defaults"
+                }
+            ]
+        }
+    ],
+    "segments": [
+        {
+            "name": "Registered, signed up for at least one newsletter, but has not donated",
+            "configuration": {
+                "min_posts": 0,
+                "max_posts": 0,
+                "min_session_posts": 0,
+                "max_session_posts": 0,
+                "is_subscribed": true,
+                "is_not_subscribed": false,
+                "is_donor": false,
+                "is_not_donor": true,
+                "is_former_donor": false,
+                "is_logged_in": true,
+                "is_not_logged_in": false,
+                "favorite_categories": [],
+                "referrers": "",
+                "referrers_not": ""
+            },
+            "id": "639b3315239f0",
+            "priority": 0
+        },
+        {
+            "name": "Registered but not signed up for a newsletter",
+            "configuration": {
+                "min_posts": 0,
+                "max_posts": 0,
+                "min_session_posts": 0,
+                "max_session_posts": 0,
+                "is_subscribed": false,
+                "is_not_subscribed": true,
+                "is_donor": false,
+                "is_not_donor": false,
+                "is_former_donor": false,
+                "is_logged_in": true,
+                "is_not_logged_in": false,
+                "favorite_categories": [],
+                "referrers": "",
+                "referrers_not": ""
+            },
+            "id": "639b333b41025",
+            "priority": 1
+        },
+        {
+            "name": "Not registered and not signed up for a newsletter",
+            "configuration": {
+                "min_posts": 0,
+                "max_posts": 0,
+                "min_session_posts": 0,
+                "max_session_posts": 0,
+                "is_subscribed": false,
+                "is_not_subscribed": true,
+                "is_donor": false,
+                "is_not_donor": false,
+                "is_former_donor": false,
+                "is_logged_in": false,
+                "is_not_logged_in": true,
+                "favorite_categories": [],
+                "referrers": "",
+                "referrers_not": ""
+            },
+            "id": "639b337fdbf33",
+            "priority": 2
+        }
+    ],
+    "campaigns": [
+        {
+            "id": 30,
+            "name": "Reader Activation Defaults"
+        }
+    ]
+}

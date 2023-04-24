@@ -1,0 +1,39 @@
+.newspack-popups {
+	&__custom-placement-prompts {
+		margin-top: 1rem;
+		width: 100%;
+
+		.components-external-link svg {
+			display: none;
+		}
+
+		.components-notice {
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.editor-styles-wrapper & strong {
+			border-top: 1px solid;
+			display: block;
+			margin-top: 8px;
+			padding-top: 8px;
+		}
+
+		.editor-styles-wrapper & p {
+			font-size: inherit;
+			margin-bottom: 16px;
+			margin-top: 0;
+		}
+		.editor-styles-wrapper & ul {
+			display: block;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			&:last-of-type {
+				border-bottom: 1px solid;
+				padding-bottom: 8px;
+			}
+		}
+	}
+}

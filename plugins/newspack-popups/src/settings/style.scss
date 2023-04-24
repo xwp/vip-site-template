@@ -1,0 +1,81 @@
+@use '~newspack-components/shared/scss/colors';
+
+.components-card {
+	margin: 2rem auto;
+	max-width: 520px;
+}
+
+.components-checkbox-control {
+	svg {
+		display: none;
+	}
+}
+
+.components-text-control__input {
+	width: 100%;
+}
+
+.components-notice {
+	color: #f00;
+	margin-top: 2rem;
+}
+
+.newspack-popups-save {
+	text-align: right;
+
+	.components-button {
+		font-size: 1.25rem;
+		margin-top: 2rem;
+		padding: 0.5rem 1rem;
+	}
+}
+
+.newspack-logo {
+	&__svg {
+		display: block;
+		fill: currentcolor;
+		height: inherit;
+		padding: 0;
+	}
+
+	&__wrapper {
+		background: colors.$primary-500;
+		display: flex;
+		padding: 12px 0;
+		position: relative;
+
+		&::before {
+			background: colors.$primary-500;
+			bottom: 0;
+			content: '';
+			display: block;
+			left: -20px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: -1;
+		}
+
+		.components-button {
+			color: white;
+			display: block;
+			height: 32px;
+			padding: 0;
+			width: 100%;
+
+			&:focus,
+			&:hover {
+				box-shadow: none;
+				color: white;
+				outline: none;
+			}
+
+			&:focus {
+				svg {
+					outline: 1px solid white;
+					outline-offset: 4px;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,19 @@
+.newspack-pattern {
+	&.subscribe__style-1 {
+		.newspack-lightbox-placement-center & {
+			margin: -1.5em -1.5em 0;
+
+			p:empty {
+				display: none;
+			}
+
+			.wp-block-group__inner-container > * {
+				margin-bottom: 0.75em;
+			}
+		}
+
+		.newspack-lightbox-has-title.newspack-lightbox-placement-center & {
+			margin-top: 0;
+		}
+	}
+}

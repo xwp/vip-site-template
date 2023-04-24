@@ -1,0 +1,42 @@
+.newspack-popups {
+	&__single-prompt {
+		border: 1px solid rgba( 0, 0, 0, 0.2 );
+		padding: 0.75em;
+
+		.newspack-inline-popup {
+			margin-bottom: 1rem;
+			pointer-events: none;
+		}
+
+		.wp-block-jetpack-mailchimp_notification {
+			display: none;
+		}
+	}
+
+	&__single-prompt-placeholder {
+		.components-notice {
+			margin-bottom: 2rem;
+			margin-left: 0;
+			margin-right: 0;
+			width: 100%;
+		}
+
+		.is-loading {
+			align-items: center;
+			display: flex;
+
+			.components-spinner {
+				margin-top: 0;
+			}
+		}
+	}
+
+	&__single-prompt-title {
+		margin-top: 0.5rem !important;
+
+		a {
+			font-size: 13px;
+			font-weight: normal;
+		}
+	}
+}

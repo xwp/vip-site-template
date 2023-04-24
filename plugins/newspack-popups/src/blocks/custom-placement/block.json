@@ -1,0 +1,14 @@
+{
+	"name": "newspack-popups/custom-placement",
+	"category": "newspack",
+	"attributes": {
+		"customPlacement": {
+			"type": "string",
+			"default": ""
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		}
+	}
+}

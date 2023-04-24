@@ -1,0 +1,14 @@
+{
+	"name": "newspack-popups/single-prompt",
+	"category": "newspack",
+	"attributes": {
+		"promptId": {
+			"type": "number",
+			"default": 0
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		}
+	}
+}
