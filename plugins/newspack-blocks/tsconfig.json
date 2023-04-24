@@ -1,7 +1,0 @@
-{
-	"extends": "newspack-scripts/config/tsconfig.json",
-	"compilerOptions": {
-		"rootDir": "src"
-	},
-	"include": [ "src", "src/**/*.json" ]
-}
