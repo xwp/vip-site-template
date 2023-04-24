@@ -51,10 +51,11 @@
 	},
 	"require": {
 		"php": ">=8.0",
-		"composer/installers": "^1.12",
-		"wpackagist-theme/twentytwenty": "^2.1",
+		"automattic/newspack-katharine": "1.69.5",
 		"automattic/newspack-theme": "1.69.5",
-		"automattic/newspack-katharine": "1.69.5"
+		"composer/installers": "^1.12",
+		"wpackagist-plugin/ad-refresh-control": "^1.1",
+		"wpackagist-theme/twentytwenty": "^2.1"
 	},
 	"require-dev": {
 		"automattic/vip-go-mu-plugins": "dev-master",

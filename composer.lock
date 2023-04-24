@@ -4,8 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c4903521605ee6b9283a39347e0482e",
+    "content-hash": "48faee455de5ab18bef74587285ca946",
     "packages": [
+        {
+            "name": "automattic/newspack-katharine",
+            "version": "1.69.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Automattic/newspack-theme/releases/download/v1.69.5/newspack-katharine.zip"
+            },
+            "type": "wordpress-theme"
+        },
+        {
+            "name": "automattic/newspack-theme",
+            "version": "1.69.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/Automattic/newspack-theme/releases/download/v1.69.5/newspack-theme.zip"
+            },
+            "type": "wordpress-theme"
+        },
         {
             "name": "composer/installers",
             "version": "v1.12.0",
@@ -156,6 +174,24 @@
                 }
             ],
             "time": "2021-09-13T08:19:44+00:00"
+        },
+        {
+            "name": "wpackagist-plugin/ad-refresh-control",
+            "version": "1.1.1",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/ad-refresh-control/",
+                "reference": "tags/1.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/ad-refresh-control.1.1.1.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/ad-refresh-control/"
         },
         {
             "name": "wpackagist-theme/twentytwenty",
