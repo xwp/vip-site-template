@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48faee455de5ab18bef74587285ca946",
+    "content-hash": "fbdc463fcf336bdc4cfa9ae39179720e",
     "packages": [
         {
             "name": "automattic/newspack-katharine",
@@ -192,6 +192,24 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/ad-refresh-control/"
+        },
+        {
+            "name": "wpackagist-plugin/ads-txt",
+            "version": "1.4.2",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/ads-txt/",
+                "reference": "tags/1.4.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/ads-txt.1.4.2.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/ads-txt/"
         },
         {
             "name": "wpackagist-theme/twentytwenty",

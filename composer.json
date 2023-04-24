@@ -55,6 +55,7 @@
 		"automattic/newspack-theme": "1.69.5",
 		"composer/installers": "^1.12",
 		"wpackagist-plugin/ad-refresh-control": "^1.1",
+		"wpackagist-plugin/ads-txt": "^1.4",
 		"wpackagist-theme/twentytwenty": "^2.1"
 	},
 	"require-dev": {
