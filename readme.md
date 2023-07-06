@@ -1,4 +1,4 @@
-# VIP Go Site Boilerplate
+# WordPress VIP Site Template
 
 [![Travis CI Status](https://app.travis-ci.com/xwp/vip-site-template.svg?branch=master)](https://app.travis-ci.com/xwp/vip-site-template)
 [![GitHub Action CI Status](https://github.com/xwp/vip-site-template/actions/workflows/test-deploy.yml/badge.svg)](https://github.com/xwp/vip-site-template/actions/workflows/test-deploy.yml)
