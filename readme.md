@@ -175,13 +175,15 @@ Requests to port 80 of the container host are captured by an Nginx proxy contain
 
 ### Importing and Exporting Data
 
-Use [VaultPress](https://vaultpress.com) to download the database data from the production environment.
+Use [VIP dashboard or VIP-CLI](https://docs.wpvip.com/technical-references/vip-dashboard/backups/) to download the database data from the production environment.
+
+- Run `npm run vip -- export sql --output=local/public/wp/vip-export.sql` to download the latest available backup to your local computer.
 
 - Run `npm run cli -- wp db export` to export and backup the database of your local development environment which will place a file like `wordpress-2020-03-04-448b132.sql` in the `local/public/wp` directory.
 
-- Run `npm run cli -- wp db import export.sql` to import `local/public/wp/export.sql` into your local development environment. Run `cat export/*.sql > combined.sql` to combine all `.sql` files in the `export` directory into one `combined.sql` file for quicker import (useful for working with exports from VaultPress).
+- Run `npm run cli -- wp db import vip-export.sql` to import `local/public/wp/vip-export.sql` into your local development environment.
 
-- Run `npm run cli -- bash -c "pv import.sql | wp db query"` to import a large database file `local/public/wp/import.sql` while monitoring the progress with [`pv`](https://linux.die.net/man/1/pv) which is bundled with the WordPress container. The `bash -c` prefix allows us to run multiple commands inside the container without affecting the main `npm run cli` command.
+- Run `npm run cli -- bash -c "pv import.sql | wp db query"` to import a large database file `local/public/wp/vip-export.sql` while monitoring the progress with [`pv`](https://linux.die.net/man/1/pv) which is bundled with the WordPress container. The `bash -c` prefix allows us to run multiple commands inside the container without affecting the main `npm run cli` command.
 
 
 ## Scripts 🧰
