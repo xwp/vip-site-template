@@ -25,7 +25,7 @@ jobs:
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
-          restore-keys: ${{ runner.os }}-php-
+          restore-keys: ${{ runner.os }}-composer-
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
