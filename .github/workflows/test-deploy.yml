@@ -1,0 +1,78 @@
+name: Test and deploy
+
+on: push
+
+jobs:
+  deploy:
+
+    name: Lint, Test and Deploy
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          tools: composer:v2
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer packages
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Log in to the Docker container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull custom Docker images
+        run: docker-compose pull wordpress mkcert
+
+      - name: Install Node dependencies
+        run: npm install --ignore-scripts
+
+      - name: Install Composer dependencies
+        run: composer install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Setup tests
+        run: mkdir uploads
+
+      - name: Test
+        run: npm run test
+
+      - name: Setup SSH deploy key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          known_hosts: github.com
+
+      - name: Setup Git credentials
+        run: |
+          git config --global user.name "XWP Deploy Bot"
+          git config --global user.email "technology@xwp.co"
+
+      - name: Deploy to develop
+        if: github.ref_name == 'develop'
+        run: npm run deploy-staging
+
+      - name: Deploy to production
+        if: github.ref_name == 'main'
+        run: npm run deploy-production

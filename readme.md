@@ -1,21 +1,21 @@
-# VIP Go Site Boilerplate
+# WordPress VIP Site Template
 
-[![Build Status](https://app.travis-ci.com/xwp/vip-site-template.svg?branch=master)](https://app.travis-ci.com/xwp/vip-site-template)
+[![Travis CI Status](https://app.travis-ci.com/xwp/vip-site-template.svg?branch=master)](https://app.travis-ci.com/xwp/vip-site-template)
+[![GitHub Action CI Status](https://github.com/xwp/vip-site-template/actions/workflows/test-deploy.yml/badge.svg)](https://github.com/xwp/vip-site-template/actions/workflows/test-deploy.yml)
 
 
-Site setup, development environment and deploy tooling for [WordPress VIP Go](https://wpvip.com/documentation/vip-go/):
+Site setup, development environment and deploy tooling for [WordPress VIP](https://docs.wpvip.com/technical-references/vip-platform/):
 
 - Uses Composer for adding project dependencies, including plugins and themes.
 - Uses Composer autoloader for using any of the popular PHP packages anywhere in the codebase.
 - Includes a local development environment based on Docker with support for PHP Xdebug and a mail catcher.
-- Includes automated build and deploy pipelines to WordPress VIP Go using Travis CI.
+- Includes automated build and deploy pipelines to WordPress VIP Go using Travis CI or GitHub Actions.
 
 
 ## Links & Resources
 
 - [VIP Go dashboard](https://dashboard.wpvip.com)
-- [VIP Go documentation](https://wpvip.com/documentation/)
-- [VaultPress](https://vaultpress.com)
+- [VIP Go documentation](https://docs.wpvip.com)
 - [NewRelic dashboard](https://rpm.newrelic.com)
 
 
@@ -54,7 +54,7 @@ A user-friendly Git client such as [GitHub Desktop](https://desktop.github.com) 
 
 **Important:** This section can be deleted once you've completed the initial setup from the VIP Go Site template.
 
-The site project generated from this template is designed to be hosted under the [WP VIP GitHub organization](https://github.com/wpcomvip) which is why it uses Travis for deployments since VIP repositories currently don't support GitHub actions.
+The site project generated from this template is designed to be hosted under the [WP VIP GitHub organization](https://github.com/wpcomvip) which is why it uses Travis for deployments since VIP repositories currently don't support GitHub actions. It also includes a [GitHub Action based workflow](.github/workflows) which can be used for projects hosted under any GitHub organization that does support GitHub Actions.
 
 ### VIP Platform Configuration
 
@@ -79,21 +79,29 @@ The following configuration must be requested from VIP Go to use this site repos
 
 4. Adjust strings and URLs in all files match your project. Search and replace the following strings: `xwp/vip-site-template`, `wpcomvip/devgo-vip`, `XWP\Vip_Site_Template`, `local.wpenv.net`.
 
-4. Add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
+4. If hosting this source repository under the [VIP GitHub organization](https://github.com/wpcomvip), add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
 
-5. Generate a new SSH key pair and add the private key [to the Travis CI configuration](https://docs.travis-ci.com/user/private-dependencies/#user-key) and the public part as the [Deploy key to the GitHub repository](https://docs.github.com/en/developers/overview/managing-deploy-keys).
+   For hosting this source repository under any other GitHub organization, simply push it to that repository.
 
-6. Remove these instructions from the README after the initial project setup.
+5. Generate a fresh SSH key pair and add the private part [to the Travis CI configuration](https://docs.travis-ci.com/user/private-dependencies/#user-key) or [as a `DEPLOY_SSH_KEY` GitHub Actions secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets), and the public part as the [Deploy key to the VIP GitHub repository](https://docs.github.com/en/developers/overview/managing-deploy-keys).
+
+        ssh-keygen -f deploy-key -t rsa -b 4096 -C "technology+project-name@xwp.co"
+
+   This provides Travis CI or GitHub Actions with access to the VIP repository for deployments.
+
+6. Remove references to either Travis CI or GitHub actions from this README depending on which deploy strategy was selected.
+
+7. Remove these initial setup instructions from the README after the initial project setup.
 
 ## Setup 🛠
 
 1. Clone this repository:
 
-		git clone git@github.com:wpcomvip/example.git
+		git clone git@github.com:wpcomvip/devgo-vip.git
 
 2. Move into the project directory:
 
-		cd example
+		cd devgo-vip
 
 3. Install the project dependencies:
 
@@ -121,16 +129,7 @@ The local development environment uses a self-signed SSL sertificate for HTTPS s
 
 Docker engine shares the networking interface with the host computer so all the ports used by the containers need to be free and unused by any other services such as a DNS resolver on port 53, MySQL service on port 3306 or another web server running on port 80.
 
-Use the included `npm run stop-all` command to stop all containers running Docker containers on the host machine.
-
-On Debian and Ubuntu systems use `sudo systemctl stop ...` to disable those services. For example:
-
-- `sudo systemctl stop mysql` to stop MySQL
-- `sudo systemctl stop apache2` to stop Apache
-- `sudo systemctl stop systemd-resolved` to stop the local name server.
-
-Alternativelly, you can adjust the port mappings in `docker-compose.yml` to use different ports.
-
+Use the included `npm run stop-all` command to stop all containers running Docker containers on the host machine. Alternativelly, you can adjust the port mappings in `docker-compose.yml` to expose different ports on the host machine.
 
 ## Contribute
 
@@ -142,13 +141,13 @@ Alternativelly, you can adjust the port mappings in `docker-compose.yml` to use 
 
 4. Review any feedback from the automated checks. Note that your local environment is configured to automatically check for any issues before each commit so there should be very few issues if you commit early and often.
 
-5. Merge the feature branch into `develop` on GitHub if all check pass. The automated [Travis CI workflow](https://travis-ci.com/xwp/vip-go-site) (see the "Deployments" section below for details) will deploy it to the `develop-built` branch.
+5. Merge the feature branch into `develop` on GitHub if all check pass. The automated [Travis CI workflow](https://travis-ci.com/xwp/vip-site-template) (see the "Deployments" section below for details) or [GitHub Actions workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `develop-built` branch.
 
 6. Test your feature on the VIP Go staging server. Open a new pull request from the same feature branch to `develop` if any fixes or changes are necessary.
 
 7. Once the feature is ready for production, open a new pull request from the same feature branch to the `master` branch.
 
-8. Ensure that all automated checks pass and merge in the pull request. The automated [Travis CI workflow](https://travis-ci.com/xwp/vip-go-site) will deploy it to the `master-built` branch.
+8. Ensure that all automated checks pass and merge in the pull request. The automated [Travis CI workflow](https://travis-ci.com/xwp/vip-site-template) or [GitHub Action workflow]() will deploy it to the `master-built` branch.
 
 
 ## Plugins and Themes
@@ -175,13 +174,15 @@ Requests to port 80 of the container host are captured by an Nginx proxy contain
 
 ### Importing and Exporting Data
 
-Use [VaultPress](https://vaultpress.com) to download the database data from the production environment.
+Use [VIP dashboard or VIP-CLI](https://docs.wpvip.com/technical-references/vip-dashboard/backups/) to download the database data from the production environment.
+
+- Run `npm run vip -- export sql --output=local/public/wp/vip-export.sql` to download the latest available backup to your local computer.
 
 - Run `npm run cli -- wp db export` to export and backup the database of your local development environment which will place a file like `wordpress-2020-03-04-448b132.sql` in the `local/public/wp` directory.
 
-- Run `npm run cli -- wp db import export.sql` to import `local/public/wp/export.sql` into your local development environment. Run `cat export/*.sql > combined.sql` to combine all `.sql` files in the `export` directory into one `combined.sql` file for quicker import (useful for working with exports from VaultPress).
+- Run `npm run cli -- wp db import vip-export.sql` to import `local/public/wp/vip-export.sql` into your local development environment.
 
-- Run `npm run cli -- bash -c "pv import.sql | wp db query"` to import a large database file `local/public/wp/import.sql` while monitoring the progress with [`pv`](https://linux.die.net/man/1/pv) which is bundled with the WordPress container. The `bash -c` prefix allows us to run multiple commands inside the container without affecting the main `npm run cli` command.
+- Run `npm run cli -- bash -c "pv import.sql | wp db query"` to import a large database file `local/public/wp/vip-export.sql` while monitoring the progress with [`pv`](https://linux.die.net/man/1/pv) which is bundled with the WordPress container. The `bash -c` prefix allows us to run multiple commands inside the container without affecting the main `npm run cli` command.
 
 
 ## Scripts 🧰
@@ -201,14 +202,12 @@ We use `npm` as the canonical task runner for things like linting files and crea
 
 The deployment process always starts from the same clean state which enables reproducable builds accross different environments such as local development machines and continuous integration services.
 
-Deployments to the VIP Go upstream repository are handled automatically by the [Travis CI build process](https://travis-ci.com/xwp/vip-go-site) after a feature branch is merged into `master` for production or `develop` for staging. We use Travis CI because GitHub Actions are currently not available on VIP hosted GitHub repositories.
+Deployments to the VIP upstream repository are handled automatically by the [Travis CI build process](https://travis-ci.com/xwp/vip-site-template) or [GitHub Actions workflow](.github/workflows) after a feature branch is merged into `master` for production or `develop` for staging.
 
-The Travis CI process (see [`.travis.yml`](.travis.yml)) checks the code against the [VIP coding standards](https://github.com/Automattic/VIP-Coding-Standards), builds the release bundle and pushes the changes to the `master-built` branch for production or `develop-built` for staging deployment.
+The CI process checks the code against the [VIP coding standards](https://github.com/Automattic/VIP-Coding-Standards), builds the release bundle and pushes the changes to the `master-built` branch for production or `develop-built` for staging deployment.
 
-	┌──────────┐   ┌─────────────┐   ┌────────────────┐
-	│  master  ├──►│  Travis CI  ├──►│  master-built  │
-	└──────────┘   └─────────────┘   └────────────────┘
+	┌──────────┐   ┌───────────────────────────┐   ┌────────────────┐
+	│  master  ├──►│  Travis / GitHub Actions  ├──►│  master-built  │
+	└──────────┘   └───────────────────────────┘   └────────────────┘
 
 Internally it runs the `local/scripts/deploy.sh` script which does a clean checkout of the deploy source branch to `local/deploy/src`, runs the build process and copies the project files with the release artifects to `deploy/dist` using `rsync`. It then commits the changes to the matching `*-built` branch which is then imported by the VIP Go servers.
-
-⏳Check the [Travis CI dashboard](https://travis-ci.com/xwp/vip-go-site) to monitor the progress of the automated deployments and check the [NewRelic reports](https://rpm.newrelic.com) for any issues or errors.
