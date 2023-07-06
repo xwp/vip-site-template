@@ -28,6 +28,7 @@ services:
 
   # Generate SSL certs for the local development environment.
   mkcert:
+    image: ghcr.io/xwp/vip-site-template--mkcert:1.0.0
     build: ./local/docker/mkcert
     volumes:
       - cert_data:/root/.local/share/mkcert
@@ -93,6 +94,7 @@ services:
     depends_on:
       - db
     build: ./local/docker/wordpress
+    image: ghcr.io/xwp/vip-site-template--wordpress:1.0.0
     restart: always
     volumes:
       - ./local/public:/var/www/html
