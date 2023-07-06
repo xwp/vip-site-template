@@ -1,4 +1,4 @@
-# List all files and directories to be deployed to VIP Go servers.
+# List all files and directories to be deployed to VIP source repository.
 # Use the rsync syntax https://linux.die.net/man/1/rsync
 
 + /client-mu-plugins/
@@ -15,3 +15,4 @@
 - /*
 - .gitignore
 - /object-cache.php
+- /client-mu-plugins/tests/
