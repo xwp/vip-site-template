@@ -33,6 +33,16 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'npm'
 
+      - name: Log in to the Docker container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull custom Docker images
+        run: docker-compose pull wordpress mkcert
+
       - name: Install dependencies
         run: npm install
 
