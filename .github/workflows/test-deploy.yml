@@ -74,5 +74,5 @@ jobs:
         run: npm run deploy-staging
 
       - name: Deploy to production
-        if: github.ref_name == 'main'
+        if: github.ref_name == 'master'
         run: npm run deploy-production
