@@ -1,10 +1,11 @@
 FROM wordpress:php8.0-apache
 
+# Can be overridden in docker-compose.yml via the build args.
+ARG NODE_VERSION=18
+
 # Set cache directories to a predictable location for re-use.
 ENV COMPOSER_HOME /tmp/.composer
 ENV npm_config_cache /tmp/.npmcache
-
-ENV NODE_VERSION 18
 
 # Add path to Composer binaries to this environment.
 ENV PATH /var/www/html/wp-content/plugins/vendor/bin:$PATH
