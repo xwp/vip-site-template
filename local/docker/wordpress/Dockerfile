@@ -32,9 +32,9 @@ RUN curl -s https://getcomposer.org/installer | \
 # Include our custom config for PHP and Xdebug.
 COPY config/php/* /usr/local/etc/php/conf.d/
 
-# Setup xdebug and memcache.
-RUN pecl install xdebug-3.1.5 memcache-8.2 \
-	&& docker-php-ext-enable xdebug memcache;
+# Setup xdebug and memcached.
+RUN pecl install xdebug-3.1.5 memcached-3.2.0 \
+	&& docker-php-ext-enable xdebug memcached
 
 # Enable HTTPS endpoints for reverse proxy requests. Used for images.
 COPY config/apache/proxy-ssl.conf /etc/apache2/conf-available/proxy-ssl.conf
