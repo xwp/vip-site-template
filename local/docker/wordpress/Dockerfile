@@ -23,7 +23,8 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg -
 	&& apt-get install nodejs
 
 # Install PHP Composer.
-RUN curl -s https://getcomposer.org/installer | php --version=2.4.4 --filename=composer --install-dir=/usr/local/bin
+RUN curl -s https://getcomposer.org/installer | \
+	php --version=2.4.4 --filename=composer --install-dir=/usr/local/bin
 
 # Include our custom config for PHP and Xdebug.
 COPY config/php/* /usr/local/etc/php/conf.d/
