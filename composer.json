@@ -33,7 +33,7 @@
 	"require-dev": {
 		"automattic/vip-go-mu-plugins": "dev-master",
 		"automattic/vipwpcs": "^2.3.3",
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
 		"johnpbloch/wordpress": "dev-master",
 		"phpunit/phpunit": "^9.6.13",
 		"wp-cli/wp-cli-bundle": "^2.8.1",
