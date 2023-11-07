@@ -23,7 +23,7 @@ Site setup, development environment and deploy tooling for [WordPress VIP](https
 
 - PHP 8.0
 - [Composer](https://getcomposer.org)
-- [Node.js](https://nodejs.org) version 16
+- [Node.js](https://nodejs.org) version 18
 - [Docker with Docker Compose](https://docs.docker.com/compose/install/)
 - [rsync](https://rsync.samba.org) for deployments
 
@@ -32,7 +32,7 @@ Site setup, development environment and deploy tooling for [WordPress VIP](https
 
 We suggest using [Homebrew](https://brew.sh) on macOS or [Chocolatey](https://chocolatey.org) for Windows to install the project dependencies.
 
-	brew install git php@8.0 composer node@16 mkcert
+	brew install git php@8.0 composer node@18 mkcert
 	brew install --cask docker
 
 
