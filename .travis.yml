@@ -1,5 +1,5 @@
 # Delete this file if using GitHub actions for CI.
-dist: bionic
+dist: focal
 
 services:
   - docker

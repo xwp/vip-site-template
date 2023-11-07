@@ -56,7 +56,7 @@ export GIT_WORK_TREE="$UPSTREAM_DIR"
 rm -rf "$UPSTREAM_DIR"
 
 git clone "$UPSTREAM_REPO" "$UPSTREAM_DIR/.git"
-git checkout -B "$UPSTREAM_BRANCH" "origin/$UPSTREAM_BRANCH"
+git checkout -B "$UPSTREAM_BRANCH"
 
 # Ensure we remove everything before copying over the contents
 # such as submodule references, etc.

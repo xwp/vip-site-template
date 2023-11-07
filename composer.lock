@@ -183,12 +183,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/vip-go-mu-plugins-built.git",
-                "reference": "cbb776a6c4993377aea48c347bd7aef06a9aea06"
+                "reference": "18751d0bc57200d1b2350e5a86424df40ec4307b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/vip-go-mu-plugins-built/zipball/cbb776a6c4993377aea48c347bd7aef06a9aea06",
-                "reference": "cbb776a6c4993377aea48c347bd7aef06a9aea06",
+                "url": "https://api.github.com/repos/Automattic/vip-go-mu-plugins-built/zipball/18751d0bc57200d1b2350e5a86424df40ec4307b",
+                "reference": "18751d0bc57200d1b2350e5a86424df40ec4307b",
                 "shasum": ""
             },
             "require": {
@@ -201,7 +201,7 @@
             "support": {
                 "source": "https://github.com/Automattic/vip-go-mu-plugins-built/tree/master"
             },
-            "time": "2023-03-08T20:56:02+00:00"
+            "time": "2023-11-07T16:06:59+00:00"
         },
         {
             "name": "automattic/vipwpcs",
