@@ -40,6 +40,11 @@ if ( ! defined( 'WPMU_PLUGIN_DIR' ) && defined( 'WP_CONTENT_DIR' ) ) {
 	define( 'WPMU_PLUGIN_DIR', WP_CONTENT_DIR . '/mu-plugins' );
 }
 
+// Account for VIP mu-plugins object-cache.php bootstrap logic not checking for the presence of the constant.
+if ( ! defined( 'VIP_GO_APP_ENVIRONMENT' ) ) {
+	define( 'VIP_GO_APP_ENVIRONMENT', false );
+}
+
 /**
  * Enable ElasticSearch integration, passed to EP_HOST in VIP mu-plugins.
  *
