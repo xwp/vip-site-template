@@ -4,19 +4,23 @@ FROM wordpress:php8.0-apache
 ENV COMPOSER_HOME /tmp/.composer
 ENV npm_config_cache /tmp/.npmcache
 
+ENV NODE_VERSION 18
+
 # Add path to Composer binaries to this environment.
 ENV PATH /var/www/html/wp-content/plugins/vendor/bin:$PATH
 
 # Development tooling dependencies
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
-		curl netcat pv bash less default-mysql-client ssh git zip unzip sudo \
+		curl netcat pv bash less default-mysql-client ssh git zip unzip sudo gnupg \
 		msmtp libz-dev libmemcached-dev libsecret-1-0 \
 	&& rm -rf /var/lib/apt/lists/*
 
-# Install Node.js.
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
-	&& apt-get install -y nodejs
+# Install Node.js per recommended setup.
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+	&& echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_VERSION}.x nodistro main" >> /etc/apt/sources.list.d/nodesource.list \
+	&& apt-get update \
+	&& apt-get install nodejs
 
 # Install PHP Composer.
 RUN curl -s https://getcomposer.org/installer | php --version=2.4.4 --filename=composer --install-dir=/usr/local/bin
