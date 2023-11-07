@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "12ef0a2051da34a9e434c2a1d12cd7c8",
+    "content-hash": "6da6da36e2b711060837e573c93f529a",
     "packages": [
         {
             "name": "composer/installers",
@@ -6804,16 +6804,16 @@
         },
         {
             "name": "xwp/wait-for",
-            "version": "0.0.1",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xwp/io-php-wait-for.git",
-                "reference": "b254328a33cfd6791637e53df8658d7b3f46af37"
+                "reference": "238dbe5b042828aab34a8c29c3353b19f0284a6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xwp/io-php-wait-for/zipball/b254328a33cfd6791637e53df8658d7b3f46af37",
-                "reference": "b254328a33cfd6791637e53df8658d7b3f46af37",
+                "url": "https://api.github.com/repos/xwp/io-php-wait-for/zipball/238dbe5b042828aab34a8c29c3353b19f0284a6a",
+                "reference": "238dbe5b042828aab34a8c29c3353b19f0284a6a",
                 "shasum": ""
             },
             "type": "library",
@@ -6824,9 +6824,9 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "support": {
-                "source": "https://github.com/xwp/io-php-wait-for/tree/0.0.1"
+                "source": "https://github.com/xwp/io-php-wait-for/tree/0.0.2"
             },
-            "time": "2022-05-17T18:05:32+00:00"
+            "time": "2023-10-12T20:29:47+00:00"
         },
         {
             "name": "yoast/phpunit-polyfills",
@@ -6905,5 +6905,5 @@
     "platform-overrides": {
         "php": "8.0"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
