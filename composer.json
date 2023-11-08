@@ -32,7 +32,7 @@
 	},
 	"require-dev": {
 		"automattic/vip-go-mu-plugins": "dev-master",
-		"automattic/vipwpcs": "^2.3",
+		"automattic/vipwpcs": "^3.0.0",
 		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
 		"johnpbloch/wordpress": "dev-master",
 		"phpunit/phpunit": "^9.6.13",
