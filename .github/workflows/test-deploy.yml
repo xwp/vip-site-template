@@ -34,7 +34,7 @@ jobs:
           cache: 'npm'
 
       - name: Log in to the Docker container registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
