@@ -45,6 +45,9 @@
 		"lint": [
 			"phpcs"
 		],
+		"format": [
+			"phpcbf"
+		],
 		"verify": [
 			"composer validate --no-check-all --no-check-publish --strict"
 		],
