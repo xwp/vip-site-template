@@ -58,8 +58,6 @@ if ( ! apiKey ) {
 	process.exit( 1 );
 }
 
-search = `*${ search }*`;
-
 const searchQuery = {
 	query: `{
 		actor {
