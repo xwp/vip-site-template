@@ -14,6 +14,8 @@ before_install:
   - mkdir -p uploads
 
 install:
+  - echo "$DOCKER_PASSWORD" | docker login ghcr.io -u "$DOCKER_USERNAME" --password-stdin || true
+  - docker-compose pull wordpress mkcert || true
   - npm install
 
 script:
@@ -21,6 +23,18 @@ script:
   - npm run test
 
 deploy:
+
+  # Build and deploy Docker images
+  - provider: script
+    script:
+      - sudo apt update
+      - sudo apt install -y docker-buildx
+      - docker buildx create --use
+      - docker buildx bake --push --progress=plain --set='*.platform=linux/amd64,linux/arm64'
+    skip_cleanup: true
+    on:
+      branch: master
+      condition: -n "$DOCKER_USERNAME" && -z $SKIP_DEPLOY
 
   # Deploy to production.
   - provider: script
