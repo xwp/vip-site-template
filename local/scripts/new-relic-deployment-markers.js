@@ -98,7 +98,7 @@ const searchRequest = https.request( 'https://api.newrelic.com/graphql', searchR
 		description = description.replace( /"/g, '\\"' ).replace( /\n/g, '\\n' );
 
 		guids.forEach( ( guid ) => {
-			const timestamp = Date.now() + (120 * 1000); // Add two minutes to current timestamp to acocunt for difference between actual deployment from VIP.
+			const timestamp = Date.now() + ( 120 * 1000 ); // Add two minutes to current timestamp to acocunt for difference between actual deployment from VIP.
 
 			const deploymentMarkerQuery = {
 				query: `mutation {
