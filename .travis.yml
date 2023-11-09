@@ -9,7 +9,7 @@ language: php
 php: '8.0'
 
 before_install:
-  - sudo apt update && sudo apt install -y docker-buildx-plugin
+  - sudo apt install -y docker-buildx
   - nvm install
   - nvm use
   - mkdir -p uploads
