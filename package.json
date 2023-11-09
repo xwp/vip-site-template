@@ -12,6 +12,7 @@
 		"lint-php": "composer lint",
 		"format": "npm-run-all format-*",
 		"format-js": "npm run lint-js -- --fix",
+		"format-php": "composer format",
 		"release": "composer release",
 		"clean": "rm -rf node_modules plugins/vendor local/public/wp",
 		"vip": "vip @devgo-vip",
