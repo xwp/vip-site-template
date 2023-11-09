@@ -9,17 +9,13 @@ language: php
 php: '8.0'
 
 before_install:
-  - sudo apt update && sudo apt install -y docker-buildx
   - nvm install
   - nvm use
   - mkdir -p uploads
 
 install:
-  #- echo "$DOCKER_PASSWORD" | docker login ghcr.io -u "$DOCKER_USERNAME" --password-stdin
-  #- docker-compose pull wordpress mkcert
-  - docker buildx ls
-  - docker buildx create --use
-  - docker buildx bake --push --progress=plain --set='*.platform=linux/amd64,linux/arm64'
+  - echo "$DOCKER_PASSWORD" | docker login ghcr.io -u "$DOCKER_USERNAME" --password-stdin || true
+  - docker-compose pull wordpress mkcert || true
   - npm install
 
 script:
