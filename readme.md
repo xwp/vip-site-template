@@ -93,6 +93,8 @@ The following configuration must be requested from VIP Go to use this site repos
 
 7. Remove these initial setup instructions from the README after the initial project setup.
 
+Consider using a dedicated GitHub [machine user](https://docs.github.com/en/get-started/learning-about-github/types-of-github-accounts#personal-accounts) for deployments in case the deploy logic requires access to multiple private GitHub repositories as there can be only one custom key associated with the Travis CI repository and GitHub doesn't allow sharing the same deploy key accross multiple repositories.
+
 ## Setup 🛠
 
 1. Clone this repository:
