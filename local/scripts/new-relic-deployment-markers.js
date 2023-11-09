@@ -60,19 +60,19 @@ if ( ! apiKey ) {
 
 const searchQuery = {
 	query: `{
-    actor {
-      entitySearch(queryBuilder: {name: "*${ search }*"}) {
-        count
-        query
-        results {
-          entities {
-            name
-            guid
-          }
-        }
-      }
-    }
-  }`,
+		actor {
+			entitySearch( queryBuilder: { name: ${ JSON.stringify( search ) } } ) {
+				count
+				query
+				results {
+					entities {
+						name
+						guid
+					}
+				}
+			}
+		}
+	}`,
 	variables: '',
 };
 
@@ -94,25 +94,31 @@ const searchRequest = https.request( 'https://api.newrelic.com/graphql', searchR
 	searchResponse.on( 'end', () => {
 		const guids = JSON.parse( responseBody ).data.actor.entitySearch.results.entities.map( ( entity ) => entity.guid );
 
-		// description is a commit message and can contain double quotes, new lines, which will break the GraphQL query.
-		description = description.replace( /"/g, '\\"' ).replace( /\n/g, '\\n' );
-
 		guids.forEach( ( guid ) => {
-			const timestamp = Date.now() + (120 * 1000); // Add two minutes to current timestamp to acocunt for difference between actual deployment from VIP.
+			const timestamp = Date.now() + ( 120 * 1000 ); // Add two minutes to current timestamp to acocunt for difference between actual deployment from VIP.
 
 			const deploymentMarkerQuery = {
 				query: `mutation {
-          changeTrackingCreateDeployment(deployment: {version: "${ commit }", entityGuid: "${ guid }", timestamp: ${ timestamp }, commit: "${ commit }", user: "${ user }", description: "${ description }"}) {
-            changelog
-            commit
-            deepLink
-            deploymentId
-            deploymentType
-            description
-            groupId
-            user
-          }
-        }`,
+					changeTrackingCreateDeployment(
+							deployment: {
+								version: ${ JSON.stringify( commit ) },
+								entityGuid: ${ JSON.stringify( guid ) },
+								timestamp: ${ timestamp },
+								commit: ${ JSON.stringify( commit ) },
+								user: ${ JSON.stringify( user ) },
+								description: ${ JSON.stringify( description ) }
+							}
+						) {
+						changelog
+						commit
+						deepLink
+						deploymentId
+						deploymentType
+						description
+						groupId
+						user
+					}
+				}`,
 				variables: '',
 			};
 
