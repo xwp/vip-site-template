@@ -211,3 +211,17 @@ The CI process checks the code against the [VIP coding standards](https://github
 	└──────────┘   └───────────────────────────┘   └────────────────┘
 
 Internally it runs the `local/scripts/deploy.sh` script which does a clean checkout of the deploy source branch to `local/deploy/src`, runs the build process and copies the project files with the release artifects to `deploy/dist` using `rsync`. It then commits the changes to the matching `*-built` branch which is then imported by the VIP Go servers.
+
+### NewRelic Deploy Markers
+
+The repository includes support for publishing [NewRelic deployment markers](https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/record-deployments) after each deploy, if the [`NEW_RELIC_API_KEY` key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/) is configured in the Travis CI or GitHub Actions environment. Note that we're not using the official [NewRelic deployment marker GitHub action](https://github.com/newrelic/deployment-marker-action) because it is harder to configure for multiple App GUIDs.
+
+	npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ secrets.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"
+
+where:
+
+- `--search` is the search term to find the NewRelic app GUIDs by app name. The app names are set to `$_SERVER['HTTP_HOST']-VIP_GO_APP_ENVIRONMENT` in [`vip-config/vip-config.php`](vip-config/vip-config.php) so we use a wildcard search for `*-VIPENVNAME` where `VIPENVNAME` is the environment name such as `staging` or `production`.
+- `--api_key` is the [API key](https://docs.newrelic.com/docs/apis/get-started/intro-apis/types-new-relic-api-keys#user-api-key) to authenticate with New Relic.
+- `--commit` is the commit hash to use for the deployment.
+- `--user` is the user to associate with the deployment.
+- `--description` is the description to use for the deployment.
