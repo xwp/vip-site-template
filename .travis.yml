@@ -19,7 +19,7 @@ install:
   #- docker-compose pull wordpress mkcert
   - docker buildx ls
   - docker buildx create --use
-  - docker buildx bake --push --set '*.platform=linux/amd64,linux/arm64'
+  - docker buildx bake --push --progress=plain --set='*.platform=linux/amd64,linux/arm64'
   - npm install
 
 script:
