@@ -14,6 +14,9 @@ before_install:
   - mkdir -p uploads
 
 install:
+  #- echo "$DOCKER_PASSWORD" | docker login ghcr.io -u "$DOCKER_USERNAME" --password-stdin
+  #- docker-compose pull wordpress mkcert
+  - docker buildx bake --push --set '*.platform=linux/amd64,linux/arm64'
   - npm install
 
 script:
