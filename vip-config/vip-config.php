@@ -66,11 +66,15 @@ if ( defined( 'VIP_GO_APP_ENVIRONMENT' ) && 'production' !== VIP_GO_APP_ENVIRONM
 
 /**
  * Set site domain for NewRelic in order to have separate logs for each site.
+ *
+ * phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
  */
-if ( isset( $_SERVER['HTTP_HOST'] ) && function_exists( 'newrelic_set_appname' ) ) {
+if ( ! empty( $_SERVER['HTTP_HOST'] ) && function_exists( 'newrelic_set_appname' ) ) {
 	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- it is ok, the code is copied from docs: https://docs.wpvip.com/technical-references/new-relic-for-wordpress/#h-separate-apps-out-on-a-per-site-basis-for-multisite
 	$app_name = $_SERVER['HTTP_HOST'];
-	if ( defined( 'VIP_GO_APP_ENVIRONMENT' ) && ! empty( $app_name ) ) {
+
+	// Append the environment name, if present.
+	if ( defined( 'VIP_GO_APP_ENVIRONMENT' ) ) {
 		$app_name .= '-' . VIP_GO_APP_ENVIRONMENT;
 	}
 
