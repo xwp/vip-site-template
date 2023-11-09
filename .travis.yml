@@ -34,7 +34,7 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-      condition: -n $DOCKER_USERNAME
+      condition: -n "$DOCKER_USERNAME" && -z $SKIP_DEPLOY
 
   # Deploy to production.
   - provider: script
