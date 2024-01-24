@@ -81,7 +81,7 @@ services:
   # Enable VIP ElasticSearch https://docs.wpvip.com/technical-references/elasticsearch/
   elasticsearch:
     # Sync version with VIP settings https://github.com/Automattic/vip-cli/blob/0e5d5a1fc2761fc67d5e59ab3d817e7724b139e6/assets/dev-env.lando.template.yml.ejs#L99
-    image: elasticsearch:7.17.2
+    image: elasticsearch:7.17.17
     environment:
       - discovery.type=single-node
       - cluster.name=elasticsearch
