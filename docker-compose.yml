@@ -36,7 +36,7 @@ services:
 
   # Sync VIP MySQL container and it's configurations - https://github.com/Automattic/vip-cli/blob/549a45a37bc254a39dba9ed23ac88174a35aa1da/assets/dev-env.lando.template.yml.ejs#L74-L75
   db:
-    image: mysql:8
+    image: mysql:8.0
     command: --sql-mode=ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION --max_allowed_packet=67M --default-authentication-plugin=mysql_native_password
     ports:
       - "3306:3306"
