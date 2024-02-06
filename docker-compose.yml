@@ -94,7 +94,7 @@ services:
     depends_on:
       - db
     build: ./local/docker/wordpress
-    image: ghcr.io/xwp/vip-site-template--wordpress:2.0.0
+    image: ghcr.io/xwp/vip-site-template--wordpress:2.1.0
     restart: always
     volumes:
       - ./local/public:/var/www/html
