@@ -10,6 +10,13 @@ ENV npm_config_cache /tmp/.npmcache
 # Add path to Composer binaries to this environment.
 ENV PATH /var/www/html/wp-content/plugins/vendor/bin:$PATH
 
+# Allow this to be customized by the environment.
+ENV APACHE_DOCUMENT_ROOT /var/www/html
+
+# Replace the hardcoded location with an environment variable.
+RUN sed -i 's#/var/www/html#\${APACHE_DOCUMENT_ROOT}#g' /etc/apache2/sites-available/*.conf
+RUN sed -i 's#/var/www#\${APACHE_DOCUMENT_ROOT}#g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
 # Development tooling dependencies
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
