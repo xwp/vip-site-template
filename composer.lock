@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c305c8b09866af3d8649225c16694145",
+    "content-hash": "38251e0a19a2f688278c76d46fa19146",
     "packages": [
         {
             "name": "composer/installers",
@@ -7064,7 +7064,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "automattic/vip-go-mu-plugins": 20,
+        "johnpbloch/wordpress": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
