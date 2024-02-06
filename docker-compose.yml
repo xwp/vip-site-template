@@ -102,6 +102,7 @@ services:
       - ./vip-config:/var/www/html/vip-config # Match the VIP production setup where vip-config is mapped to the root directory.
       - webgrind_data:/tmp
     environment:
+      APACHE_DOCUMENT_ROOT: /var/www/html
       VIRTUAL_HOST: ${DEV_URL:-local.wpenv.net}, *.${DEV_URL:-local.wpenv.net}
       SMTPSERVER: mailhog
       EMAIL: local@${DEV_URL:-local.wpenv.net}
