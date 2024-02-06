@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd8e241ee99d7fef71059ee418c42dcc",
+    "content-hash": "c305c8b09866af3d8649225c16694145",
     "packages": [
         {
             "name": "composer/installers",
@@ -183,12 +183,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/vip-go-mu-plugins-built.git",
-                "reference": "18751d0bc57200d1b2350e5a86424df40ec4307b"
+                "reference": "f22996f2cee7987cd279873e2fdfe189d862355f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/vip-go-mu-plugins-built/zipball/18751d0bc57200d1b2350e5a86424df40ec4307b",
-                "reference": "18751d0bc57200d1b2350e5a86424df40ec4307b",
+                "url": "https://api.github.com/repos/Automattic/vip-go-mu-plugins-built/zipball/f22996f2cee7987cd279873e2fdfe189d862355f",
+                "reference": "f22996f2cee7987cd279873e2fdfe189d862355f",
                 "shasum": ""
             },
             "require": {
@@ -201,7 +201,7 @@
             "support": {
                 "source": "https://github.com/Automattic/vip-go-mu-plugins-built/tree/master"
             },
-            "time": "2023-11-07T16:06:59+00:00"
+            "time": "2024-02-01T18:43:55+00:00"
         },
         {
             "name": "automattic/vipwpcs",
@@ -801,35 +801,38 @@
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v0.7.2",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer.git",
-                "reference": "1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db"
+                "url": "https://github.com/PHPCSStandards/composer-installer.git",
+                "reference": "4be43904336affa5c2f70744a348312336afd0da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Dealerdirect/phpcodesniffer-composer-installer/zipball/1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db",
-                "reference": "1c968e542d8843d7cd71de3c5c9c3ff3ad71a1db",
+                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/4be43904336affa5c2f70744a348312336afd0da",
+                "reference": "4be43904336affa5c2f70744a348312336afd0da",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^1.0 || ^2.0",
-                "php": ">=5.3",
+                "php": ">=5.4",
                 "squizlabs/php_codesniffer": "^2.0 || ^3.1.0 || ^4.0"
             },
             "require-dev": {
                 "composer/composer": "*",
+                "ext-json": "*",
+                "ext-zip": "*",
                 "php-parallel-lint/php-parallel-lint": "^1.3.1",
-                "phpcompatibility/php-compatibility": "^9.0"
+                "phpcompatibility/php-compatibility": "^9.0",
+                "yoast/phpunit-polyfills": "^1.0"
             },
             "type": "composer-plugin",
             "extra": {
-                "class": "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
+                "class": "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
             },
             "autoload": {
                 "psr-4": {
-                    "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
+                    "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -845,7 +848,7 @@
                 },
                 {
                     "name": "Contributors",
-                    "homepage": "https://github.com/Dealerdirect/phpcodesniffer-composer-installer/graphs/contributors"
+                    "homepage": "https://github.com/PHPCSStandards/composer-installer/graphs/contributors"
                 }
             ],
             "description": "PHP_CodeSniffer Standards Composer Installer Plugin",
@@ -869,10 +872,10 @@
                 "tests"
             ],
             "support": {
-                "issues": "https://github.com/dealerdirect/phpcodesniffer-composer-installer/issues",
-                "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
+                "issues": "https://github.com/PHPCSStandards/composer-installer/issues",
+                "source": "https://github.com/PHPCSStandards/composer-installer"
             },
-            "time": "2022-02-04T12:51:07+00:00"
+            "time": "2023-01-05T11:28:13+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1163,24 +1166,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress.git",
-                "reference": "791215d9f8fb9b8c9949f3993d01c25ebf2a84e1"
+                "reference": "e9fe06fe97451804d07e7d3e1e99da34a2b97b69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/791215d9f8fb9b8c9949f3993d01c25ebf2a84e1",
-                "reference": "791215d9f8fb9b8c9949f3993d01c25ebf2a84e1",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/e9fe06fe97451804d07e7d3e1e99da34a2b97b69",
+                "reference": "e9fe06fe97451804d07e7d3e1e99da34a2b97b69",
                 "shasum": ""
             },
             "require": {
                 "johnpbloch/wordpress-core": "dev-master",
                 "johnpbloch/wordpress-core-installer": "^1.0 || ^2.0",
-                "php": ">=5.6.20"
+                "php": ">=7.0.0"
             },
             "default-branch": true,
             "type": "package",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0+"
+                "GPL-2.0-or-later"
             ],
             "authors": [
                 {
@@ -1202,7 +1205,7 @@
                 "issues": "https://core.trac.wordpress.org/",
                 "source": "https://core.trac.wordpress.org/browser"
             },
-            "time": "2022-03-01T15:13:50+00:00"
+            "time": "2023-08-10T19:57:39+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core",
@@ -1220,7 +1223,7 @@
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=5.6.20"
+                "php": ">=7.0.0"
             },
             "provide": {
                 "wordpress/core-implementation": "dev-master"
@@ -3615,12 +3618,12 @@
             "version": "3.7.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
                 "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ed8e00df0a83aa96acf703f8c2979ff33341f879",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/ed8e00df0a83aa96acf703f8c2979ff33341f879",
                 "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879",
                 "shasum": ""
             },
@@ -3665,6 +3668,20 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
+            "funding": [
+                {
+                    "url": "https://github.com/PHPCSStandards",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/jrfnl",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/php_codesniffer",
+                    "type": "open_collective"
+                }
+            ],
             "time": "2023-02-22T23:07:41+00:00"
         },
         {
@@ -7047,18 +7064,15 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "automattic/vip-go-mu-plugins": 20,
-        "johnpbloch/wordpress": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.0"
+        "php": ">=8.2"
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "8.0"
+        "php": "8.2"
     },
     "plugin-api-version": "2.6.0"
 }

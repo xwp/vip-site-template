@@ -17,7 +17,7 @@
 		"preferred-install": "dist",
 		"vendor-dir": "plugins/vendor",
 		"platform": {
-			"php": "8.0"
+			"php": "8.2"
 		},
 		"allow-plugins": {
 			"johnpbloch/wordpress-core-installer": true,
@@ -26,18 +26,18 @@
 		}
 	},
 	"require": {
-		"php": ">=8.0",
+		"php": ">=8.2",
 		"composer/installers": "^1.12",
 		"wpackagist-theme/twentytwenty": "^2.4"
 	},
 	"require-dev": {
 		"automattic/vip-go-mu-plugins": "dev-master",
-		"automattic/vipwpcs": "^3.0.0",
-		"dealerdirect/phpcodesniffer-composer-installer": "^0.7.2",
+		"automattic/vipwpcs": "^3.0",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
 		"johnpbloch/wordpress": "dev-master",
 		"phpunit/phpunit": "^9.6.13",
 		"wp-cli/wp-cli-bundle": "^2.8",
-		"wp-phpunit/wp-phpunit": "^6.4.2",
+		"wp-phpunit/wp-phpunit": "^6.4",
 		"xwp/wait-for": "^0.0.2",
 		"yoast/phpunit-polyfills": "^2.0"
 	},
