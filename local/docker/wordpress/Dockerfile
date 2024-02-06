@@ -20,7 +20,7 @@ RUN sed -i 's#/var/www#\${APACHE_DOCUMENT_ROOT}#g' /etc/apache2/apache2.conf /et
 # Development tooling dependencies
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
-		curl netcat pv bash less default-mysql-client ssh git zip unzip sudo gnupg \
+		curl pv bash less default-mysql-client ssh git zip unzip sudo gnupg \
 		msmtp libz-dev libmemcached-dev libsecret-1-0 \
 	&& rm -rf /var/lib/apt/lists/*
 
