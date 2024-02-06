@@ -46,8 +46,8 @@ LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
 npm install --ignore-scripts
 npm run release
 
-# Clone the upstream repository.
-echo "Fetching the latest changes from the VIP Go upstream repository:"
+# Clone the release repository.
+echo "Fetching the latest changes from the VIP release repository:"
 
 export GIT_DIR="$UPSTREAM_DIR/.git"
 export GIT_WORK_TREE="$UPSTREAM_DIR"
@@ -56,13 +56,15 @@ export GIT_WORK_TREE="$UPSTREAM_DIR"
 rm -rf "$UPSTREAM_DIR"
 
 git clone "$UPSTREAM_REPO" "$UPSTREAM_DIR/.git"
-git checkout -B "$UPSTREAM_BRANCH"
+
+# Checkout the release branch or create it if it doesn't exist.
+git checkout "$UPSTREAM_BRANCH" || git checkout -B "$UPSTREAM_BRANCH"
 
 # Ensure we remove everything before copying over the contents
 # such as submodule references, etc.
 git rm -r --quiet .
 
-echo "Copying files to the VIP Go upstream repository:"
+echo "Copying files to the VIP release repository:"
 
 # Sync everything from our clean git directory to our git upstream directory.
 rsync --archive --recursive --filter='protect .git' --delete --prune-empty-dirs \
