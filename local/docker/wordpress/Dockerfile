@@ -34,7 +34,7 @@ RUN mkdir -p /etc/apt/keyrings \
 
 # Install PHP Composer.
 RUN curl -s https://getcomposer.org/installer | \
-	php --version=2.4.4 --filename=composer --install-dir=/usr/local/bin
+	php --version=2.6.6 --filename=composer --install-dir=/usr/local/bin
 
 # Include our custom config for PHP and Xdebug.
 COPY config/php/* /usr/local/etc/php/conf.d/
