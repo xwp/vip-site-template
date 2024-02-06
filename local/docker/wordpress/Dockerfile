@@ -1,4 +1,4 @@
-FROM wordpress:php8.0-apache
+FROM wordpress:php8.2-apache
 
 # Can be overridden in docker-compose.yml via the build args.
 ARG NODE_VERSION=18

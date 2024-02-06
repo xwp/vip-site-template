@@ -6,7 +6,7 @@ services:
 
 language: php
 
-php: '8.0'
+php: '8.2'
 
 before_install:
   - nvm install
