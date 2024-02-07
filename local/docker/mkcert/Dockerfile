@@ -1,4 +1,4 @@
-FROM golang:1.21-alpine
+FROM golang:1.22-alpine
 
 # Set the version tag to build.
 ENV MKCERT_VERSION "v1.4.3"
