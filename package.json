@@ -32,6 +32,6 @@
 		"@automattic/vip": "^2.38.0",
 		"@wordpress/scripts": "^27.1.0",
 		"lint-staged": "^15.0.2",
-		"npm-run-all2": "^5.0.0"
+		"npm-run-all2": "^5.0.2"
 	}
 }
