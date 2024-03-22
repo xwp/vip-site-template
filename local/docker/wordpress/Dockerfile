@@ -21,7 +21,7 @@ RUN sed -i 's#/var/www#\${APACHE_DOCUMENT_ROOT}#g' /etc/apache2/apache2.conf /et
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		curl pv bash less default-mysql-client ssh git zip unzip sudo gnupg \
-		msmtp libz-dev libmemcached-dev libsecret-1-0 \
+		msmtp libz-dev libmemcached-dev libsecret-1-0 libssl-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Install Node.js per recommended setup.
@@ -29,7 +29,7 @@ RUN mkdir -p /etc/apt/keyrings \
 	&& curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
 	&& echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_VERSION}.x nodistro main" >> /etc/apt/sources.list.d/nodesource.list \
 	&& apt-get update \
-	&& apt-get -y --no-install-recommends install nodejs npm \
+	&& apt-get -y --no-install-recommends install nodejs \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Install PHP Composer.
