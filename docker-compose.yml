@@ -11,7 +11,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - cert_data:/etc/nginx/certs
+      - ./local/certs:/etc/nginx/certs
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./local/docker/nginx-proxy/conf.d/custom.conf:/etc/nginx/conf.d/custom.conf
 
@@ -31,8 +31,9 @@ services:
     image: ghcr.io/xwp/vip-site-template--mkcert:1.0.0
     build: ./local/docker/mkcert
     volumes:
-      - cert_data:/root/.local/share/mkcert
+      - ./local/certs:/root/.local/share/mkcert
     command: sh -c 'test -f "${DEV_URL:-local.wpenv.net}.crt" || mkcert -cert-file "${DEV_URL:-local.wpenv.net}.crt" -key-file "${DEV_URL:-local.wpenv.net}.key" "${DEV_URL:-local.wpenv.net}" "*.${DEV_URL:-local.wpenv.net}"'
+
 
   # Sync VIP MySQL container and it's configurations - https://github.com/Automattic/vip-cli/blob/549a45a37bc254a39dba9ed23ac88174a35aa1da/assets/dev-env.lando.template.yml.ejs#L74-L75
   db:
@@ -112,6 +113,5 @@ services:
 
 volumes:
   db_data:
-  cert_data:
   webgrind_data:
   elasticsearch_data:

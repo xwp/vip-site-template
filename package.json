@@ -4,6 +4,7 @@
 		"node": "^18"
 	},
 	"scripts": {
+		"install-cert": "CAROOT=./local/certs mkcert -install",
 		"preinstall": "composer install",
 		"prepare": "git config core.hooksPath ./local/git-hooks",
 		"lint": "npm-run-all lint-*",
