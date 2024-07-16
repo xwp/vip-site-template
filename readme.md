@@ -113,21 +113,21 @@ Consider using a dedicated GitHub [machine user](https://docs.github.com/en/get-
 
 	  npm run install-cert
 
-5Start the development environment using Docker:
+5. Start the development environment using Docker:
 
 		npm run start
 
 	and `npm run stop` to stop the virtual environment at any time. Run `npm run start-debug` to start the environment in debug mode where all output from containers is displayed. Run `npm run stop-all` to stop all active Docker containers in case you're running into port conflicts.
 
-6Install the local WordPress multisite environment:
+6. Install the local WordPress multisite environment:
 
 		npm run setup
 
 	with the configuration from `local/public/wp-cli.yml`.
 
-7Visit [local.wpenv.net](https://local.wpenv.net) to view the development environment. WordPress username `devgo` and password `devgo`.
+7. Visit [local.wpenv.net](https://local.wpenv.net) to view the development environment. WordPress username `devgo` and password `devgo`.
 
-8Visit [mail.local.wpenv.net](https://mail.local.wpenv.net) to view all emails sent by WordPress.
+8. Visit [mail.local.wpenv.net](https://mail.local.wpenv.net) to view all emails sent by WordPress.
 
 The local development environment uses a self-signed SSL sertificate for HTTPS so the "Your connection is not private" error can be ignored to visit the site.
 
