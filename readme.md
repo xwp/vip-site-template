@@ -32,7 +32,7 @@ Site setup, development environment and deploy tooling for [WordPress VIP](https
 
 We suggest using [Homebrew](https://brew.sh) on macOS or [Chocolatey](https://chocolatey.org) for Windows to install the project dependencies.
 
-	brew install git php@8.2 composer node@18 mkcert
+	brew install git php@8.2 composer node@18 mkcert nss
 	brew install --cask docker
 
 
@@ -99,7 +99,7 @@ Consider using a dedicated GitHub [machine user](https://docs.github.com/en/get-
 
 1. Clone this repository:
 
-		git clone git@github.com:wpcomvip/devgo-vip.git
+		git clone git@github.com:xwp/vip-site-template.git devgo-vip
 
 2. Move into the project directory:
 
@@ -109,21 +109,25 @@ Consider using a dedicated GitHub [machine user](https://docs.github.com/en/get-
 
 		npm install
 
-4. Start the development environment using Docker:
+4. Install ssl certificate to add the certificate authority of the development environment [`local/data/mkcert/rootCA.pem`](local/data/mkcert/rootCA.pem) to the trusted list on your computer. Alternatively, [configure it manually](https://support.apple.com/guide/keychain-access/add-certificates-to-a-keychain-kyca2431/mac).
+
+	  npm run install-cert
+
+5. Start the development environment using Docker:
 
 		npm run start
 
 	and `npm run stop` to stop the virtual environment at any time. Run `npm run start-debug` to start the environment in debug mode where all output from containers is displayed. Run `npm run stop-all` to stop all active Docker containers in case you're running into port conflicts.
 
-5. Install the local WordPress multisite environment:
+6. Install the local WordPress multisite environment:
 
 		npm run setup
 
 	with the configuration from `local/public/wp-cli.yml`.
 
-6. Visit [local.wpenv.net](https://local.wpenv.net) to view the development environment. WordPress username `devgo` and password `devgo`.
+7. Visit [local.wpenv.net](https://local.wpenv.net) to view the development environment. WordPress username `devgo` and password `devgo`.
 
-7. Visit [mail.local.wpenv.net](https://mail.local.wpenv.net) to view all emails sent by WordPress.
+8. Visit [mail.local.wpenv.net](https://mail.local.wpenv.net) to view all emails sent by WordPress.
 
 The local development environment uses a self-signed SSL sertificate for HTTPS so the "Your connection is not private" error can be ignored to visit the site.
 
@@ -198,6 +202,8 @@ We use `npm` as the canonical task runner for things like linting files and crea
 - `npm run cli -- wp help` where `wp help` is any command to run inside the WordPress docker container. For example, run `npm run cli -- wp plugin list` to list all of the available plugins or `npm run cli -- composer update` to update the Composer dependencies using the PHP binary in the container instead of your host machine. Run `npm run cli -- wp user create devgo local@devgo.vip --role=administrator --user_pass=devgo` to create a new administrator user with `devgo` as username and password.
 
 - `npm run vip` to run [VIP CLI](https://wpvip.com/documentation/vip-go/vip-cli/) commands on staging and production environments.
+
+- `npm run install-cert` to mark the self-signed SSL certificate authority (under [`local/certs/rootCA.pem`](local/certs/rootCA.pem)) for the local development environment as trusted. Make sure [`mkcert` is installed on your computer](#install-dependencies). This command is required to avoid the "Your connection is not private" error when visiting the site. Stop the local environment before running this command and restart the browser/tab after installing the certificate and starting the environment again.
 
 
 ## Deployments 🚀
