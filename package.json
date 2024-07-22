@@ -30,7 +30,7 @@
 		"newrelic-mark-deploy": "node ./local/scripts/new-relic-deployment-markers.js"
 	},
 	"devDependencies": {
-		"@automattic/vip": "^2.38.0",
+		"@automattic/vip": "^2.39.7",
 		"@wordpress/scripts": "^27.1.0",
 		"lint-staged": "^15.0.2",
 		"npm-run-all2": "^5.0.0"
