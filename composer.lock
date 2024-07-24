@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "765b930c1c9ac3f70f84603606c0b5a4",
+    "content-hash": "a0164c7f8a5e245cfc5eeac2ba910339",
     "packages": [
         {
             "name": "composer/installers",
@@ -6929,16 +6929,16 @@
         },
         {
             "name": "wp-phpunit/wp-phpunit",
-            "version": "6.4.2",
+            "version": "6.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-phpunit/wp-phpunit.git",
-                "reference": "aa3c8f5d1b7efc295fd2b37c7264d2356a8c1099"
+                "reference": "7a1d3a2150033a3d3e19de40aa5b2ef2fee36bc3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-phpunit/wp-phpunit/zipball/aa3c8f5d1b7efc295fd2b37c7264d2356a8c1099",
-                "reference": "aa3c8f5d1b7efc295fd2b37c7264d2356a8c1099",
+                "url": "https://api.github.com/repos/wp-phpunit/wp-phpunit/zipball/7a1d3a2150033a3d3e19de40aa5b2ef2fee36bc3",
+                "reference": "7a1d3a2150033a3d3e19de40aa5b2ef2fee36bc3",
                 "shasum": ""
             },
             "type": "library",
@@ -6973,7 +6973,7 @@
                 "issues": "https://github.com/wp-phpunit/issues",
                 "source": "https://github.com/wp-phpunit/wp-phpunit"
             },
-            "time": "2023-12-07T00:50:08+00:00"
+            "time": "2024-07-17T01:13:44+00:00"
         },
         {
             "name": "xwp/wait-for",
