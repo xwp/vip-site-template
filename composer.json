@@ -36,7 +36,7 @@
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
 		"johnpbloch/wordpress": "dev-master",
 		"phpunit/phpunit": "^9.6.13",
-		"wp-cli/wp-cli-bundle": "^2.8",
+		"wp-cli/wp-cli-bundle": "^2.11.0",
 		"wp-phpunit/wp-phpunit": "^6.4.2",
 		"xwp/wait-for": "^0.0.2",
 		"yoast/phpunit-polyfills": "^2.0"
