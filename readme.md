@@ -45,8 +45,8 @@ A user-friendly Git client such as [GitHub Desktop](https://desktop.github.com) 
 
 ## Overview
 
-- Project plugins and themes can be added as Composer dependencies or manualy to this repository under `plugins/your-plugin` and `themes/your-theme`.
-- Composer dependencies are placed under `plugins/vendor` since it has to be in the same location relative to the project root (which is not the case for `vip-config` which is mapped to the WP root directory on the server).
+- Project plugins and themes can be added as Composer dependencies or manually to this repository under `plugins/your-plugin` and `themes/your-theme`.
+- Composer dependencies are placed under `plugins/vendor` since it has to be in the same location relative to the project root (which is not the case for `vip-config`, which is mapped to the WP root directory on the server).
 - Composer autoloader `plugins/vendor/autoload.php` is included in `vip-config/vip-config.php`.
 
 
@@ -129,13 +129,13 @@ Consider using a dedicated GitHub [machine user](https://docs.github.com/en/get-
 
 8. Visit [mail.local.wpenv.net](https://mail.local.wpenv.net) to view all emails sent by WordPress.
 
-The local development environment uses a self-signed SSL sertificate for HTTPS so the "Your connection is not private" error can be ignored to visit the site.
+The local development environment uses a self-signed SSL certificate for HTTPS so the "Your connection is not private" error can be ignored to visit the site.
 
 ### Resolving Port Conflicts
 
-Docker engine shares the networking interface with the host computer so all the ports used by the containers need to be free and unused by any other services such as a DNS resolver on port 53, MySQL service on port 3306 or another web server running on port 80.
+Docker engine shares the networking interface with the host computer, so all the ports used by the containers must be free and unused by any other services such as a DNS resolver on port 53, MySQL service on port 3306 or another web server running on port 80.
 
-Use the included `npm run stop-all` command to stop all containers running Docker containers on the host machine. Alternativelly, you can adjust the port mappings in `docker-compose.yml` to expose different ports on the host machine.
+Use the included `npm run stop-all` command to stop all containers running Docker containers on the host machine. Alternatively, you can adjust the port mappings in `docker-compose.yml` to expose different ports on the host machine.
 
 ## Contribute
 
@@ -147,7 +147,7 @@ Use the included `npm run stop-all` command to stop all containers running Docke
 
 4. Review any feedback from the automated checks. Note that your local environment is configured to automatically check for any issues before each commit so there should be very few issues if you commit early and often.
 
-5. Merge the feature branch into `develop` on GitHub if all check pass. The automated [Travis CI workflow](https://travis-ci.com/xwp/vip-site-template) (see the "Deployments" section below for details) or [GitHub Actions workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `develop-built` branch.
+5. Merge the feature branch into `develop` on GitHub if all checks pass. The automated [Travis CI workflow](https://travis-ci.com/xwp/vip-site-template) (see the "Deployments" section below for details) or [GitHub Actions workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `develop-built` branch.
 
 6. Test your feature on the VIP Go staging server. Open a new pull request from the same feature branch to `develop` if any fixes or changes are necessary.
 
@@ -175,7 +175,7 @@ For manually installed plugins and themes replace the directory with the updated
 
 We use Docker containers to replicate the VIP Go production environment with all VIP dependencies added as Composer packages and mapped to specific directories inside the containers as defined in `docker-compose.yml`.
 
-Requests to port 80 of the container host are captured by an Nginx proxy container that routes all requests to the necessary service container based on the HTTP host name.
+Requests to port 80 of the container host are captured by an Nginx proxy container that routes all requests to the necessary service container based on the HTTP hostname.
 
 
 ### Importing and Exporting Data
@@ -184,7 +184,7 @@ Use [VIP dashboard or VIP-CLI](https://docs.wpvip.com/technical-references/vip-d
 
 - Run `npm run vip -- export sql --output=local/public/wp/vip-export.sql` to download the latest available backup to your local computer.
 
-- Run `npm run cli -- wp db export` to export and backup the database of your local development environment which will place a file like `wordpress-2020-03-04-448b132.sql` in the `local/public/wp` directory.
+- Run `npm run cli -- wp db export` to export and backup the database of your local development environment, which will place a file like `wordpress-2020-03-04-448b132.sql` in the `local/public/wp` directory.
 
 - Run `npm run cli -- wp db import vip-export.sql` to import `local/public/wp/vip-export.sql` into your local development environment.
 
@@ -195,7 +195,7 @@ Use [VIP dashboard or VIP-CLI](https://docs.wpvip.com/technical-references/vip-d
 
 We use `npm` as the canonical task runner for things like linting files and creating release bundles. Composer scripts (defined in `composer.json`) are used only for PHP related tasks and they have a wrapper npm script in `package.json` for consistency with the rest of the registered tasks.
 
-- `npm run start` and `npm run stop` to start and stop the local development environment. Run `npm run start-debug` to start the environment in debug mode where all output from containers is displayed. Run `npm run stop-all` to stop all active Docker containers in case you're running into port conflicts. Run `npm run stop -- --volumes` to stop the project containers and delete the database data volume.
+- `npm run start` and `npm run stop` to start and stop the local development environment. Run `npm run start-debug` to start the environment in debug mode, where all output from containers is displayed. Run `npm run stop-all` to stop all active Docker containers in case you're running into port conflicts. Run `npm run stop -- --volumes` to stop the project containers and delete the database data volume.
 
 - `npm run lint` to check source code against the defined coding standards.
 
@@ -203,12 +203,12 @@ We use `npm` as the canonical task runner for things like linting files and crea
 
 - `npm run vip` to run [VIP CLI](https://wpvip.com/documentation/vip-go/vip-cli/) commands on staging and production environments.
 
-- `npm run install-cert` to mark the self-signed SSL certificate authority (under [`local/certs/rootCA.pem`](local/certs/rootCA.pem)) for the local development environment as trusted. Make sure [`mkcert` is installed on your computer](#install-dependencies). This command is required to avoid the "Your connection is not private" error when visiting the site. Stop the local environment before running this command and restart the browser/tab after installing the certificate and starting the environment again.
+- `npm run install-cert` to mark the self-signed SSL certificate authority (under [`local/certs/rootCA.pem`](local/certs/rootCA.pem)) for the local development environment as trusted. Make sure [`mkcert` is installed on your computer](#install-dependencies). This command is required to avoid the "Your connection is not private" error when visiting the site. Stop the local environment before running this command, restart the browser/tab after installing the certificate, and start the environment again.
 
 
 ## Deployments 🚀
 
-The deployment process always starts from the same clean state which enables reproducable builds accross different environments such as local development machines and continuous integration services.
+The deployment process always starts from the same clean state, which enables reproducible builds across different environments, such as local development machines and continuous integration services.
 
 Deployments to the VIP upstream repository are handled automatically by the [Travis CI build process](https://travis-ci.com/xwp/vip-site-template) or [GitHub Actions workflow](.github/workflows) after a feature branch is merged into `master` for production or `develop` for staging.
 
@@ -218,7 +218,7 @@ The CI process checks the code against the [VIP coding standards](https://github
 	│  master  ├──►│  Travis / GitHub Actions  ├──►│  master-built  │
 	└──────────┘   └───────────────────────────┘   └────────────────┘
 
-Internally it runs the `local/scripts/deploy.sh` script which does a clean checkout of the deploy source branch to `local/deploy/src`, runs the build process and copies the project files with the release artifects to `deploy/dist` using `rsync`. It then commits the changes to the matching `*-built` branch which is then imported by the VIP Go servers.
+Internally it runs the `local/scripts/deploy.sh` script, which does a clean checkout of the deploy source branch to `local/deploy/src`, runs the build process and copies the project files with the release artifacts to `deploy/dist` using `rsync`. It then commits the changes to the matching `*-built` branch which is then imported by the VIP Go servers.
 
 ### NewRelic Deploy Markers
 
