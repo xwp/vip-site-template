@@ -203,7 +203,7 @@ We use `npm` as the canonical task runner for things like linting files and crea
 
 - `npm run vip` to run [VIP CLI](https://wpvip.com/documentation/vip-go/vip-cli/) commands on staging and production environments.
 
-- `npm run install-cert` to mark the self-signed SSL certificate authority (under [`local/certs/rootCA.pem`](local/certs/rootCA.pem)) for the local development environment as trusted. Make sure [`mkcert` is installed on your computer](#install-dependencies). This command is required to avoid the "Your connection is not private" error when visiting the site. Stop the local environment before running this command restart the browser/tab after installing the certificate, and start the environment again.
+- `npm run install-cert` to mark the self-signed SSL certificate authority (under [`local/certs/rootCA.pem`](local/certs/rootCA.pem)) for the local development environment as trusted. Make sure [`mkcert` is installed on your computer](#install-dependencies). This command is required to avoid the "Your connection is not private" error when visiting the site. Stop the local environment before running this command, restart the browser/tab after installing the certificate, and start the environment again.
 
 
 ## Deployments 🚀
