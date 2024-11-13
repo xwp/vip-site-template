@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull custom Docker images
-        run: docker-compose pull wordpress mkcert
+        run: docker compose pull wordpress mkcert
 
       - name: Install Node dependencies
         run: npm install --ignore-scripts
