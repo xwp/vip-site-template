@@ -28,7 +28,7 @@
 		"logs": "docker compose logs --follow",
 		"setup": "npm run cli -- wp core install",
 		"deploy-staging": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
-		"deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git main",
+		"deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master",
 		"newrelic-mark-deploy": "node ./local/scripts/new-relic-deployment-markers.js"
 	},
 	"devDependencies": {
