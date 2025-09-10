@@ -117,7 +117,7 @@ The following configuration must be requested from VIP Go to use this site repos
 
 	and `npm run stop` to stop the virtual environment at any time. Run `npm run start-debug` to start the environment in debug mode where all output from containers is displayed. Run `npm run stop-all` to stop all active Docker containers in case you're running into port conflicts.
 
-6. Install the local WordPress multisite environment:
+6. Install the local WordPress environment:
 
 		npm run setup
 

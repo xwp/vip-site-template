@@ -34,7 +34,7 @@ define( 'DISALLOW_FILE_EDIT', true );
 define( 'AUTOMATIC_UPDATER_DISABLED', true );
 
 // Keep the wp-contents outside of WP core directory.
-define( 'WP_CONTENT_DIR', realpath( __DIR__ . '/../..' ) );
+define( 'WP_CONTENT_DIR', __DIR__ . '/wp-content' );
 
 // Ensure object-cache.php knows where to load the assets from.
 if ( ! defined( 'WPMU_PLUGIN_DIR' ) && defined( 'WP_CONTENT_DIR' ) ) {
@@ -89,7 +89,9 @@ try {
 // Use a dedicated prefix for the test tables.
 $table_prefix = 'tests_';
 
-define( 'WP_TESTS_MULTISITE', true );
+// Multisite config.
+// define( 'WP_TESTS_MULTISITE', true );
+
 define( 'WP_TESTS_DOMAIN', 'example.org' );
 define( 'WP_TESTS_EMAIL', 'admin@example.org' );
 define( 'WP_TESTS_TITLE', 'Test Blog' );
