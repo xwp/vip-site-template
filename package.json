@@ -1,5 +1,5 @@
 {
-	"name": "xwp/vip-site-template",
+	"name": "xwp-vip-site-template",
 	"private": true,
 	"engines": {
 		"node": ">=20.10.0",
