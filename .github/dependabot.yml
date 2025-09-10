@@ -1,0 +1,28 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      wordpress:
+        patterns:
+          - "@wordpress/*"
+    allow:
+      - dependency-name: "@wordpress/*"
+
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    allow:
+      - dependency-name: "wpackagist-plugin/*"
+      - dependency-name: "wpackagist-theme/*"
+      - dependency-name: "automattic/vip-go-mu-plugins"
+      - dependency-name: "automattic/wpcom-legacy-redirector"

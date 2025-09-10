@@ -1,7 +1,9 @@
 {
+	"name": "xwp/vip-site-template",
 	"private": true,
 	"engines": {
-		"node": "^18"
+		"node": ">=20.10.0",
+		"npm": ">=10.2.3"
 	},
 	"scripts": {
 		"install-cert": "CAROOT=./local/certs mkcert -install",
@@ -24,14 +26,14 @@
 		"stop": "docker compose down",
 		"stop-all": "docker stop $(docker ps --all --quiet)",
 		"logs": "docker compose logs --follow",
-		"setup": "npm run cli -- wp core multisite-install",
+		"setup": "npm run cli -- wp core install",
 		"deploy-staging": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
 		"deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master",
 		"newrelic-mark-deploy": "node ./local/scripts/new-relic-deployment-markers.js"
 	},
 	"devDependencies": {
-		"@automattic/vip": "^2.38.0",
-		"@wordpress/scripts": "^27.1.0",
+		"@automattic/vip": "^3",
+		"@wordpress/scripts": "^30.12.1",
 		"lint-staged": "^15.0.2",
 		"npm-run-all2": "^5.0.0"
 	}

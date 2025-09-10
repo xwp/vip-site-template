@@ -1,9 +1,12 @@
 /.vagrant/
 /node_modules/
 /plugins/vendor/
-/console.log
+/*.log
 /.env
-/debug.log
+.phpunit.result.cache
+
+# Allow Docker Compose override file.
+docker-compose.override.yml
 
 # Uploads directory
 /uploads/
@@ -17,6 +20,9 @@
 # drop-ins; these are managed at the platform-level
 /db.php
 
+# PHPStan cache
+.phpstan-cache/
+
 # Ignore temporary OS files
 .DS_Store
 .DS_Store?
@@ -27,3 +33,6 @@ Thumbs.db
 
 # Ignore Jetbrains IDE files
 .idea/
+
+# Local files that are not tracked by git
+.untracked/

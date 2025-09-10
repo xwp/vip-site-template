@@ -10,9 +10,15 @@
 + /vip-config/
 + /config/
 + .gitkeep
++ .version.json
 
 # Exclude everything else
 - /*
 - .gitignore
 - /object-cache.php
 - /client-mu-plugins/tests/
+- node_modules/
+- package.json
+- package-lock.json
+- composer.json
+- composer.lock

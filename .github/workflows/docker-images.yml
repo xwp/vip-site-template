@@ -35,5 +35,5 @@ jobs:
         run: docker compose build
 
       - name: Publish images
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'main'
         run: docker buildx bake --push --set '*.platform=linux/amd64,linux/arm64'

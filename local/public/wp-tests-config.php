@@ -22,6 +22,7 @@ define( 'DB_COLLATE', '' );
 error_reporting( -1 );
 
 define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', __DIR__ . '/wp-content/debug-tests.log' );
 define( 'WP_DEBUG_DISPLAY', true );
 
 // Enable offline mode to ensure it doesn't connect to WP.com.
@@ -33,7 +34,7 @@ define( 'DISALLOW_FILE_EDIT', true );
 define( 'AUTOMATIC_UPDATER_DISABLED', true );
 
 // Keep the wp-contents outside of WP core directory.
-define( 'WP_CONTENT_DIR', __DIR__ . '/wp-content' );
+define( 'WP_CONTENT_DIR', realpath( __DIR__ . '/../..' ) );
 
 // Ensure object-cache.php knows where to load the assets from.
 if ( ! defined( 'WPMU_PLUGIN_DIR' ) && defined( 'WP_CONTENT_DIR' ) ) {
@@ -54,6 +55,22 @@ define( 'VIP_ELASTICSEARCH_ENDPOINTS', [ 'http://elasticsearch:9200' ] );
 define( 'VIP_ELASTICSEARCH_USERNAME', 'elastic' );
 define( 'VIP_ELASTICSEARCH_PASSWORD', 'changeme' );
 define( 'FILES_CLIENT_SITE_ID', 123456 ); // Fake client site ID.
+
+define( 'VIP_ENABLE_VIP_SEARCH', false ); // Disable ES during tests since data is populated during runtime and never indexed.
+
+// Enable Xdebug during tests.
+if ( 'cli' === php_sapi_name() && function_exists( 'xdebug_connect_to_client' ) ) {
+	xdebug_connect_to_client();
+}
+
+/**
+ * Match the VIP production behaviour on local.
+ *
+ * @see https://github.com/Automattic/vip-go-mu-plugins/blob/ab1f0ac12b1690d27a175baac10729cc7a0060ff/000-pre-vip-config/requires.php
+ */
+if ( file_exists( __DIR__ . '/wp-content/mu-plugins/000-pre-vip-config/requires.php' ) ) {
+	require_once __DIR__ . '/wp-content/mu-plugins/000-pre-vip-config/requires.php';
+}
 
 // Include VIP-specific config.
 if ( file_exists( __DIR__ . '/vip-config/vip-config.php' ) ) {

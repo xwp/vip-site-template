@@ -1,0 +1,25 @@
+includes:
+	- plugins/vendor/szepeviktor/phpstan-wordpress/extension.neon
+	- local/phpstan/phpstan-baseline.neon
+
+parameters:
+	level: 2
+	tmpDir: local/phpstan/phpstan-cache
+	bootstrapFiles:
+		- local/phpstan/wordpress-globals-stubs.php
+	scanDirectories:
+		- plugins
+		- mu-plugins
+		- local/public/wp
+	scanFiles:
+		- local/public/wp-config.php
+	paths:
+		- client-mu-plugins
+		- themes/example-theme
+	excludePaths:
+		- local/public/wp-content
+		- themes/example-theme/tests
+		- themes/example-theme/build
+		- themes/example-theme/vendor
+		- plugins/vendor/composer
+		- vendor

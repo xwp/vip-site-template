@@ -18,3 +18,11 @@ core multisite-install:
   admin_user: devgo
   admin_password: devgo
   admin_email: local@devgo.vip
+
+@test:
+  url: test.local.wpenv.net
+  path: wp
+
+@devgo:
+  url: local.wpenv.net
+  path: wp

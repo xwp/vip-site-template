@@ -1,0 +1,36 @@
+{
+	"extends": "@wordpress/stylelint-config/scss",
+	"plugins": [
+		"stylelint-use-logical"
+	],
+	"rules": {
+		"selector-class-pattern": "^(?:(?:o|c|u|t|s|is|has|_|js|qa)-)?[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*(?:__[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:--[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:\\[.+\\])?$",
+		"no-descending-specificity": null,
+		"media-feature-name-no-unknown": null,
+		"csstools/use-logical": [ "always", { "except": [ "float", "width", "height", "min-width", "max-width", "min-height", "max-height" ] } ],
+		"declaration-no-important": true,
+		"at-rule-empty-line-before": [
+			"always",
+			{
+				"except": [ "first-nested", "blockless-after-blockless" ],
+				"ignore": [ "after-comment" ]
+			}
+		],
+		"rule-empty-line-before": [
+			"always",
+			{
+				"ignore": [ "first-nested", "after-comment" ]
+			}
+		],
+		"no-duplicate-selectors": null
+	},
+	"overrides": [
+		{
+			"files": ["css/editor.scss", "css/style.scss"],
+			"rules": {
+				"selector-class-pattern": null,
+				"no-invalid-position-at-import-rule": null
+			}
+		}
+	]
+}

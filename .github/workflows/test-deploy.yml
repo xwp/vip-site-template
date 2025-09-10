@@ -74,11 +74,11 @@ jobs:
         run: npm run deploy-staging
 
       - name: Deploy to production
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'main'
         run: npm run deploy-production
 
       - name: Set NewRelic deploy marker
         env:
           NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
-        if: ${{ env.NEW_RELIC_API_KEY != null && github.ref_name == 'master' }}
+        if: ${{ env.NEW_RELIC_API_KEY != null && github.ref_name == 'main' }}
         run: npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ secrets.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"

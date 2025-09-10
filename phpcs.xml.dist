@@ -1,11 +1,35 @@
 <?xml version="1.0"?>
-<ruleset name="VIP Go Coding Standards">
+<ruleset name="PHP Coding Standards">
 	<arg name="extensions" value="php" />
 	<arg name="colors" />
+	<arg name="parallel" value="16" />
 	<arg value="s" /><!-- Show sniff codes in all reports. -->
 	<arg value="p" /><!-- Show progress. -->
 
+	<!-- Ensure all code works with PHP 8.2 and above. -->
+	<rule ref="PHPCompatibilityWP" />
+	<config name="testVersion" value="8.2-" />
+
+	<!--
+	Prevent errors caused by WordPress Coding Standards not supporting PHP 8.0+.
+	See https://github.com/WordPress/WordPress-Coding-Standards/issues/2035
+	-->
+	<ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />
+
 	<rule ref="WordPress-VIP-Go" />
+
+	<rule ref="WordPress" />
+
+	<rule ref="WordPress-Core">
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" /><!-- We enforce short syntax further down. -->
+		<exclude name="Generic.Commenting.DocComment.MissingShort" />
+		<exclude name="PSR2.Classes.PropertyDeclaration.Underscore" />
+	</rule>
+
+	<!-- Enforce short array syntax -->
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found">
+		<type>warning</type>
+	</rule>
 
 	<file>client-mu-plugins</file>
 	<file>local/public</file>
@@ -13,7 +37,13 @@
 	<file>themes</file>
 	<file>vip-config</file>
 
+	<exclude-pattern>local/public/wp-content</exclude-pattern>
 	<exclude-pattern>themes/twentytwenty</exclude-pattern>
-	<exclude-pattern>plugins/vendor</exclude-pattern>
+	<exclude-pattern>themes/example-theme/</exclude-pattern><!-- Uses own ruleset. -->
 	<exclude-pattern>local/public/wp</exclude-pattern>
+	<exclude-pattern>plugins/safe-svg</exclude-pattern>
+	<exclude-pattern>plugins/vendor</exclude-pattern>
+	<exclude-pattern>plugins/wp-crontrol</exclude-pattern>
+	<exclude-pattern>plugins/wpcom-legacy-redirector</exclude-pattern>
+	<exclude-pattern>plugins/example-*/build</exclude-pattern><!-- Uses own ruleset. -->
 </ruleset>

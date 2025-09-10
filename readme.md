@@ -1,47 +1,44 @@
 # WordPress VIP Site Template
 
-[![Travis CI Status](https://app.travis-ci.com/xwp/vip-site-template.svg?branch=master)](https://app.travis-ci.com/xwp/vip-site-template)
-[![GitHub Action CI Status](https://github.com/xwp/vip-site-template/actions/workflows/test-deploy.yml/badge.svg)](https://github.com/xwp/vip-site-template/actions/workflows/test-deploy.yml)
-
-
 Site setup, development environment and deploy tooling for [WordPress VIP](https://docs.wpvip.com/technical-references/vip-platform/):
 
 - Uses Composer for adding project dependencies, including plugins and themes.
 - Uses Composer autoloader for using any of the popular PHP packages anywhere in the codebase.
 - Includes a local development environment based on Docker with support for PHP Xdebug and a mail catcher.
-- Includes automated build and deploy pipelines to WordPress VIP Go using Travis CI or GitHub Actions.
-
+- Includes automated build and deploy pipelines to WordPress VIP Go using GitHub Actions.
 
 ## Links & Resources
 
 - [VIP Go dashboard](https://dashboard.wpvip.com)
 - [VIP Go documentation](https://docs.wpvip.com)
 - [NewRelic dashboard](https://rpm.newrelic.com)
-
+- [VIP upstream GitHub repository](#)
 
 ## Requirements
 
 - PHP 8.2
 - [Composer](https://getcomposer.org)
-- [Node.js](https://nodejs.org) version 18
+- [Node.js](https://nodejs.org) version 20
 - [Docker with Docker Compose](https://docs.docker.com/compose/install/)
 - [rsync](https://rsync.samba.org) for deployments
-
 
 ### Install Dependencies
 
 We suggest using [Homebrew](https://brew.sh) on macOS or [Chocolatey](https://chocolatey.org) for Windows to install the project dependencies.
 
-	brew install git php@8.2 composer node@18 mkcert nss
+	brew install git php@8.2 composer node@20 mkcert nss
 	brew install --cask docker
 
+Once NVM is installed, you can install the required Node.js version from the `.nvmrc` file:
+
+    nvm install
+    nvm use
 
 ### Code Editor and Git Client
 
 This repository includes a list of suggested extensions for the [Visual Studio Code editor](https://code.visualstudio.com) and Xdebug support in the `.vscode` directory.
 
 A user-friendly Git client such as [GitHub Desktop](https://desktop.github.com) or [Tower](https://www.git-tower.com/mac) enables smaller commits and simplifies merge conflict resolution.
-
 
 ## Overview
 
@@ -50,11 +47,12 @@ A user-friendly Git client such as [GitHub Desktop](https://desktop.github.com) 
 - Composer autoloader `plugins/vendor/autoload.php` is included in `vip-config/vip-config.php`.
 
 
+
 ## Initial Setup
 
 **Important:** This section can be deleted once you've completed the initial setup from the VIP Go Site template.
 
-The site project generated from this template is designed to be hosted under the [WP VIP GitHub organization](https://github.com/wpcomvip) which is why it uses Travis for deployments since VIP repositories currently don't support GitHub actions. It also includes a [GitHub Action based workflow](.github/workflows) which can be used for projects hosted under any GitHub organization that does support GitHub Actions.
+The site project generated from this template is designed to be hosted under the [WP VIP GitHub organization](https://github.com/wpcomvip) which is why it uses GitHub Actions for deployments - [GitHub Action based workflow](.github/workflows).
 
 ### VIP Platform Configuration
 
@@ -77,23 +75,23 @@ The following configuration must be requested from VIP Go to use this site repos
 
 	or by manually copying them to `themes` or `plugins`. Remember to start tracking those directories by excluding them in `themes/.gitignore` and `plugins/.gitignore`.
 
-4. Adjust strings and URLs in all files match your project. Search and replace the following strings: `xwp/vip-site-template`, `wpcomvip/devgo-vip`, `XWP\Vip_Site_Template`, `local.wpenv.net`.
+4. Adjust strings and URLs in all files match your project. Search and replace the following strings: `xwp/vip-site-template`, `wpcomvip/devgo-vip`, `XWP\Vip_Site_Template`, `local.wpenv.net`, `XWP_Vip_Site_Template`, `xwp/example-theme`, `themes/example-theme` `example-theme`.
 
-4. If hosting this source repository under the [VIP GitHub organization](https://github.com/wpcomvip), add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
+5. If hosting this source repository under the [VIP GitHub organization](https://github.com/wpcomvip), add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
 
    For hosting this source repository under any other GitHub organization, simply push it to that repository.
 
-5. Generate a fresh SSH key pair and add the private part [to the Travis CI configuration](https://docs.travis-ci.com/user/private-dependencies/#user-key) or [as a `DEPLOY_SSH_KEY` GitHub Actions secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets), and the public part as the [Deploy key to the VIP GitHub repository](https://docs.github.com/en/developers/overview/managing-deploy-keys).
+6. Generate a fresh SSH key pair and add the private part [as a `DEPLOY_SSH_KEY` GitHub Actions secret](https://docs.github.com/en/actions/security-guides/encrypted-secrets), and the public part as the [Deploy key to the VIP GitHub repository](https://docs.github.com/en/developers/overview/managing-deploy-keys).
 
         ssh-keygen -f deploy-key -t rsa -b 4096 -C "technology+project-name@xwp.co"
 
-   This provides Travis CI or GitHub Actions with access to the VIP repository for deployments.
+   This provides GitHub Actions with access to the VIP repository for deployments.
 
-6. Remove references to either Travis CI or GitHub actions from this README depending on which deploy strategy was selected.
+7. Remove references to either GitHub actions from this README depending on which deploy strategy was selected.
 
-7. Remove these initial setup instructions from the README after the initial project setup.
+8. Remove these initial setup instructions from the README after the initial project setup.
 
-Consider using a dedicated GitHub [machine user](https://docs.github.com/en/get-started/learning-about-github/types-of-github-accounts#personal-accounts) for deployments in case the deploy logic requires access to multiple private GitHub repositories as there can be only one custom key associated with the Travis CI repository and GitHub doesn't allow sharing the same deploy key accross multiple repositories.
+
 
 ## Setup 🛠
 
@@ -111,7 +109,7 @@ Consider using a dedicated GitHub [machine user](https://docs.github.com/en/get-
 
 4. Install ssl certificate to add the certificate authority of the development environment [`local/data/mkcert/rootCA.pem`](local/data/mkcert/rootCA.pem) to the trusted list on your computer. Alternatively, [configure it manually](https://support.apple.com/guide/keychain-access/add-certificates-to-a-keychain-kyca2431/mac).
 
-	  npm run install-cert
+		npm run install-cert
 
 5. Start the development environment using Docker:
 
@@ -123,7 +121,7 @@ Consider using a dedicated GitHub [machine user](https://docs.github.com/en/get-
 
 		npm run setup
 
-	with the configuration from `local/public/wp-cli.yml`.
+	with the configuration from `wp-cli.yml`.
 
 7. Visit [local.wpenv.net](https://local.wpenv.net) to view the development environment. WordPress username `devgo` and password `devgo`.
 
@@ -147,14 +145,13 @@ Use the included `npm run stop-all` command to stop all containers running Docke
 
 4. Review any feedback from the automated checks. Note that your local environment is configured to automatically check for any issues before each commit so there should be very few issues if you commit early and often.
 
-5. Merge the feature branch into `develop` on GitHub if all checks pass. The automated [Travis CI workflow](https://travis-ci.com/xwp/vip-site-template) (see the "Deployments" section below for details) or [GitHub Actions workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `develop-built` branch.
+5. Merge the feature branch into `develop` on GitHub if all checks pass. The automated [GitHub Actions workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `develop-built` branch.
 
 6. Test your feature on the VIP Go staging server. Open a new pull request from the same feature branch to `develop` if any fixes or changes are necessary.
 
 7. Once the feature is ready for production, open a new pull request from the same feature branch to the `master` branch.
 
-8. Ensure that all automated checks pass and merge in the pull request. The automated [Travis CI workflow](https://travis-ci.com/xwp/vip-site-template) or [GitHub Action workflow]() will deploy it to the `master-built` branch.
-
+8. Ensure that all automated checks pass and merge in the pull request. The automated [GitHub Action workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `master-built` branch.
 
 ## Plugins and Themes
 
@@ -210,19 +207,19 @@ We use `npm` as the canonical task runner for things like linting files and crea
 
 The deployment process always starts from the same clean state, which enables reproducible builds across different environments, such as local development machines and continuous integration services.
 
-Deployments to the VIP upstream repository are handled automatically by the [Travis CI build process](https://travis-ci.com/xwp/vip-site-template) or [GitHub Actions workflow](.github/workflows) after a feature branch is merged into `master` for production or `develop` for staging.
+Deployments to the VIP upstream repository are handled automatically by the [GitHub Actions workflow](.github/workflows) after a feature branch is merged into `master` for production or `develop` for staging.
 
 The CI process checks the code against the [VIP coding standards](https://github.com/Automattic/VIP-Coding-Standards), builds the release bundle and pushes the changes to the `master-built` branch for production or `develop-built` for staging deployment.
 
-	┌──────────┐   ┌───────────────────────────┐   ┌────────────────┐
-	│  master  ├──►│  Travis / GitHub Actions  ├──►│  master-built  │
-	└──────────┘   └───────────────────────────┘   └────────────────┘
+	┌──────────┐   ┌──────────────────┐   ┌────────────────┐
+	│  master  ├──►│  GitHub Actions  ├──►│  master-built  │
+	└──────────┘   └──────────────────┘   └────────────────┘
 
 Internally it runs the `local/scripts/deploy.sh` script, which does a clean checkout of the deploy source branch to `local/deploy/src`, runs the build process and copies the project files with the release artifacts to `deploy/dist` using `rsync`. It then commits the changes to the matching `*-built` branch which is then imported by the VIP Go servers.
 
 ### NewRelic Deploy Markers
 
-The repository includes support for publishing [NewRelic deployment markers](https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/record-deployments) after each deploy, if the [`NEW_RELIC_API_KEY` key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/) is configured in the Travis CI or GitHub Actions environment. Note that we're not using the official [NewRelic deployment marker GitHub action](https://github.com/newrelic/deployment-marker-action) because it is harder to configure for multiple App GUIDs.
+The repository includes support for publishing [NewRelic deployment markers](https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/record-deployments) after each deploy, if the [`NEW_RELIC_API_KEY` key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/) is configured in the GitHub Actions environment. Note that we're not using the official [NewRelic deployment marker GitHub action](https://github.com/newrelic/deployment-marker-action) because it is harder to configure for multiple App GUIDs.
 
 	npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ secrets.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"
 

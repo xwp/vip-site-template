@@ -10,4 +10,5 @@
  * @package XWP\Vip_Site_Template
  */
 
+// Load WP.
 require_once __DIR__ . '/wp/index.php';

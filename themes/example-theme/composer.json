@@ -1,0 +1,15 @@
+{
+	"name": "xwp/example-theme",
+	"version": "1.0.0",
+	"type": "wordpress-theme",
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"config": {
+		"sort-packages": true
+	},
+	"require": {
+		"psr/container": "^2.0",
+		"ext-libxml": "*",
+		"ext-dom": "*"
+	}
+}

@@ -1,3 +1,4 @@
+# .vip.[app].[environment-type].yml
 # See https://wpvip.com/documentation/vip-go/syncing-data-on-vip-go/#domain-mapping-config
 # TODO: Rename the site ID or slug (example) in the filename, too.
 data_sync:
