@@ -33,8 +33,8 @@ RUN mkdir -p /etc/apt/keyrings \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Install PHP Composer.
-RUN curl -s https://getcomposer.org/installer | \
-	php --version=2.6.6 --filename=composer --install-dir=/usr/local/bin
+RUN curl --silent https://getcomposer.org/installer | \
+	php -- --version=2.6.6 --filename=composer --install-dir=/usr/local/bin
 
 # Install WP-CLI.
 RUN curl --location --output /usr/local/bin/wp "https://github.com/wp-cli/wp-cli/releases/download/v${VERSION_WPCLI}/wp-cli-${VERSION_WPCLI}.phar" \
