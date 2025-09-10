@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1f82a898508f588d42f57d04ed90791a",
+    "content-hash": "52abe408d78d05707bac948b16d911c8",
     "packages": [
         {
             "name": "automattic/wpcom-legacy-redirector",
@@ -303,6 +303,24 @@
                 "source": "https://github.com/php-fig/container/tree/2.0.2"
             },
             "time": "2021-11-05T16:47:00+00:00"
+        },
+        {
+            "name": "wpackagist-plugin/action-scheduler",
+            "version": "3.9.3",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/action-scheduler/",
+                "reference": "tags/3.9.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/action-scheduler.3.9.3.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/action-scheduler/"
         },
         {
             "name": "wpackagist-plugin/safe-svg",

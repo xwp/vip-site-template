@@ -43,6 +43,7 @@
 	<exclude-pattern>local/public/wp</exclude-pattern>
 	<exclude-pattern>plugins/safe-svg</exclude-pattern>
 	<exclude-pattern>plugins/vendor</exclude-pattern>
+	<exclude-pattern>plugins/action-scheduler</exclude-pattern>
 	<exclude-pattern>plugins/wp-crontrol</exclude-pattern>
 	<exclude-pattern>plugins/wpcom-legacy-redirector</exclude-pattern>
 	<exclude-pattern>plugins/example-*/build</exclude-pattern><!-- Uses own ruleset. -->
