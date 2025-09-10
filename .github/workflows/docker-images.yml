@@ -6,6 +6,9 @@ on:
       - '.github/workflows/**'
       - 'docker-compose.yml'
       - 'local/docker/**'
+    tags:
+      - 'docker-image-build'  # Explicit tag to force image publishing
+  workflow_dispatch: # Allow manual triggers
 
 jobs:
 
@@ -35,5 +38,16 @@ jobs:
         run: docker compose build
 
       - name: Publish images
-        # Push images for all branches so PRs can use them
-        run: docker buildx bake --push --set '*.platform=linux/amd64,linux/arm64'
+        # Only push to registry when explicitly triggered by tag or manual dispatch
+        if: github.ref == 'refs/tags/docker-image-build' || github.event_name == 'workflow_dispatch'
+        run: |
+          echo "Publishing Docker images (triggered by: ${{ github.ref_type }} ${{ github.ref_name }})"
+          docker buildx bake --push --set '*.platform=linux/amd64,linux/arm64'
+
+      - name: Images built (not published)
+        if: github.ref != 'refs/tags/docker-image-build' && github.event_name != 'workflow_dispatch'
+        run: |
+          echo "✅ Docker images built successfully (not published to registry)"
+          echo "To publish these images, create and push the 'docker-image-build' tag:"
+          echo "  git tag -f docker-image-build"
+          echo "  git push -f origin docker-image-build"
