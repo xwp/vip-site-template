@@ -35,5 +35,5 @@ jobs:
         run: docker compose build
 
       - name: Publish images
-        if: github.ref_name == 'master'
+        # Push images for all branches so PRs can use them
         run: docker buildx bake --push --set '*.platform=linux/amd64,linux/arm64'
