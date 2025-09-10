@@ -8,7 +8,7 @@
 /**
  * Test the WP setup.
  */
-class Test_Example extends \WP_UnitTestCase {
+class Example_Test extends \WP_UnitTestCase {
 
 	/**
 	 * Test that the add_action function exists.

@@ -2,7 +2,7 @@
 <phpunit
 	backupGlobals="false"
 	colors="true"
-	bootstrap="client-mu-plugins/tests/phpunit-bootstrap.php"
+	bootstrap="client-mu-plugins/tests/phpunit/bootstrap.php"
 	>
 	<testsuites>
 		<testsuite name="client-mu-plugins">
