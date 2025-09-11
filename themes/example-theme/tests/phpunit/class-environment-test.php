@@ -2,8 +2,10 @@
 /**
  * Environment tests.
  *
- * @package XWP\Vip_Site_Template\Theme
+ * @package XWP\VIP_Site_Template\Theme
  */
+
+use WP_UnitTestCase;
 
 /**
  * Test Environment.

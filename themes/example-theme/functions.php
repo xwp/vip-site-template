@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
- * @package XWP\Vip_Site_Template\Theme
+ * @package XWP\VIP_Site_Template\Theme
  */
 
-namespace XWP\Vip_Site_Template\Theme;
+namespace XWP\VIP_Site_Template\Theme;

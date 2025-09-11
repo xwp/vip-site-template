@@ -4,7 +4,7 @@
  *
  * Named with a numeric prefix to be loaded before all other must-use plugins.
  *
- * @package XWP\Vip_Site_Template
+ * @package XWP\VIP_Site_Template
  */
 
 /**
@@ -29,6 +29,8 @@ foreach ( $mu_plugin_files as $mu_plugin_file ) {
  * Use wpcom_vip_load_plugin( 'plugin-name' ); to always
  * enable certain plugins from wp-content/plugins.
  */
+wpcom_vip_load_plugin( 'action-scheduler' );
+// phpcs:ignore Squiz.PHP.CommentedOutCode.Found, Squiz.Commenting.InlineComment.InvalidEndChar -- To be enabled on demand.
+// wpcom_vip_load_plugin( 'query-monitor' );
 wpcom_vip_load_plugin( 'safe-svg' );
 wpcom_vip_load_plugin( 'wpcom-legacy-redirector' );
-wpcom_vip_load_plugin( 'action-scheduler' );

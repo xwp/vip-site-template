@@ -2,13 +2,15 @@
 /**
  * Test the WP setup.
  *
- * @package XWP\Vip_Site_Template
+ * @package XWP\VIP_Site_Template
  */
+
+use WP_UnitTestCase;
 
 /**
  * Test the WP setup.
  */
-class Example_Test extends \WP_UnitTestCase {
+class Example_Test extends WP_UnitTestCase {
 
 	/**
 	 * Test that the add_action function exists.

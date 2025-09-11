@@ -2,7 +2,7 @@
 /**
  * Bootstrap the WP test environment.
  *
- * @package XWP\Vip_Site_Template\Theme
+ * @package XWP\VIP_Site_Template\Theme
  *
  * phpcs:disable WPThemeReview.CoreFunctionality.FileInclude.FileIncludeFound
  */

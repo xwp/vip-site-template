@@ -13,7 +13,7 @@
  *
  * @see https://vip.wordpress.com/documentation/vip-go/understanding-your-vip-go-codebase/
  *
- * @package XWP\Vip_Site_Template
+ * @package XWP\VIP_Site_Template
  */
 
 /**
@@ -86,13 +86,12 @@ if ( defined( 'VIP_GO_APP_ENVIRONMENT' ) && 'production' !== VIP_GO_APP_ENVIRONM
 }
 
 /**
- * Set WP_MEMORY_LIMIT to 1024M as suggested by the VIP team in the past.
+ * Set WP_MEMORY_LIMIT to the current memory limit.
+ * Fall back to 1024M if the current memory limit is not set.
  *
  * Some GraphQL/SQL queries, relying on Elasticsearch, can take up to 1GB of memory.
- *
- * @see https://support.wpvip.com/hc/en-us/requests/205553
  */
-define( 'WP_MEMORY_LIMIT', '1024M' );
+define( 'WP_MEMORY_LIMIT', ini_get( 'memory_limit' ) ?: '1024M' );
 
 /**
  * Set site domain for NewRelic in order to have separate logs for each site.

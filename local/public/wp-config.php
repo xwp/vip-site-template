@@ -4,7 +4,7 @@
  *
  * phpcs:disable WordPress.WP.CapitalPDangit.Misspelled, WordPress.WP.GlobalVariablesOverride.Prohibited
  *
- * @package XWP\Vip_Site_Template
+ * @package XWP\VIP_Site_Template
  */
 
 // On VIP this is actually loaded from /vip-config/vip-config.php.

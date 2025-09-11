@@ -19,7 +19,7 @@
 		}
 	],
 	"config": {
-		"autoloader-suffix": "XWP_Vip_Site_Template",
+		"autoloader-suffix": "XWP_VIP_Site_Template",
 		"sort-packages": true,
 		"process-timeout": 600,
 		"preferred-install": "dist",
@@ -41,6 +41,7 @@
 		"cweagans/composer-patches": "^1.7",
 		"xwp/example-theme": "@dev",
 		"wpackagist-plugin/action-scheduler": "^3.9",
+		"wpackagist-plugin/query-monitor": "^3.2",
 		"wpackagist-plugin/safe-svg": "^2.3",
 		"wpackagist-plugin/wp-crontrol": "^1.19",
 		"wpackagist-theme/twentytwentyfive": "^1.3"

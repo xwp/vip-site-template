@@ -4,7 +4,7 @@
  *
  * Used on local only.
  *
- * @package XWP\Vip_Site_Template
+ * @package XWP\VIP_Site_Template
  */
 
 if ( file_exists( __DIR__ . '/mu-plugins/drop-ins/object-cache.php' ) ) {

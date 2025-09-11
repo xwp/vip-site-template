@@ -1,8 +1,6 @@
 # Development dependencies.
 node_modules
 vendor
-tools/wordpress
-tools/wp-content
 languages
 build
 .phpunit.result.cache
