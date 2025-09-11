@@ -1,3 +1,4 @@
-/vendor/
-/tools/
-/build/
+vendor/
+tools/
+build/
+node_modules/
