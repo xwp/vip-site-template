@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "830fbb816de7eb35e47d1aa16dbf3f14",
+    "content-hash": "52abe408d78d05707bac948b16d911c8",
     "packages": [
         {
             "name": "automattic/wpcom-legacy-redirector",
@@ -321,24 +321,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/action-scheduler/"
-        },
-        {
-            "name": "wpackagist-plugin/query-monitor",
-            "version": "3.20.0",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/query-monitor/",
-                "reference": "tags/3.20.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/query-monitor.3.20.0.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/query-monitor/"
         },
         {
             "name": "wpackagist-plugin/safe-svg",

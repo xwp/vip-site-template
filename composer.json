@@ -41,7 +41,6 @@
 		"cweagans/composer-patches": "^1.7",
 		"xwp/example-theme": "@dev",
 		"wpackagist-plugin/action-scheduler": "^3.9",
-		"wpackagist-plugin/query-monitor": "^3.2",
 		"wpackagist-plugin/safe-svg": "^2.3",
 		"wpackagist-plugin/wp-crontrol": "^1.19",
 		"wpackagist-theme/twentytwentyfive": "^1.3"

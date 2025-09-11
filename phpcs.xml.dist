@@ -45,7 +45,6 @@
 	<exclude-pattern>themes/example-theme/</exclude-pattern><!-- Uses own ruleset. -->
 	<exclude-pattern>local/public/wp</exclude-pattern>
 	<exclude-pattern>plugins/action-scheduler</exclude-pattern>
-	<exclude-pattern>plugins/query-monitor</exclude-pattern>
 	<exclude-pattern>plugins/safe-svg</exclude-pattern>
 	<exclude-pattern>plugins/vendor</exclude-pattern>
 	<exclude-pattern>plugins/wp-crontrol</exclude-pattern>

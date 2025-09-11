@@ -30,7 +30,5 @@ foreach ( $mu_plugin_files as $mu_plugin_file ) {
  * enable certain plugins from wp-content/plugins.
  */
 wpcom_vip_load_plugin( 'action-scheduler' );
-// phpcs:ignore Squiz.PHP.CommentedOutCode.Found, Squiz.Commenting.InlineComment.InvalidEndChar -- To be enabled on demand.
-// wpcom_vip_load_plugin( 'query-monitor' );
 wpcom_vip_load_plugin( 'safe-svg' );
 wpcom_vip_load_plugin( 'wpcom-legacy-redirector' );
