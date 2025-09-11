@@ -90,7 +90,7 @@ try {
 $table_prefix = 'tests_';
 
 // Multisite config.
-// define( 'WP_TESTS_MULTISITE', true );
+define( 'WP_TESTS_MULTISITE', true );
 
 define( 'WP_TESTS_DOMAIN', 'example.org' );
 define( 'WP_TESTS_EMAIL', 'admin@example.org' );
