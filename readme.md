@@ -46,8 +46,6 @@ A user-friendly Git client such as [GitHub Desktop](https://desktop.github.com) 
 - Composer dependencies are placed under `plugins/vendor` since it has to be in the same location relative to the project root (which is not the case for `vip-config`, which is mapped to the WP root directory on the server).
 - Composer autoloader `plugins/vendor/autoload.php` is included in `vip-config/vip-config.php`.
 
-
-
 ## Initial Setup
 
 **Important:** This section can be deleted once you've completed the initial setup from the VIP Go Site template.
@@ -90,8 +88,6 @@ The following configuration must be requested from VIP Go to use this site repos
 7. Remove references to either GitHub actions from this README depending on which deploy strategy was selected.
 
 8. Remove these initial setup instructions from the README after the initial project setup.
-
-
 
 ## Setup 🛠
 
