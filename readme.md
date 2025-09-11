@@ -75,7 +75,7 @@ The following configuration must be requested from VIP Go to use this site repos
 
 	or by manually copying them to `themes` or `plugins`. Remember to start tracking those directories by excluding them in `themes/.gitignore` and `plugins/.gitignore`.
 
-4. Adjust strings and URLs in all files match your project. Search and replace the following strings: `xwp/vip-site-template`, `xwp-vip-site-template`, `wpcomvip/devgo-vip`, `XWP\VIP_Site_Template`, `local.wpenv.net`, `XWP_VIP_Site_Template`, `xwp/example-theme`, `themes/example-theme` `example-theme`.
+4. Adjust strings and URLs in all files match your project. Search and replace the following strings: `xwp/vip-site-template`, `xwp-vip-site-template`, `wpcomvip/devgo-vip`, `XWP\VIP_Site_Template`, `network.local.wpenv.net`, `main.local.wpenv.net`, `XWP_VIP_Site_Template`, `xwp/example-theme`, `themes/example-theme` `example-theme`.
 
 5. If hosting this source repository under the [VIP GitHub organization](https://github.com/wpcomvip), add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
 
@@ -123,7 +123,7 @@ The following configuration must be requested from VIP Go to use this site repos
 
 	with the configuration from `wp-cli.yml`.
 
-7. Visit [local.wpenv.net](https://local.wpenv.net) to view the development environment. WordPress username `devgo` and password `devgo`.
+7. Visit [network.local.wpenv.net](https://network.local.wpenv.net) for the network admin or [main.local.wpenv.net](https://main.local.wpenv.net) for the main site. WordPress username `devgo` and password `devgo`.
 
 8. Visit [mail.local.wpenv.net](https://mail.local.wpenv.net) to view all emails sent by WordPress.
 

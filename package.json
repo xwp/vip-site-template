@@ -26,7 +26,7 @@
 		"stop": "docker compose down",
 		"stop-all": "docker stop $(docker ps --all --quiet)",
 		"logs": "docker compose logs --follow",
-		"setup": "npm run cli -- wp core multisite-install",
+		"setup": "./local/scripts/setup-multisite.sh",
 		"deploy-staging": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
 		"deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master",
 		"newrelic-mark-deploy": "node ./local/scripts/new-relic-deployment-markers.js"
