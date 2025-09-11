@@ -23,6 +23,10 @@ core multisite-install:
   url: test.local.wpenv.net
   path: wp
 
+@devgo-network:
+  url: network.local.wpenv.net
+  path: wp
+
 @devgo:
   url: local.wpenv.net
   path: wp
