@@ -1,4 +1,4 @@
-name: Build and Publish Docker Images
+name: Docker Images
 
 on:
   pull_request:
@@ -14,8 +14,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
   build-and-push-image:
+    name: Build and Publish Docker Images
     runs-on: ubuntu-22.04
     permissions:
       contents: read
