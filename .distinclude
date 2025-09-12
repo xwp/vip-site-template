@@ -49,6 +49,7 @@
 - .phpunit.result.cache
 
 # IDE and editor files
+- .claude/
 - .cursor/
 - .idea/
 - .vscode/
