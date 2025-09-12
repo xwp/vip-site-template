@@ -1,39 +1,61 @@
 {
-	"name": "xwp-vip-site-template",
+	"name": "@xwp/vip-site-template",
 	"private": true,
 	"engines": {
 		"node": ">=20.10.0",
 		"npm": ">=10.2.3"
+	},
+	"workspaces": [
+		"themes/example-theme"
+	],
+	"overrides": {
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
 	},
 	"scripts": {
 		"install-cert": "CAROOT=./local/certs mkcert -install",
 		"preinstall": "composer install",
 		"prepare": "git config core.hooksPath ./local/git-hooks",
 		"lint": "npm-run-all lint-*",
-		"lint-js": "wp-scripts lint-js ./local/scripts",
+		"lint-workspaces": "npm run lint --workspaces",
 		"lint-composer": "composer verify",
+		"lint-js": "wp-scripts lint-js ./local/scripts",
 		"lint-php": "composer lint",
 		"format": "npm-run-all format-*",
+		"format-workspaces": "npm run format --workspaces",
 		"format-js": "npm run lint-js -- --fix",
 		"format-php": "composer format",
-		"release": "composer release",
+		"build": "npm-run-all build-*",
+		"build-workspaces": "npm run build --workspaces",
+		"dev": "npm-run-all dev-*",
+		"dev-workspaces": "npm run dev --workspaces",
+		"test": "npm-run-all test-*",
+		"test-workspaces": "npm run test --workspaces",
+		"test-php": "npm run cli -- composer test --working-dir=wp-content",
+		"release": "npm-run-all release-*",
+		"release-workspaces": "npm run build --workspaces",
+		"release-php": "composer release",
 		"clean": "rm -rf node_modules plugins/vendor local/public/wp",
+		"clean-workspaces": "npm run clean --workspaces --if-present",
 		"vip": "vip @devgo-vip",
 		"cli": "docker compose run --rm --user=1000 --workdir=/var/www/html wordpress",
-		"test": "npm run cli -- composer test --working-dir=wp-content",
 		"start": "docker compose up --detach --remove-orphans --build",
 		"start-debug": "docker compose up --remove-orphans --build",
 		"stop": "docker compose down",
 		"stop-all": "docker stop $(docker ps --all --quiet)",
 		"logs": "docker compose logs --follow",
 		"setup": "./local/scripts/setup-multisite.sh",
-		"deploy-staging": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
-		"deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git master",
+		"deploy-dev": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
+		"deploy-test": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git main",
+		"deploy-pre-prod": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git release",
+		"deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git production",
 		"newrelic-mark-deploy": "node ./local/scripts/new-relic-deployment-markers.js"
 	},
 	"devDependencies": {
 		"@automattic/vip": "^3",
 		"@wordpress/scripts": "^30.12.1",
+		"@wordpress/eslint-plugin": "^22.11.0",
+		"clean-webpack-plugin": "^4.0.0",
 		"lint-staged": "^15.0.2",
 		"npm-run-all2": "^5.0.0"
 	}

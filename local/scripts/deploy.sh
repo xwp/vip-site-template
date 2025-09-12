@@ -8,13 +8,13 @@
 set -e
 
 # Set the working directory to the repository root.
-PROJECT_DOOR_DIR="$(git rev-parse --show-toplevel)"
+PROJECT_ROOT_DIR="$(git rev-parse --show-toplevel)"
 
 SRC_BRANCH="$2"
-SRC_DIR="$PROJECT_DOOR_DIR/local/deploy/src"
+SRC_DIR="$PROJECT_ROOT_DIR/local/deploy/src"
 
 UPSTREAM_REPO="$1"
-UPSTREAM_DIR="$PROJECT_DOOR_DIR/local/deploy/dist"
+UPSTREAM_DIR="$PROJECT_ROOT_DIR/local/deploy/dist"
 UPSTREAM_BRANCH="$SRC_BRANCH-built"
 
 # Use .distinclude to specify which files to include and exclude from the release.
@@ -26,10 +26,10 @@ if [ -z "$SRC_BRANCH" ] || [ -z "$UPSTREAM_REPO" ]; then
 fi
 
 # Ensure we don't corrupt the local development repository.
-echo "Copying theme repository to $SRC_DIR for a fresh build"
+echo "Copying source repository to $SRC_DIR for a fresh build."
 rm -rf "$SRC_DIR"
 mkdir -p "$SRC_DIR"
-cp -r "$PROJECT_DOOR_DIR/.git" "$SRC_DIR/"
+cp -r "$PROJECT_ROOT_DIR/.git" "$SRC_DIR/"
 
 # Build everything in the source directory.
 cd "$SRC_DIR"
@@ -46,7 +46,7 @@ LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
 npm install --ignore-scripts
 npm run release
 
-# Clone the release repository.
+# Clone the upstream repository.
 echo "Fetching the latest changes from the VIP release repository:"
 
 export GIT_DIR="$UPSTREAM_DIR/.git"
