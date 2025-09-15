@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
-# Accepts upstream git repository URL as the first argument
-# and deploy branch as the second argument.
+# Accepts upstream git repository URL as the first argument,
+# source branch as the second argument, and upstream branch as the third argument.
+# If upstream branch is not provided, it defaults to the source branch.
 #
 
 # Set this to -ex for verbose output.
@@ -15,15 +16,18 @@ SRC_DIR="$PROJECT_ROOT_DIR/local/deploy/src"
 
 UPSTREAM_REPO="$1"
 UPSTREAM_DIR="$PROJECT_ROOT_DIR/local/deploy/dist"
-UPSTREAM_BRANCH="$SRC_BRANCH-built"
+UPSTREAM_BRANCH="${3:-$SRC_BRANCH}"  # Use third parameter or default to SRC_BRANCH
 
 # Use .distinclude to specify which files to include and exclude from the release.
 DIST_FILES="$SRC_DIR/.distinclude"
 
 if [ -z "$SRC_BRANCH" ] || [ -z "$UPSTREAM_REPO" ]; then
 	echo "Please specify the upstream repository and the source branch."
+	echo "Usage: $0 <upstream_repo> <source_branch> [upstream_branch]"
 	exit 1
 fi
+
+echo "Deploying from source branch '$SRC_BRANCH' to upstream branch '$UPSTREAM_BRANCH'"
 
 # Ensure we don't corrupt the local development repository.
 echo "Copying source repository to $SRC_DIR for a fresh build."
@@ -76,7 +80,7 @@ git add --all
 
 # Commit and deploy if changes found.
 if ! git diff-index --cached --quiet HEAD --; then
-	git commit --message "Deploy to $SRC_BRANCH at \"$LAST_COMMIT_MSG\" ($SYNCREV)"
+	git commit --message "Deploy from $SRC_BRANCH to $UPSTREAM_BRANCH at \"$LAST_COMMIT_MSG\" ($SYNCREV)"
 	git push -u origin "$UPSTREAM_BRANCH"
 
 	echo "Branch $SRC_BRANCH was built and deployed to $UPSTREAM_BRANCH."
