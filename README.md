@@ -56,7 +56,7 @@ The site project generated from this template is designed to be hosted under the
 
 The following configuration must be requested from VIP Go to use this site repository:
 
-1. Deployments from `*-built` branches such as `master-built` and `develop-built`.
+1. Deployments from `*-built` branches such as `main-built` and `develop-built`.
 2. Staging environment tracking the `develop-built` branch.
 
 ### VIP Repository Setup
@@ -75,7 +75,7 @@ The following configuration must be requested from VIP Go to use this site repos
 
 4. Adjust strings and URLs in all files match your project. Search and replace the following strings: `xwp/vip-site-template`, `xwp-vip-site-template`, `wpcomvip/devgo-vip`, `XWP\VIP_Site_Template`, `network.local.wpenv.net`, `main.local.wpenv.net`, `XWP_VIP_Site_Template`, `xwp/example-theme`, `themes/example-theme` `example-theme`.
 
-5. If hosting this source repository under the [VIP GitHub organization](https://github.com/wpcomvip), add the VIP Go upstream repository as another remote to this repository locally and force-push the current `master` to that upstream repository to override the `master` branch with this. Do the same for the `develop` branch.
+5. If hosting this source repository under the [VIP GitHub organization](https://github.com/wpcomvip), add the VIP Go upstream repository as another remote to this repository locally and force-push the current `main` to that upstream repository to override the `main` branch with this. Do the same for the `develop` branch.
 
    For hosting this source repository under any other GitHub organization, simply push it to that repository.
 
@@ -145,9 +145,9 @@ Use the included `npm run stop-all` command to stop all containers running Docke
 
 6. Test your feature on the VIP Go staging server. Open a new pull request from the same feature branch to `develop` if any fixes or changes are necessary.
 
-7. Once the feature is ready for production, open a new pull request from the same feature branch to the `master` branch.
+7. Once the feature is ready for production, open a new pull request from the same feature branch to the `main` branch.
 
-8. Ensure that all automated checks pass and merge in the pull request. The automated [GitHub Action workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `master-built` branch.
+8. Ensure that all automated checks pass and merge in the pull request. The automated [GitHub Action workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `main-built` branch.
 
 ## Plugins and Themes
 
@@ -203,13 +203,13 @@ We use `npm` as the canonical task runner for things like linting files and crea
 
 The deployment process always starts from the same clean state, which enables reproducible builds across different environments, such as local development machines and continuous integration services.
 
-Deployments to the VIP upstream repository are handled automatically by the [GitHub Actions workflow](.github/workflows) after a feature branch is merged into `master` for production or `develop` for staging.
+Deployments to the VIP upstream repository are handled automatically by the [GitHub Actions workflow](.github/workflows) after a branch is merged into `develop` for development, `main` for test, `release` for pre-production and `production` for production.
 
-The CI process checks the code against the [VIP coding standards](https://github.com/Automattic/VIP-Coding-Standards), builds the release bundle and pushes the changes to the `master-built` branch for production or `develop-built` for staging deployment.
+The CI process checks the code against the [VIP coding standards](https://github.com/Automattic/VIP-Coding-Standards), builds the release bundle, and pushes the changes to matching release branch:
 
-	┌──────────┐   ┌──────────────────┐   ┌────────────────┐
-	│  master  ├──►│  GitHub Actions  ├──►│  master-built  │
-	└──────────┘   └──────────────────┘   └────────────────┘
+	┌──────────────┐   ┌──────────────────┐   ┌────────────────────┐
+	│  production  ├──►│  GitHub Actions  ├──►│  production-built  │
+	└──────────────┘   └──────────────────┘   └────────────────────┘
 
 Internally it runs the `local/scripts/deploy.sh` script, which does a clean checkout of the deploy source branch to `local/deploy/src`, runs the build process and copies the project files with the release artifacts to `deploy/dist` using `rsync`. It then commits the changes to the matching `*-built` branch which is then imported by the VIP Go servers.
 

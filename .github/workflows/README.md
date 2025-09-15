@@ -8,27 +8,27 @@ For your first PR with Docker changes:
 ```bash
 # After pushing your PR, you'll see CI fail with "manifest unknown"
 # This is expected! Now publish the images:
-git tag -f docker-image-build
-git push -f origin docker-image-build
+# 1. Add the "docker-image-build" label to your PR in GitHub, or
+# 2. Manually trigger the workflow from the Actions tab
 
 # Wait for docker-images workflow to complete, then re-run failed CI jobs
 ```
 
 ### How It Works
 
-Docker images are built automatically when Docker files change, but only published to the registry when explicitly requested via a Git tag. This ensures version immutability and prevents accidental overwrites.
+Docker images are built automatically when Docker files change, but only published to the registry when explicitly requested via PR labels or manual triggers. This ensures version immutability and prevents accidental overwrites.
 
 #### Workflow Triggers
 
 The `docker-images.yml` workflow runs when:
 - Docker-related files change (Dockerfile, docker-compose.yml)
-- The `docker-image-build` tag is created/updated
+- A PR is labeled with `docker-image-build`
 - Manually triggered from GitHub Actions UI
 
 #### Publishing Docker Images
 
 Images are **only** published to GitHub Container Registry when:
-1. You create/update the `docker-image-build` tag
+1. A PR has the `docker-image-build` label
 2. You manually trigger the workflow from GitHub Actions UI
 
 When triggered by file changes alone, images are built but NOT published.
@@ -49,18 +49,16 @@ When you need to publish new Docker images:
    git push
    ```
 
-3. **Create/update the docker-image-build tag** to publish:
-   ```bash
-   git tag -f docker-image-build
-   git push -f origin docker-image-build
-   ```
+3. **Add the `docker-image-build` label** to your PR:
+   - Go to your PR on GitHub
+   - Click "Labels" in the right sidebar
+   - Add the `docker-image-build` label
 
 4. The `docker-images.yml` workflow will:
    - Build the images
    - Push them to `ghcr.io` with the version from docker-compose.yml
    - Make them available for all future CI runs
 
-Note: The `-f` flag allows you to move the tag to the latest commit when needed.
 
 ### Test and Deploy Workflow
 
@@ -92,8 +90,7 @@ Don't create a new version for:
 1. **Initial setup** (first PR with Docker changes):
    ```bash
    # After pushing your PR, publish the Docker images:
-   git tag -f docker-image-build
-   git push -f origin docker-image-build
+   # Add "docker-image-build" label to your PR in GitHub UI
    # Re-run failed CI jobs - they will now pass
    ```
 
@@ -113,12 +110,8 @@ Don't create a new version for:
    git commit -m "feat: Update Docker images with Node.js 20"
    git push
 
-   # Publish the new images
-   git tag -f docker-image-build
-   git push -f origin docker-image-build
+   # Add "docker-image-build" label to your PR in GitHub
    ```
-
-The single `docker-image-build` tag can be reused - it always publishes whatever version is in docker-compose.yml.
 
 ### Manual Trigger
 
@@ -131,31 +124,34 @@ You can also manually trigger the Docker image build:
 ### Benefits
 
 - **Immutable versions**: Once published, version 2.2.0 never changes
-- **Explicit control**: You decide when to publish new images via the `docker-image-build` tag
+- **Explicit control**: You decide when to publish new images via PR labels
 - **Efficient CI**: No unnecessary rebuilds or publishes
 - **Validation**: Docker changes are built automatically to catch errors early
-- **Simple workflow**: One reusable tag for all publishes
+- **Simple workflow**: Just add a label to publish images
+- **PR-integrated**: Publishing is tied to the PR workflow
 
 ### Troubleshooting
 
 **Q: CI fails with "manifest unknown" error**
-A: Docker images haven't been published yet. Create the tag:
-```bash
-git tag -f docker-image-build
-git push -f origin docker-image-build
-```
+A: Docker images haven't been published yet. Add the `docker-image-build` label to your PR.
 
 **Q: I updated the Dockerfile but CI is using old images**
 A: 
 1. Bump the version in docker-compose.yml (e.g., 2.2.0 → 2.3.0)
 2. Push your changes
-3. Update the tag to publish: `git tag -f docker-image-build && git push -f origin docker-image-build`
+3. Add the `docker-image-build` label to your PR
 
 **Q: Can I overwrite an existing image version?**
-A: Yes, by using the same version and pushing the tag again, but this is discouraged. Better to bump the version for traceability.
+A: Yes, by using the same version and adding the label again, but this is discouraged. Better to bump the version for traceability.
 
 **Q: How do I know which Docker image version is being used?**
 A: Check the `docker-compose.yml` file for the current image tags.
 
 **Q: The docker-images workflow ran but images weren't published**
-A: This is expected when triggered by file changes alone. Only the `docker-image-build` tag or manual trigger publishes images.
+A: This is expected when triggered by file changes alone. Only PRs with the `docker-image-build` label or manual triggers publish images.
+
+**Q: How do I add the docker-image-build label?**
+A: 
+1. Go to your PR on GitHub
+2. Click "Labels" in the right sidebar  
+3. Type `docker-image-build` and select it (or create it if it doesn't exist)
