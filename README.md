@@ -34,6 +34,12 @@ Once NVM is installed, you can install the required Node.js version from the `.n
     nvm install
     nvm use
 
+### WordPress Compatibility
+
+This theme template is aligned with WordPress 6.8.x package versions.
+To update packages to match a different WordPress version:
+`npx wp-scripts packages-update --dist-tag=wp-[version] --save`
+
 ### Code Editor and Git Client
 
 This repository includes a list of suggested extensions for the [Visual Studio Code editor](https://code.visualstudio.com) and Xdebug support in the `.vscode` directory.
@@ -163,13 +169,11 @@ To update plugins and themes added as Composer dependencies, use `composer insta
 
 For manually installed plugins and themes replace the directory with the updated set of files and commit them to the GitHub repository.
 
-
 ## Local Development Environment
 
 We use Docker containers to replicate the VIP Go production environment with all VIP dependencies added as Composer packages and mapped to specific directories inside the containers as defined in `docker-compose.yml`.
 
 Requests to port 80 of the container host are captured by an Nginx proxy container that routes all requests to the necessary service container based on the HTTP hostname.
-
 
 ### Importing and Exporting Data
 
@@ -197,7 +201,6 @@ We use `npm` as the canonical task runner for things like linting files and crea
 - `npm run vip` to run [VIP CLI](https://wpvip.com/documentation/vip-go/vip-cli/) commands on staging and production environments.
 
 - `npm run install-cert` to mark the self-signed SSL certificate authority (under [`local/certs/rootCA.pem`](local/certs/rootCA.pem)) for the local development environment as trusted. Make sure [`mkcert` is installed on your computer](#install-dependencies). This command is required to avoid the "Your connection is not private" error when visiting the site. Stop the local environment before running this command, restart the browser/tab after installing the certificate, and start the environment again.
-
 
 ## Deployments 🚀
 

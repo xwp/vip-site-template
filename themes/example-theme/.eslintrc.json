@@ -1,7 +1,6 @@
 {
 	"extends": [
-		"plugin:@wordpress/eslint-plugin/recommended-with-formatting",
-		"plugin:react-hooks/recommended"
+		"plugin:@wordpress/eslint-plugin/recommended-with-formatting"
 	],
 	"env": {
 		"browser": true,

@@ -59,7 +59,6 @@ When you need to publish new Docker images:
    - Push them to `ghcr.io` with the version from docker-compose.yml
    - Make them available for all future CI runs
 
-
 ### Test and Deploy Workflow
 
 The `test-deploy.yml` workflow runs on every push and:

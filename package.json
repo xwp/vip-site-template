@@ -46,15 +46,15 @@
 		"logs": "docker compose logs --follow",
 		"setup": "./local/scripts/setup-multisite.sh",
 		"deploy-dev": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git develop",
-		"deploy-test": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git main",
+		"deploy-test": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git staging",
 		"deploy-pre-prod": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git release",
 		"deploy-production": "./local/scripts/deploy.sh git@github.com:wpcomvip/devgo-vip.git production",
 		"newrelic-mark-deploy": "node ./local/scripts/new-relic-deployment-markers.js"
 	},
 	"devDependencies": {
 		"@automattic/vip": "^3",
+		"@wordpress/eslint-plugin": "^22.5.1",
 		"@wordpress/scripts": "^30.12.1",
-		"@wordpress/eslint-plugin": "^22.11.0",
 		"clean-webpack-plugin": "^4.0.0",
 		"lint-staged": "^15.0.2",
 		"npm-run-all2": "^5.0.0"
