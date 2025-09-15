@@ -83,7 +83,7 @@ jobs:
           script: |
             const hotfixBadge = ${{ inputs.is_hotfix }} ? "**HOTFIX RELEASE**\n\n" : "";
 
-            const prBody = `${hotfixBadge}## 🚀 Production Release - ${new Date().toISOString().split('T')[0]}
+            const prBody = `${hotfixBadge}## Production Release - ${new Date().toISOString().split('T')[0]}
 
             **Release Notes:**
             ${{ inputs.release_notes }}
@@ -168,8 +168,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "${{ inputs.is_hotfix == true && 'danger' || 'warning' }}",
-                "title": "${{ inputs.is_hotfix == true && 'HOTFIX Production Release PR Created' || 'Production Release PR Created' }}",
+                "color": "${{ inputs.is_hotfix == true && '#ff6b6b' || '#ffa500' }}",
+                "pretext": "${{ inputs.is_hotfix == true && ':rotating_light: *HOTFIX Release PR Ready*' || ':memo: *Production Release PR Ready*' }}",
+                "title": "${{ inputs.is_hotfix == true && '🚨 HOTFIX Production Release PR Created' || '📋 Production Release PR Created' }}",
                 "fields": [
                   {
                     "title": "PR Number",
@@ -215,7 +216,7 @@ jobs:
                     "url": "${{ github.server_url }}/${{ github.repository }}/compare/production...release"
                   }
                 ],
-                "footer": "${{ env.GIT_USER_NAME }}"
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
               }]
             }
 
@@ -228,8 +229,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "danger",
-                "title": "Production PR Creation Failed",
+                "color": "#ff0000",
+                "pretext": ":x: *Production PR Creation Failed*",
+                "title": "❌ Production PR Creation Failed",
                 "fields": [
                   {
                     "title": "Triggered by",
@@ -255,6 +257,6 @@ jobs:
                     "style": "danger"
                   }
                 ],
-                "footer": "${{ env.GIT_USER_NAME }}"
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
               }]
             }

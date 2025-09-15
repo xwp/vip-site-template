@@ -126,7 +126,7 @@ jobs:
                   release_id: draftRelease.id,
                   tag_name: version,
                   name: `Production Release ${version}`,
-                  body: `## 🎉 Production Release ${version}
+                  body: `## Production Release ${version}
 
           **Deployment Date:** ${new Date().toISOString().split('T')[0]}
           **Deployed by:** ${{ github.event.pull_request.merged_by.login }}
@@ -190,8 +190,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "good",
-                "title": "Production Release Completed & Cleaned Up",
+                "color": "#36a64f",
+                "pretext": ":tada: *Production Release Successfully Deployed*",
+                "title": "🎉 Production Release Completed & Cleaned Up",
                 "fields": [
                   {
                     "title": "Version",
@@ -237,7 +238,7 @@ jobs:
                     "url": "${{ github.server_url }}/${{ github.repository }}/deployments"
                   }
                 ],
-                "footer": "${{ env.GIT_USER_NAME }}"
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
               }]
             }
 
@@ -250,8 +251,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "warning",
-                "title": "Production Release Completed (Cleanup Skipped)",
+                "color": "#ffa500",
+                "pretext": ":warning: *Production Release Deployed (Minor Cleanup Issue)*",
+                "title": "⚠️ Production Release Completed (Cleanup Skipped)",
                 "fields": [
                   {
                     "title": "Version",
@@ -269,7 +271,7 @@ jobs:
                     "short": false
                   }
                 ],
-                "footer": "${{ env.GIT_USER_NAME }}"
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
               }]
             }
 
@@ -282,8 +284,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "danger",
-                "title": "Release Cleanup Failed",
+                "color": "#ff0000",
+                "pretext": ":x: *Release Cleanup Failed - Manual Action Required*",
+                "title": "❌ Release Cleanup Failed",
                 "fields": [
                   {
                     "title": "PR",
@@ -309,6 +312,6 @@ jobs:
                     "style": "danger"
                   }
                 ],
-                "footer": "${{ env.GIT_USER_NAME }}"
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
               }]
             }

@@ -130,8 +130,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "good",
-                "title": "Release Branch Created",
+                "color": "#36a64f",
+                "pretext": ":construction: *Release Branch Ready for Testing*",
+                "title": "🔧 Release Branch Created",
                 "fields": [
                   {
                     "title": "Version",
@@ -177,7 +178,7 @@ jobs:
                     "url": "${{ github.server_url }}/${{ github.repository }}/actions"
                   }
                 ],
-                "footer": "${{ env.GIT_USER_NAME }}",
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}",
                 "ts": ${{ github.event.repository.updated_at }}
               }]
             }
@@ -191,8 +192,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "danger",
-                "title": "Release Branch Creation Failed",
+                "color": "#ff0000",
+                "pretext": ":x: *Release Branch Creation Failed*",
+                "title": "❌ Release Branch Creation Failed",
                 "fields": [
                   {
                     "title": "Version",
@@ -218,6 +220,6 @@ jobs:
                     "style": "danger"
                   }
                 ],
-                "footer": "${{ env.GIT_USER_NAME }}"
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
               }]
             }

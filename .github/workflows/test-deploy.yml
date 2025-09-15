@@ -127,7 +127,8 @@ jobs:
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
                 "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
-                "title": "${{ job.status == 'success' && 'Tests Passed' || 'Tests Failed' }}",
+                "pretext": "${{ job.status == 'success' && ':white_check_mark: *Tests Passed Successfully*' || ':x: *Tests Failed*' }}",
+                "title": "${{ job.status == 'success' && '✅ All Tests Passed' || '❌ Test Suite Failed' }}",
                 "fields": [
                   {
                     "title": "Branch",
@@ -141,7 +142,7 @@ jobs:
                   },
                   {
                     "title": "Commit",
-                     "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ steps.check-deploy.outputs.short-sha }}`>",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ steps.check-deploy.outputs.short-sha }}`>",
                     "short": true
                   },
                   {
@@ -210,8 +211,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "warning",
-                "title": "Deployment Started",
+                "color": "#ff9900",
+                "pretext": ":rocket: *Deployment In Progress*",
+                "title": "🚀 Deployment Started",
                 "fields": [
                   {
                     "title": "Environment",
@@ -225,7 +227,7 @@ jobs:
                   },
                   {
                     "title": "Commit",
-                     "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.test.outputs.short-sha }}`>",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.test.outputs.short-sha }}`>",
                     "short": true
                   },
                   {
@@ -267,8 +269,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "good",
-                "title": "Deployment Successful",
+                "color": "#36a64f",
+                "pretext": ":white_check_mark: *Deployment Completed Successfully*",
+                "title": "✅ Deployment Successful",
                 "fields": [
                   {
                     "title": "Environment",
@@ -321,8 +324,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "danger",
-                "title": "Deployment Failed",
+                "color": "#ff0000",
+                "pretext": ":x: *Deployment Failed - Immediate Attention Required*",
+                "title": "❌ Deployment Failed",
                 "fields": [
                   {
                     "title": "Environment",

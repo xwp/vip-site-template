@@ -59,7 +59,8 @@ To enable Slack notifications, you need to create a webhook URL:
 
 **Tests Passed:**
 ```
-Tests Passed
+🟢 ✅ All Tests Passed
+✅ Tests Passed Successfully
 
 Branch: main
 Event: Pull Request
@@ -68,11 +69,14 @@ Author: john-doe
 Will Deploy: No - none
 
 [View Run]
+
+🤖 XWP Deploy Bot
 ```
 
 **Tests Failed:**
 ```
-Tests Failed
+🔴 ❌ Test Suite Failed
+❌ Tests Failed
 
 Branch: feature/new-feature
 Event: Pull Request  
@@ -81,23 +85,29 @@ Author: jane-smith
 Will Deploy: No - none
 
 [View Run]
+
+🤖 XWP Deploy Bot
 ```
 
 ### 2. Deployment Started (test-deploy.yml)
 
 ```
-Deployment Started
+🟠 🚀 Deployment Started
+🚀 Deployment In Progress
 
 Environment: production
 Branch: production
 Commit: ghi789jk
 Deployed by: release-manager
+
+🤖 XWP Deploy Bot
 ```
 
 ### 3. Deployment Success (test-deploy.yml)
 
 ```
-Deployment Successful
+🟢 ✅ Deployment Successful
+✅ Deployment Completed Successfully
 
 Environment: production
 Branch: production
@@ -106,12 +116,15 @@ Deployed by: release-manager
 Deployment Time: ~3 minutes
 
 [View Environment] [View Deployment]
+
+🤖 XWP Deploy Bot
 ```
 
 ### 4. Deployment Failed (test-deploy.yml)
 
 ```
-Deployment Failed
+🔴 ❌ Deployment Failed
+❌ Deployment Failed - Immediate Attention Required
 
 Environment: staging
 Branch: main
@@ -120,12 +133,15 @@ Deployed by: developer
 Action Required: Immediate attention needed - Check logs and consider rollback if necessary
 
 [View Logs] [Rollback Guide]
+
+🤖 XWP Deploy Bot
 ```
 
 ### 5. Release Branch Created (create-release-branch.yml)
 
 ```
-Release Branch Created
+🟢 🔧 Release Branch Created
+🔧 Release Branch Ready for Testing
 
 Version: v2.1.0
 Branch: release
@@ -138,24 +154,30 @@ Next Steps:
 • Create production PR when ready
 
 [View Release Branch] [View Draft Release] [Deploy to UAT]
+
+🤖 XWP Deploy Bot
 ```
 
 ### 6. Release Branch Creation Failed (create-release-branch.yml)
 
 ```
-Release Branch Creation Failed
+🔴 ❌ Release Branch Creation Failed
+❌ Release Branch Creation Failed
 
 Version: v2.1.0
 Triggered by: tech-lead
 Error: Check the workflow logs for details
 
 [View Logs]
+
+🤖 XWP Deploy Bot
 ```
 
 ### 7. Production PR Created (create-production-pr.yml)
 
 ```
-Production Release PR Created
+🟠 📋 Production Release PR Created
+📋 Production Release PR Ready
 
 PR Number: #42
 Created by: tech-lead
@@ -165,12 +187,15 @@ Release Notes: Bug fixes and performance improvements
 Action Required: @xwp/client-x: Please review and approve this PR for production deployment
 
 [Review PR] [View Changes]
+
+🤖 XWP Deploy Bot
 ```
 
 ### 8. Hotfix Production PR Created (create-production-pr.yml)
 
 ```
-HOTFIX Production Release PR Created
+🔴 🚨 HOTFIX Production Release PR Created
+🚨 HOTFIX Release PR Ready
 
 PR Number: #43
 Created by: tech-lead
@@ -180,24 +205,30 @@ Release Notes: Critical security fix for user authentication
 Action Required: @xwp/client-x: Please review and approve this PR for production deployment
 
 [Review PR] [View Changes]
+
+🤖 XWP Deploy Bot
 ```
 
 ### 9. Production PR Creation Failed (create-production-pr.yml)
 
 ```
-Production PR Creation Failed
+🔴 ❌ Production PR Creation Failed
+❌ Production PR Creation Failed
 
 Triggered by: tech-lead
 Hotfix Release: false
 Error: Check the workflow logs for details
 
 [View Logs]
+
+🤖 XWP Deploy Bot
 ```
 
 ### 10. Production Release Completed (cleanup-release-branch.yml)
 
 ```
-Production Release Completed & Cleaned Up
+🟢 🎉 Production Release Completed & Cleaned Up
+🎉 Production Release Successfully Deployed
 
 Version: v2.1.0
 Deployed by: tech-lead
@@ -210,37 +241,45 @@ Actions Completed:
 • Release branch cleaned up
 
 [View Production] [View Release] [View Deployment]
+
+🤖 XWP Deploy Bot
 ```
 
 ### 11. Release Cleanup Partial Success (cleanup-release-branch.yml)
 
 ```
-Production Release Completed (Cleanup Skipped)
+🟠 ⚠️ Production Release Completed (Cleanup Skipped)
+⚠️ Production Release Deployed (Minor Cleanup Issue)
 
 Version: v2.1.0
 Deployed by: tech-lead
 Note: Release branch was already deleted (likely by GitHub's auto-delete feature)
+
+🤖 XWP Deploy Bot
 ```
 
 ### 12. Release Cleanup Failed (cleanup-release-branch.yml)
 
 ```
-Release Cleanup Failed
+🔴 ❌ Release Cleanup Failed
+❌ Release Cleanup Failed - Manual Action Required
 
 PR: #42
 Deployed by: tech-lead
 Error: Production deployment succeeded but cleanup failed. Check the workflow logs for details. Manual cleanup may be required.
 
 [View Logs]
+
+🤖 XWP Deploy Bot
 ```
 
 ## Footer
 
-All notifications include a footer showing:
+All notifications include an enhanced footer showing:
 ```
-XWP Deploy Bot
+🤖 XWP Deploy Bot
 ```
-(or the custom name configured in `GIT_USER_NAME` variable)
+(or the custom name configured in `GIT_USER_NAME` variable with robot emoji)
 
 ## Notification Flow
 
