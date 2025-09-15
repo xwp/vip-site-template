@@ -1,10 +1,17 @@
-name: Test and deploy
+name: Test and Deploy
 
-on: push
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [develop, main, release, production]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
-
     name: Lint, Test and Deploy
     runs-on: ubuntu-22.04
     steps:
@@ -82,11 +89,11 @@ jobs:
         run: npm run deploy-pre-prod
 
       - name: Deploy to production
-        if: github.ref_name == 'main'
+        if: github.ref_name == 'production'
         run: npm run deploy-production
 
       - name: Set NewRelic deploy marker
         env:
           NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
-        if: ${{ env.NEW_RELIC_API_KEY != null && github.ref_name == 'main' }}
+        if: ${{ env.NEW_RELIC_API_KEY != null && github.ref_name == 'production' }}
         run: npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ secrets.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"

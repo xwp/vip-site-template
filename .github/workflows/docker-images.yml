@@ -1,18 +1,21 @@
-name: Build and Publish Docker Images
+name: Docker Images
 
 on:
-  push:
+  pull_request:
+    types: [labeled, synchronize, opened, reopened]
     paths:
       - '.github/workflows/**'
       - 'docker-compose.yml'
       - 'local/docker/**'
-    tags:
-      - 'docker-image-build'  # Explicit tag to force image publishing
   workflow_dispatch: # Allow manual triggers
 
-jobs:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
+jobs:
   build-and-push-image:
+    name: Build and Publish Docker Images
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -21,33 +24,56 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check if should publish
+        id: should-publish
+        run: |
+          SHOULD_PUBLISH=false
+
+          # Publish on manual dispatch
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            SHOULD_PUBLISH=true
+            echo "reason=Manual workflow dispatch" >> $GITHUB_OUTPUT
+          fi
+
+          # Publish if PR has docker-image-build label
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            if echo '${{ toJson(github.event.pull_request.labels.*.name) }}' | grep -q "docker-image-build"; then
+              SHOULD_PUBLISH=true
+              echo "reason=PR labeled with 'docker-image-build'" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+          echo "should_publish=$SHOULD_PUBLISH" >> $GITHUB_OUTPUT
+
       - name: Set up QEMU
+        if: steps.should-publish.outputs.should_publish == 'true'
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
+        if: steps.should-publish.outputs.should_publish == 'true'
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to the Container registry
+        if: steps.should-publish.outputs.should_publish == 'true'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build images
-        run: docker compose build
-
-      - name: Publish images
-        # Only push to registry when explicitly triggered by tag or manual dispatch
-        if: github.ref == 'refs/tags/docker-image-build' || github.event_name == 'workflow_dispatch'
+      - name: Build and publish images
+        if: steps.should-publish.outputs.should_publish == 'true'
         run: |
-          echo "Publishing Docker images (triggered by: ${{ github.ref_type }} ${{ github.ref_name }})"
+          echo "Building and publishing Docker images (triggered by: ${{ steps.should-publish.outputs.reason }})"
+          docker compose build
           docker buildx bake --push --set '*.platform=linux/amd64,linux/arm64'
 
-      - name: Images built (not published)
-        if: github.ref != 'refs/tags/docker-image-build' && github.event_name != 'workflow_dispatch'
+      - name: Skip build (no publish needed)
+        if: steps.should-publish.outputs.should_publish != 'true'
         run: |
-          echo "✅ Docker images built successfully (not published to registry)"
-          echo "To publish these images, create and push the 'docker-image-build' tag:"
-          echo "  git tag -f docker-image-build"
-          echo "  git push -f origin docker-image-build"
+          echo "⏭️ Skipping Docker image build (no publish needed)"
+          echo ""
+          echo "Docker-related files were changed, but images won't be published."
+          echo "To build and publish these images:"
+          echo "  1. Add the 'docker-image-build' label to your PR, or"
+          echo "  2. Manually trigger this workflow from the Actions tab"
