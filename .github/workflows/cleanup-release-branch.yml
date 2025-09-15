@@ -1,0 +1,314 @@
+name: Release Branch Cleanup
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [production]
+
+env:
+  # Slack Configuration
+  SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  # Git Configuration
+  GIT_USER_NAME: ${{ vars.GIT_USER_NAME || 'XWP Deploy Bot' }}
+  GIT_USER_EMAIL: ${{ vars.GIT_USER_EMAIL || 'technology@xwp.co' }}
+
+jobs:
+  cleanup-release:
+    runs-on: ubuntu-22.04
+    # Only run if PR was merged (not just closed)
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }} # Do not move to a variable
+
+      - name: Setup Git
+        run: |
+          git config user.name "${{ env.GIT_USER_NAME }}"
+          git config user.email "${{ env.GIT_USER_EMAIL }}"
+
+      - name: Check if release branch exists
+        id: check-branch
+        run: |
+          if git show-ref --verify --quiet refs/remotes/origin/release; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Release branch found - will proceed with cleanup"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Release branch not found - may have been auto-deleted by GitHub"
+          fi
+
+      - name: Get release information
+        id: release-info
+        if: steps.check-branch.outputs.exists == 'true'
+        run: |
+          # Get the release branch commit info
+          RELEASE_SHA=$(git rev-parse origin/release)
+          RELEASE_COMMIT_MSG=$(git log -1 --pretty="%s" origin/release)
+          PRODUCTION_SHA=$(git rev-parse origin/production)
+
+          echo "release_sha=${RELEASE_SHA}" >> $GITHUB_OUTPUT
+          echo "release_commit_msg=${RELEASE_COMMIT_MSG}" >> $GITHUB_OUTPUT
+          echo "production_sha=${PRODUCTION_SHA}" >> $GITHUB_OUTPUT
+
+      - name: Create release tag on production
+        id: create-tag
+        run: |
+          # Extract version from PR title or use timestamp
+          PR_TITLE="${{ github.event.pull_request.title }}"
+
+          # Try to extract version from PR title (looks for vX.Y.Z pattern)
+          if [[ $PR_TITLE =~ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+            VERSION=$(echo "$PR_TITLE" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+')
+          else
+            # Fallback to timestamp-based version
+            VERSION="release-$(date +%Y%m%d-%H%M%S)"
+          fi
+
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+          # Create and push the tag
+          git fetch origin production
+          git checkout production
+          git pull origin production
+
+          # Create annotated tag
+          git tag -a "${VERSION}" -m "Production release ${VERSION}
+
+          Release Notes:
+          ${{ github.event.pull_request.body }}
+
+          Merged PR: #${{ github.event.pull_request.number }}
+          Merged by: ${{ github.event.pull_request.merged_by.login }}
+          Release SHA: ${{ steps.release-info.outputs.release_sha }}"
+
+          git push origin "${VERSION}"
+
+          echo "Created release tag: ${VERSION}"
+
+      - name: Delete release branch
+        if: steps.check-branch.outputs.exists == 'true'
+        run: |
+          echo "Deleting release branch..."
+
+          # Delete the remote release branch
+          git push origin --delete release
+
+          echo "Release branch deleted successfully"
+
+      - name: Update GitHub release
+        id: update-release
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          script: |
+            const version = "${{ steps.create-tag.outputs.version }}";
+
+            try {
+              // Try to find existing draft release
+              const { data: releases } = await github.rest.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+
+              const draftRelease = releases.find(release =>
+                release.draft && (release.tag_name === version || release.name.includes(version))
+              );
+
+              if (draftRelease) {
+                // Update existing draft release
+                await github.rest.repos.updateRelease({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  release_id: draftRelease.id,
+                  tag_name: version,
+                  name: `Production Release ${version}`,
+                  body: `## 🎉 Production Release ${version}
+
+          **Deployment Date:** ${new Date().toISOString().split('T')[0]}
+          **Deployed by:** ${{ github.event.pull_request.merged_by.login }}
+          **PR:** #${{ github.event.pull_request.number }}
+
+          ### Release Notes
+          ${{ github.event.pull_request.body }}
+
+          ### Links
+          - [Merged PR](${{ github.event.pull_request.html_url }})
+          - [Production Branch](${context.payload.repository.html_url}/tree/production)
+
+          ---
+          *This release was finalized automatically by the ${{ env.GIT_USER_NAME }}*`,
+                  draft: false,
+                  prerelease: false
+                });
+
+                console.log(`Updated release: ${draftRelease.html_url}`);
+                return draftRelease.html_url;
+              } else {
+                // Create new release
+                const { data: newRelease } = await github.rest.repos.createRelease({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  tag_name: version,
+                  name: `Production Release ${version}`,
+                  body: `## Production Release ${version}
+
+          **Deployment Date:** ${new Date().toISOString().split('T')[0]}
+          **Deployed by:** ${{ github.event.pull_request.merged_by.login }}
+          **PR:** #${{ github.event.pull_request.number }}
+
+          ### Release Notes
+          ${{ github.event.pull_request.body }}
+
+          ### Links
+          - [Merged PR](${{ github.event.pull_request.html_url }})
+          - [Production Branch](${context.payload.repository.html_url}/tree/production)
+
+          ---
+          *This release was created automatically by the ${{ env.GIT_USER_NAME }}*`,
+                  draft: false,
+                  prerelease: false
+                });
+
+                console.log(`Created new release: ${newRelease.html_url}`);
+                return newRelease.html_url;
+              }
+            } catch (error) {
+              console.log(`Could not update GitHub release: ${error.message}`);
+              return null;
+            }
+
+      - name: Notify Slack - Success
+        if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "good",
+                "title": "Production Release Completed & Cleaned Up",
+                "fields": [
+                  {
+                    "title": "Version",
+                    "value": "${{ steps.create-tag.outputs.version }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Deployed by",
+                    "value": "${{ github.event.pull_request.merged_by.login }}",
+                    "short": true
+                  },
+                  {
+                    "title": "PR",
+                    "value": "<${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>",
+                    "short": true
+                  },
+                  {
+                    "title": "Branch Cleanup",
+                    "value": "${{ steps.check-branch.outputs.exists == 'true' && 'Release branch deleted' || 'Release branch was already deleted by GitHub' }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Actions Completed",
+                    "value": "\n• Production deployment successful\n• Release tag created: `${{ steps.create-tag.outputs.version }}`\n• GitHub release published\n• Release branch cleaned up",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Production",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/tree/production",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Release",
+                    "url": "${{ steps.update-release.outputs.result }}"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Deployment",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/deployments"
+                  }
+                ],
+                "footer": "${{ env.GIT_USER_NAME }}"
+              }]
+            }
+
+      - name: Notify Slack - Partial Success
+        if: failure() && steps.check-branch.outputs.exists == 'false' && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "warning",
+                "title": "Production Release Completed (Cleanup Skipped)",
+                "fields": [
+                  {
+                    "title": "Version",
+                    "value": "${{ steps.create-tag.outputs.version }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Deployed by",
+                    "value": "${{ github.event.pull_request.merged_by.login }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Note",
+                    "value": "Release branch was already deleted (likely by GitHub's auto-delete feature)",
+                    "short": false
+                  }
+                ],
+                "footer": "${{ env.GIT_USER_NAME }}"
+              }]
+            }
+
+      - name: Notify Slack - Failure
+        if: failure() && steps.check-branch.outputs.exists == 'true' && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "danger",
+                "title": "Release Cleanup Failed",
+                "fields": [
+                  {
+                    "title": "PR",
+                    "value": "<${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>",
+                    "short": true
+                  },
+                  {
+                    "title": "Deployed by",
+                    "value": "${{ github.event.pull_request.merged_by.login }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Error",
+                    "value": "Production deployment succeeded but cleanup failed. Check the <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|workflow logs> for details. Manual cleanup may be required.",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Logs",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "style": "danger"
+                  }
+                ],
+                "footer": "${{ env.GIT_USER_NAME }}"
+              }]
+            }

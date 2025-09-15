@@ -1,0 +1,5 @@
+# Global code ownership
+# This file automatically assigns reviewers to PRs based on files changed
+
+# Default owners for all files
+* @xwp/client-x

@@ -10,10 +10,27 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  # Slack Configuration
+  SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  # Deployment Secrets
+  DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+  NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
+  # Git Configuration
+  GIT_USER_NAME: ${{ vars.GIT_USER_NAME || 'XWP Deploy Bot' }}
+  GIT_USER_EMAIL: ${{ vars.GIT_USER_EMAIL || 'technology@xwp.co' }}
+
 jobs:
-  deploy:
-    name: Lint, Test and Deploy
+  # Job 1: Always run linting and testing
+  test:
+    name: Lint and Test
     runs-on: ubuntu-22.04
+    outputs:
+      should-deploy: ${{ steps.check-deploy.outputs.should-deploy }}
+      environment: ${{ steps.check-deploy.outputs.environment }}
+      short-sha: ${{ steps.check-deploy.outputs.short-sha }}
+      display-branch: ${{ steps.check-deploy.outputs.display-branch }}
     steps:
       - uses: actions/checkout@v4
 
@@ -45,7 +62,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }} # Do not move to a variable
 
       - name: Pull custom Docker images
         run: docker compose pull wordpress mkcert
@@ -65,35 +82,286 @@ jobs:
       - name: Test
         run: npm run test
 
+      - name: Check if deployment needed
+        id: check-deploy
+        run: |
+          # Set short commit SHA for Slack notifications
+          echo "short-sha=${GITHUB_SHA:0:8}" >> $GITHUB_OUTPUT
+
+          # Set user-friendly branch name for Slack notifications
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "display-branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+          else
+            echo "display-branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            echo "should-deploy=true" >> $GITHUB_OUTPUT
+
+            case "${{ github.ref_name }}" in
+              "develop")
+                echo "environment=dev" >> $GITHUB_OUTPUT
+                ;;
+              "main")
+                echo "environment=test" >> $GITHUB_OUTPUT
+                ;;
+              "release")
+                echo "environment=pre-prod" >> $GITHUB_OUTPUT
+                ;;
+              "production")
+                echo "environment=production" >> $GITHUB_OUTPUT
+                ;;
+            esac
+          else
+            echo "should-deploy=false" >> $GITHUB_OUTPUT
+            echo "environment=none" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Notify Slack - Test Results
+        if: (success() || failure()) && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
+                "title": "${{ job.status == 'success' && 'Tests Passed' || 'Tests Failed' }}",
+                "fields": [
+                  {
+                    "title": "Branch",
+                    "value": "`${{ steps.check-deploy.outputs.display-branch }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "Event",
+                    "value": "${{ github.event_name == 'push' && 'Push' || 'Pull Request' }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Commit",
+                     "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ steps.check-deploy.outputs.short-sha }}`>",
+                    "short": true
+                  },
+                  {
+                    "title": "Author",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Will Deploy",
+                    "value": "${{ steps.check-deploy.outputs.should-deploy == 'true' && 'Yes - ' || 'No - ' }}${{ steps.check-deploy.outputs.environment }}",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Run",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  }
+                ]
+              }]
+            }
+
+  # Job 2: Deploy only when needed (pushes to protected branches)
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-22.04
+    needs: test
+    if: needs.test.outputs.should-deploy == 'true'
+    environment: ${{ needs.test.outputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install Node dependencies
+        run: npm install --ignore-scripts
+
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      - name: Build for deployment
+        run: npm run release
+
       - name: Setup SSH deploy key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          key: ${{ env.DEPLOY_SSH_KEY }}
           known_hosts: github.com
 
       - name: Setup Git credentials
         run: |
-          git config --global user.name "XWP Deploy Bot"
-          git config --global user.email "technology@xwp.co"
+          git config --global user.name "${{ env.GIT_USER_NAME }}"
+          git config --global user.email "${{ env.GIT_USER_EMAIL }}"
+
+      - name: Notify Slack - Deployment Started
+        if: env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "warning",
+                "title": "Deployment Started",
+                "fields": [
+                  {
+                    "title": "Environment",
+                    "value": "${{ needs.test.outputs.environment }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Branch",
+                    "value": "`${{ needs.test.outputs.display-branch }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "Commit",
+                     "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.test.outputs.short-sha }}`>",
+                    "short": true
+                  },
+                  {
+                    "title": "Deployed by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  }
+                ]
+              }]
+            }
 
       - name: Deploy to develop (dev environment)
         if: github.ref_name == 'develop'
-        run: npm run deploy-dev
+        run: npm run deploy-dev # wpcomvip/devgo-vip.git/develop
 
       - name: Deploy to main (test environment)
         if: github.ref_name == 'main'
-        run: npm run deploy-test
+        run: npm run deploy-test # wpcomvip/devgo-vip.git/staging
 
       - name: Deploy to release (pre-prod environment)
         if: github.ref_name == 'release'
-        run: npm run deploy-pre-prod
+        run: npm run deploy-pre-prod # wpcomvip/devgo-vip.git/release
 
       - name: Deploy to production
         if: github.ref_name == 'production'
-        run: npm run deploy-production
+        run: npm run deploy-production # wpcomvip/devgo-vip.git/production
 
       - name: Set NewRelic deploy marker
-        env:
-          NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
-        if: ${{ env.NEW_RELIC_API_KEY != null && github.ref_name == 'production' }}
-        run: npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ secrets.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"
+        if: github.ref_name == 'production' && env.NEW_RELIC_API_KEY != ''
+        run: |
+          npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ env.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"
+
+      - name: Notify Slack - Deployment Success
+        if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "good",
+                "title": "Deployment Successful",
+                "fields": [
+                  {
+                    "title": "Environment",
+                    "value": "${{ needs.test.outputs.environment }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Branch",
+                    "value": "`${{ needs.test.outputs.display-branch }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "Commit",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.test.outputs.short-sha }}`>",
+                    "short": true
+                  },
+                  {
+                    "title": "Deployed by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Deployment Time",
+                    "value": "~${{ job.duration }} minutes",
+                    "short": true
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Environment",
+                    "url": "${{ github.ref_name == 'production' && 'https://www.devgo-vip.com' || github.ref_name == 'main' && 'https://staging.devgo-vip.com' || 'https://dev.devgo-vip.com' }}",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Deployment",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  }
+                ]
+              }]
+            }
+
+      - name: Notify Slack - Deployment Failed
+        if: failure() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "danger",
+                "title": "Deployment Failed",
+                "fields": [
+                  {
+                    "title": "Environment",
+                    "value": "${{ needs.test.outputs.environment }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Branch",
+                    "value": "`${{ needs.test.outputs.display-branch }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "Commit",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.test.outputs.short-sha }}`>",
+                    "short": true
+                  },
+                  {
+                    "title": "Deployed by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Action Required",
+                    "value": "**Immediate attention needed** - Check logs and consider rollback if necessary",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Logs",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "style": "danger"
+                  },
+                  {
+                    "type": "button",
+                    "text": "Rollback Guide",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/wiki/Rollback-Procedures"
+                  }
+                ]
+              }]
+            }

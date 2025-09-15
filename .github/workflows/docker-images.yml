@@ -59,7 +59,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }} # Do not move to a variable
 
       - name: Build and publish images
         if: steps.should-publish.outputs.should_publish == 'true'
@@ -71,7 +71,7 @@ jobs:
       - name: Skip build (no publish needed)
         if: steps.should-publish.outputs.should_publish != 'true'
         run: |
-          echo "⏭️ Skipping Docker image build (no publish needed)"
+          echo "Skipping Docker image build (no publish needed)"
           echo ""
           echo "Docker-related files were changed, but images won't be published."
           echo "To build and publish these images:"

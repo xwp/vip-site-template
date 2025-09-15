@@ -1,0 +1,260 @@
+name: Create Production Release PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_notes:
+        description: 'Release notes for production deployment'
+        required: true
+        type: string
+      is_hotfix:
+        description: 'Mark as hotfix release'
+        required: false
+        type: boolean
+        default: false
+env:
+  # Slack Configuration
+  SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  # Git Configuration
+  GIT_USER_NAME: ${{ vars.GIT_USER_NAME || 'XWP Deploy Bot' }}
+  GIT_USER_EMAIL: ${{ vars.GIT_USER_EMAIL || 'technology@xwp.co' }}
+
+jobs:
+  create-production-pr:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate release branch exists
+        run: |
+          if ! git show-ref --verify --quiet refs/remotes/origin/release; then
+            echo "Release branch does not exist. Create a release branch first."
+            exit 1
+          fi
+          echo "Release branch found"
+
+      - name: Get release information
+        id: release-info
+        run: |
+          # Get commits between production and release
+          git fetch origin production release
+
+          COMMITS=$(git log --oneline origin/production..origin/release --no-merges | wc -l | xargs)
+          LAST_COMMIT=$(git log -1 --pretty="%h - %s" origin/release)
+          RELEASE_COMMIT=$(git rev-parse origin/release)
+
+          echo "commit_count=${COMMITS}" >> $GITHUB_OUTPUT
+          echo "last_commit=${LAST_COMMIT}" >> $GITHUB_OUTPUT
+          echo "release_sha=${RELEASE_COMMIT}" >> $GITHUB_OUTPUT
+
+          echo "Found ${COMMITS} commits ready for production"
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "Generating changelog..."
+
+          # Create a temporary file for the changelog
+          CHANGELOG_FILE=$(mktemp)
+
+          echo "## Changes in this Release" >> $CHANGELOG_FILE
+          echo "" >> $CHANGELOG_FILE
+
+          # Get commit messages between production and release
+          git log --pretty=format:"- %s (%h)" origin/production..origin/release --no-merges >> $CHANGELOG_FILE
+
+          # Read the changelog and escape for JSON
+          CHANGELOG_CONTENT=$(cat $CHANGELOG_FILE | sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g')
+
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          cat $CHANGELOG_FILE >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+          rm $CHANGELOG_FILE
+
+      - name: Create Production PR
+        id: create-pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const hotfixBadge = ${{ inputs.is_hotfix }} ? "**HOTFIX RELEASE**\n\n" : "";
+
+            const prBody = `${hotfixBadge}## 🚀 Production Release - ${new Date().toISOString().split('T')[0]}
+
+            **Release Notes:**
+            ${{ inputs.release_notes }}
+
+            **Release Statistics:**
+            - **Commits:** ${{ steps.release-info.outputs.commit_count }}
+            - **Release SHA:** \`${{ steps.release-info.outputs.release_sha }}\`
+            - **Last Commit:** ${{ steps.release-info.outputs.last_commit }}
+
+            ${{ steps.changelog.outputs.changelog }}
+
+            ## Pre-Deployment Checklist
+            ${${{ inputs.is_hotfix }} ?
+              `- [ ] Hotfix approved by Technical Lead
+            - [ ] Critical issue confirmed and documented
+            - [ ] Minimal change scope verified` :
+              `- [ ] UAT testing completed and signed off
+            - [ ] Security review completed
+            - [ ] Performance testing completed
+            - [ ] Stakeholder approval received`}
+            - [ ] Database migration scripts reviewed (if applicable)
+            - [ ] Feature flags configured (if applicable)
+
+            ## Deployment Checklist
+            - [ ] Pre-deployment backup verified
+            - [ ] Rollback plan confirmed and tested
+            - [ ] Monitoring alerts configured
+            - [ ] On-call engineer notified
+            - [ ] Deployment window confirmed
+
+            ## Emergency Contacts
+            - **Release Manager:** ${{ github.actor }}
+            - **Team:** @xwp/client-x
+
+            ---
+            *This PR was created automatically by the ${{ env.GIT_USER_NAME }}*
+            *Hotfix Release: ${{ inputs.is_hotfix }}*`;
+
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Production Release - ${new Date().toISOString().split('T')[0]}${${{ inputs.is_hotfix }} ? ' [HOTFIX]' : ''}`,
+              head: 'release',
+              base: 'production',
+              body: prBody
+            });
+
+            // Add reviewers - team and specific users
+            try {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                team_reviewers: ['xwp/client-x']
+              });
+              console.log('Team reviewers added successfully');
+            } catch (error) {
+              console.log('Could not add team reviewers:', error.message);
+            }
+
+            // Add labels - simplified set
+            const labels = ['production-release'];
+            if (${{ inputs.is_hotfix }}) {
+              labels.push('hotfix');
+            }
+
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              labels: labels
+            });
+
+            return pr.number;
+
+      - name: Notify Slack - Success
+        if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "${{ inputs.is_hotfix == true && 'danger' || 'warning' }}",
+                "title": "${{ inputs.is_hotfix == true && 'HOTFIX Production Release PR Created' || 'Production Release PR Created' }}",
+                "fields": [
+                  {
+                    "title": "PR Number",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.create-pr.outputs.result }}|#${{ steps.create-pr.outputs.result }}>",
+                    "short": true
+                  },
+                  {
+                    "title": "Created by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Commits",
+                    "value": "${{ steps.release-info.outputs.commit_count }} commits ready for production",
+                    "short": true
+                  },
+                  {
+                    "title": "Hotfix Release",
+                    "value": "${{ inputs.is_hotfix }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Release Notes",
+                    "value": "${{ inputs.release_notes }}",
+                    "short": false
+                  },
+                  {
+                    "title": "Action Required",
+                    "value": "**@xwp/client-x**: Please review and approve this PR for production deployment",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "Review PR",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.create-pr.outputs.result }}",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Changes",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/compare/production...release"
+                  }
+                ],
+                "footer": "${{ env.GIT_USER_NAME }}"
+              }]
+            }
+
+      - name: Notify Slack - Failure
+        if: failure() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "danger",
+                "title": "Production PR Creation Failed",
+                "fields": [
+                  {
+                    "title": "Triggered by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Hotfix Release",
+                    "value": "${{ inputs.is_hotfix }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Error",
+                    "value": "Check the <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|workflow logs> for details",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Logs",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "style": "danger"
+                  }
+                ],
+                "footer": "${{ env.GIT_USER_NAME }}"
+              }]
+            }

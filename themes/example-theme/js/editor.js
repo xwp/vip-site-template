@@ -1,4 +1,4 @@
-// Block editor JavaScript for Daily Kos theme
+// Block editor JavaScript
 
 /**
  * WordPress dependencies

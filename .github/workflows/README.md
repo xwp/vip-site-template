@@ -1,156 +1,214 @@
 # GitHub Actions Workflows
 
+This repository uses automated GitHub Actions workflows to handle testing, deployments, and release management.
+
+## Overview
+
+| Workflow | Trigger | Purpose |
+|----------|---------|---------|
+| [test-deploy.yml](test-deploy.yml) | PR/Push | Lint, test, and deploy to environments |
+| [create-release-branch.yml](create-release-branch.yml) | Manual | Create release branch from main |
+| [create-production-pr.yml](create-production-pr.yml) | Manual | Create production release PR |
+| [cleanup-release-branch.yml](cleanup-release-branch.yml) | Production merge | Clean up after release |
+| [docker-images.yml](docker-images.yml) | Docker changes | Build/publish Docker images |
+
+## Release Management Workflows
+
+### 1. Create Release Branch
+
+**File**: `create-release-branch.yml`  
+**Trigger**: Manual (workflow_dispatch)  
+**Purpose**: Creates a `release` branch from `main` for UAT testing
+
+**Usage**:
+
+1. Go to Actions → "Create Release Branch"
+2. Enter release version (e.g., `v2.1.0`)
+3. Optionally force update existing branch
+4. Click "Run workflow"
+
+**What it does**:
+
+- Creates/updates `release` branch from latest `main`
+- Creates GitHub release draft
+- Sends Slack notification (if configured)
+
+### 2. Create Production PR  
+
+**File**: `create-production-pr.yml`  
+**Trigger**: Manual (workflow_dispatch)  
+**Purpose**: Creates PR from `release` → `production` with comprehensive checklist
+
+**Usage**:
+
+1. Go to Actions → "Create Production Release PR"
+2. Enter release notes
+3. Mark as hotfix if needed
+4. Click "Run workflow"
+
+**What it does**:
+
+- Validates `release` branch exists
+- Generates changelog from commits
+- Creates PR with deployment checklist
+- Assigns `@xwp/client-x` team as reviewers
+- Adds appropriate labels (`production-release`, `hotfix`)
+
+### 3. Release Cleanup
+
+**File**: `cleanup-release-branch.yml`  
+**Trigger**: Automatic (when production PR is merged)  
+**Purpose**: Cleans up after successful production deployment
+
+**What it does**:
+
+- Creates release tag on production branch
+- Deletes release branch (if exists)
+- Publishes GitHub release
+- Sends completion notification
+
+## Test & Deploy Workflow
+
+**File**: `test-deploy.yml`  
+**Trigger**: All PRs and pushes to protected branches
+
+### For Pull Requests
+
+- ✅ Lint and test only
+- ❌ No deployment
+
+### For Branch Pushes
+
+- ✅ Lint and test
+- 🚀 Deploy to environment:
+  - `develop` → Dev environment
+  - `main` → Test environment  
+  - `release` → Pre-prod environment
+  - `production` → Production environment
+
+### Features
+
+- Split jobs for efficiency (test always runs, deploy only when needed)
+- Auto-cancellation of redundant runs
+- Comprehensive Slack notifications
+- NewRelic deployment markers (production only)
+
 ## Docker Image Management
 
-### Quick Start
+**File**: `docker-images.yml`  
+**Purpose**: Builds and publishes Docker images when needed
 
-For your first PR with Docker changes:
-```bash
-# After pushing your PR, you'll see CI fail with "manifest unknown"
-# This is expected! Now publish the images:
-# 1. Add the "docker-image-build" label to your PR in GitHub, or
-# 2. Manually trigger the workflow from the Actions tab
+### Triggers
 
-# Wait for docker-images workflow to complete, then re-run failed CI jobs
-```
+- Docker-related file changes (builds only, doesn't publish)
+- PR labeled with `docker-image-build` (builds and publishes)
+- Manual workflow dispatch (builds and publishes)
 
-### How It Works
+### Usage
 
-Docker images are built automatically when Docker files change, but only published to the registry when explicitly requested via PR labels or manual triggers. This ensures version immutability and prevents accidental overwrites.
-
-#### Workflow Triggers
-
-The `docker-images.yml` workflow runs when:
-- Docker-related files change (Dockerfile, docker-compose.yml)
-- A PR is labeled with `docker-image-build`
-- Manually triggered from GitHub Actions UI
-
-#### Publishing Docker Images
-
-Images are **only** published to GitHub Container Registry when:
-1. A PR has the `docker-image-build` label
-2. You manually trigger the workflow from GitHub Actions UI
-
-When triggered by file changes alone, images are built but NOT published.
-
-#### Creating a Docker Release
-
-When you need to publish new Docker images:
-
-1. **Update the version** in `docker-compose.yml` (if needed):
-   ```yaml
-   image: ghcr.io/xwp/vip-site-template--wordpress:2.3.0  # ← Bump this
-   ```
-
-2. **Commit and push** your changes:
-   ```bash
-   git add docker-compose.yml local/docker/
-   git commit -m "Update WordPress container to Node.js 20"
-   git push
-   ```
-
-3. **Add the `docker-image-build` label** to your PR:
-   - Go to your PR on GitHub
-   - Click "Labels" in the right sidebar
-   - Add the `docker-image-build` label
-
-4. The `docker-images.yml` workflow will:
-   - Build the images
-   - Push them to `ghcr.io` with the version from docker-compose.yml
-   - Make them available for all future CI runs
-
-### Test and Deploy Workflow
-
-The `test-deploy.yml` workflow runs on every push and:
-1. **Pulls** the Docker images from the registry
-2. Runs tests and deployments
-
-**Important:** The workflow will fail if Docker images haven't been published yet. This is intentional to ensure all CI runs use the same published images.
-
-### Version Management Best Practices
-
-#### When to Create a New Version
-
-Create a new Docker image version when you:
-- Update the Dockerfile (new tools, dependencies, configurations)
-- Change base images (e.g., `wordpress:php8.2-apache` → `wordpress:php8.3-apache`)
-- Fix bugs in the container setup
-- Update Node.js, PHP, or other runtime versions
-
-#### When NOT to Create a New Version
-
-Don't create a new version for:
-- PHP/JavaScript code changes
-- Composer/npm dependency updates (handled at runtime)
-- Theme or plugin updates
-
-### Example Workflow
-
-1. **Initial setup** (first PR with Docker changes):
-   ```bash
-   # After pushing your PR, publish the Docker images:
-   # Add "docker-image-build" label to your PR in GitHub UI
-   # Re-run failed CI jobs - they will now pass
-   ```
-
-2. **Regular development**:
-   - Push code changes normally
-   - CI pulls existing Docker images from registry
-   - Tests run fast without rebuilding images
-
-3. **When Dockerfile changes**:
-   ```bash
-   # Edit Dockerfile and bump version in docker-compose.yml
-   vim local/docker/wordpress/Dockerfile
-   vim docker-compose.yml  # Change 2.2.0 → 2.3.0
-
-   # Commit and push
-   git add .
-   git commit -m "feat: Update Docker images with Node.js 20"
-   git push
-
-   # Add "docker-image-build" label to your PR in GitHub
-   ```
-
-### Manual Trigger
-
-You can also manually trigger the Docker image build:
-1. Go to Actions tab in GitHub
-2. Select "Build and Publish Docker Images"
-3. Click "Run workflow"
-4. Select the branch and click "Run workflow"
+1. Make Docker changes (Dockerfile, docker-compose.yml)
+2. Push to PR
+3. Add `docker-image-build` label to PR
+4. Images are built and published to GitHub Container Registry
 
 ### Benefits
 
-- **Immutable versions**: Once published, version 2.2.0 never changes
-- **Explicit control**: You decide when to publish new images via PR labels
-- **Efficient CI**: No unnecessary rebuilds or publishes
-- **Validation**: Docker changes are built automatically to catch errors early
-- **Simple workflow**: Just add a label to publish images
-- **PR-integrated**: Publishing is tied to the PR workflow
+- Only builds when actually needed (saves CI time)
+- Explicit control over publishing
+- Version immutability
 
-### Troubleshooting
+## Configuration
 
-**Q: CI fails with "manifest unknown" error**
-A: Docker images haven't been published yet. Add the `docker-image-build` label to your PR.
+### Required GitHub Secrets
 
-**Q: I updated the Dockerfile but CI is using old images**
-A: 
-1. Bump the version in docker-compose.yml (e.g., 2.2.0 → 2.3.0)
-2. Push your changes
-3. Add the `docker-image-build` label to your PR
+```bash
+DEPLOY_SSH_KEY          # SSH key for VIP deployments
+```
 
-**Q: Can I overwrite an existing image version?**
-A: Yes, by using the same version and adding the label again, but this is discouraged. Better to bump the version for traceability.
+### Optional GitHub Secrets
 
-**Q: How do I know which Docker image version is being used?**
-A: Check the `docker-compose.yml` file for the current image tags.
+```bash
+SLACK_WEBHOOK_URL       # Slack webhook for notifications
+NEW_RELIC_API_KEY      # NewRelic deployment markers
+```
 
-**Q: The docker-images workflow ran but images weren't published**
-A: This is expected when triggered by file changes alone. Only PRs with the `docker-image-build` label or manual triggers publish images.
+📋 **Slack setup guide**: [SLACK-NOTIFICATIONS.md](SLACK-NOTIFICATIONS.md#setup)
 
-**Q: How do I add the docker-image-build label?**
-A: 
-1. Go to your PR on GitHub
-2. Click "Labels" in the right sidebar  
-3. Type `docker-image-build` and select it (or create it if it doesn't exist)
+### Optional GitHub Variables
+
+```bash
+SLACK_CHANNEL          # Slack channel (e.g., #releases)
+GIT_USER_NAME          # Git author name (default: XWP Deploy Bot)
+GIT_USER_EMAIL         # Git author email (default: technology@xwp.co)
+```
+
+### Required GitHub Labels
+
+```bash
+production-release     # Added to production PRs
+hotfix                 # Added to emergency releases
+docker-image-build     # Triggers Docker image publishing
+```
+
+## Code Ownership
+
+The [CODEOWNERS](../CODEOWNERS) file automatically assigns reviewers:
+
+- All files require review from `@xwp/client-x` team
+- Works with branch protection rules to enforce reviews
+
+## Slack Notifications
+
+All workflows support optional Slack notifications. Examples and setup details: [SLACK-NOTIFICATIONS.md](SLACK-NOTIFICATIONS.md)
+
+## Best Practices
+
+### For Developers
+
+- Create feature branches from `main`
+- Ensure tests pass before merging
+- Use descriptive commit messages
+- Add Docker label only when publishing images
+
+### For EM/TL
+
+- Use release workflows for UAT and production
+- Review production PRs carefully
+- Monitor Slack notifications for deployment status
+- Verify environment deployments before promoting
+- Configure secrets and variables in repository settings
+- Set up branch protection rules
+- Keep Docker images updated
+
+## Troubleshooting
+
+### Common Issues
+
+**Workflow fails with missing secrets**:
+
+- Check repository secrets are configured
+- Verify secret names match workflow expectations
+
+**Docker builds fail**:
+
+- Ensure `docker-image-build` label is added to PR
+- Check Docker image versions in docker-compose.yml
+
+**Deployments fail**:
+
+- Verify SSH key has proper permissions
+- Check VIP repository access
+- Review deployment logs for specific errors
+
+**Slack notifications not working**:
+
+- Confirm both `SLACK_CHANNEL` and `SLACK_WEBHOOK_URL` are set
+- Test webhook URL manually
+- Check channel permissions
+
+### Getting Help
+
+1. Check workflow logs in GitHub Actions tab
+2. Review error messages in PR checks
+3. Consult team Slack channels
+4. Contact DevOps team for infrastructure issues
