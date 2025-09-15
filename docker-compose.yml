@@ -16,6 +16,7 @@ services:
   # Create a local DNS server that maps all *.local.wpenv.net to this environment when not connected to the internet.
   # Append `--log-queries --log-facility=-` to the command to enable verbose logging to stderr of all lookups.
   dnsmasq:
+    platform: linux/amd64 # Required for Apple silicon
     image: andyshinn/dnsmasq:2.83
     # Enable only when needed.
     # ports:
@@ -30,8 +31,9 @@ services:
     build: ./local/docker/mkcert
     volumes:
       - ./local/certs:/root/.local/share/mkcert
-    command: sh -c 'test -f "${DEV_URL:-local.wpenv.net}.crt" || mkcert -cert-file "${DEV_URL:-local.wpenv.net}.crt" -key-file "${DEV_URL:-local.wpenv.net}.key" "${DEV_URL:-local.wpenv.net}" "*.${DEV_URL:-local.wpenv.net}"'
-
+    command: |
+      sh -c 'test -f "${DEV_URL:-local.wpenv.net}.crt" || mkcert -cert-file "${DEV_URL:-local.wpenv.net}.crt" -key-file "${DEV_URL:-local.wpenv.net}.key" \
+      "${DEV_URL:-local.wpenv.net}" "*.${DEV_URL:-local.wpenv.net}"'
 
   # Sync VIP MySQL container and it's configurations - https://github.com/Automattic/vip-cli/blob/549a45a37bc254a39dba9ed23ac88174a35aa1da/assets/dev-env.lando.template.yml.ejs#L74-L75
   db:
@@ -49,8 +51,8 @@ services:
       MYSQL_PASSWORD: wordpress
 
   phpmyadmin:
+    platform: linux/amd64 # Required for Apple silicon
     image: phpmyadmin/phpmyadmin:5.2.1
-    platform: linux/amd64
     depends_on:
       - db
     environment:
@@ -61,6 +63,7 @@ services:
 
   # Capture all emails sent by WordPress.
   mailhog:
+    platform: linux/amd64 # Required for Apple silicon
     image: mailhog/mailhog:v1.0.1
     environment:
       VIRTUAL_HOST: mail.${DEV_URL:-local.wpenv.net}
@@ -72,8 +75,8 @@ services:
 
   # Review Xdebug profiling data.
   webgrind:
+    platform: linux/amd64 # Required for Apple silicon
     image: jokkedk/webgrind:latest
-    platform: linux/amd64
     volumes:
       - webgrind_data:/tmp
     environment:
@@ -81,21 +84,24 @@ services:
 
   # Enable VIP ElasticSearch https://docs.wpvip.com/technical-references/elasticsearch/
   elasticsearch:
-    # Sync version with VIP settings https://github.com/Automattic/vip-cli/blob/0e5d5a1fc2761fc67d5e59ab3d817e7724b139e6/assets/dev-env.lando.template.yml.ejs#L99
-    image: elasticsearch:7.17.2
+    # Sync version with VIP settings hhttps://github.com/Automattic/vip-cli/blob/v2.32.0/assets/dev-env.lando.template.yml.ejs#L133
+    image: elasticsearch:7.17.8
+    mem_limit: ${ES_MEM_LIMIT:-2g}
+    mem_reservation: ${ES_MEM_RESERVATION:-2g}
     environment:
-      - discovery.type=single-node
-      - cluster.name=elasticsearch
-      - xpack.security.enabled=false
-      - bootstrap.memory_lock=true
+      discovery.type: single-node
+      cluster.name: elasticsearch
+      xpack.security.enabled: false
+      bootstrap.memory_lock: true
+      ES_JAVA_OPTS: ${ES_JAVA_OPTS:- -Xms1g -Xmx1g}
     volumes:
-        - elasticsearch_data:/usr/share/elasticsearch/data
+      - elasticsearch_data:/usr/share/elasticsearch/data
 
   wordpress:
     depends_on:
       - db
     build: ./local/docker/wordpress
-    image: ghcr.io/xwp/vip-site-template--wordpress:2.1.0
+    image: ghcr.io/xwp/vip-site-template--wordpress:2.2.0
     restart: always
     volumes:
       - ./local/public:/var/www/html
@@ -107,8 +113,9 @@ services:
       VIRTUAL_HOST: ${DEV_URL:-local.wpenv.net}, *.${DEV_URL:-local.wpenv.net}
       SMTPSERVER: mailhog
       EMAIL: local@${DEV_URL:-local.wpenv.net}
-      XDEBUG_MODE: debug,coverage # Append `profile` to enable profiling or leave empty to disable all.
-      XDEBUG_CONFIG: client_host=host.docker.internal discover_client_host=0 # Required for MacOS only.
+      XDEBUG_TRIGGER: # Starts Xdebug when the value is not empty.
+      XDEBUG_MODE: # Configure in your .env file.
+      XDEBUG_CONFIG: # Configure in your .env file.
       WP_PHPUNIT__TESTS_CONFIG: /var/www/html/wp-tests-config.php
 
 volumes:

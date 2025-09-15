@@ -1,7 +1,7 @@
 FROM wordpress:php8.2-apache
 
-# Can be overridden in docker-compose.yml via the build args.
-ARG NODE_VERSION=18
+ARG VERSION_WPCLI=2.9.0
+ARG NODE_VERSION=20
 
 # Set cache directories to a predictable location for re-use.
 ENV COMPOSER_HOME /tmp/.composer
@@ -33,11 +33,18 @@ RUN mkdir -p /etc/apt/keyrings \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Install PHP Composer.
-RUN curl -s https://getcomposer.org/installer | \
-	php --version=2.6.6 --filename=composer --install-dir=/usr/local/bin
+RUN curl --silent https://getcomposer.org/installer | \
+	php -- --version=2.6.6 --filename=composer --install-dir=/usr/local/bin
+
+# Install WP-CLI.
+RUN curl --location --output /usr/local/bin/wp "https://github.com/wp-cli/wp-cli/releases/download/v${VERSION_WPCLI}/wp-cli-${VERSION_WPCLI}.phar" \
+	&& chmod +x /usr/local/bin/wp
 
 # Include our custom config for PHP and Xdebug.
 COPY config/php/* /usr/local/etc/php/conf.d/
+
+# Configure PCNTL for parallel linting.
+RUN docker-php-ext-install pcntl
 
 # Setup xdebug and memcached.
 RUN pecl install xdebug-3.3.1 memcached-3.2.0 \

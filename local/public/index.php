@@ -7,7 +7,8 @@
  *
  * @see https://github.com/docker-library/wordpress/blob/e665dbf6044556ace612e09ce1e01d92bb8d6a34/latest/php8.0/fpm/docker-entrypoint.sh#L71-L96
  *
- * @package XWP\Vip_Site_Template
+ * @package XWP\VIP_Site_Template
  */
 
+// Load WP.
 require_once __DIR__ . '/wp/index.php';

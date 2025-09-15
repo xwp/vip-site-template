@@ -1,6 +1,8 @@
 # List all files and directories to be deployed to VIP source repository.
 # Use the rsync syntax https://linux.die.net/man/1/rsync
 
+# Include main VIP directories
+# https://docs.wpvip.com/wordpress-skeleton/#0-required-directories
 + /client-mu-plugins/
 + /images/
 + /languages/
@@ -11,8 +13,58 @@
 + /config/
 + .gitkeep
 
-# Exclude everything else
+# Exclude everything else at root level
 - /*
+
+# Global exclusions - Development directories
+- .cache/
+- .git/
+- coverage/
+- node_modules/
+- tests/
+- test/
+- vendor/
+
+# Development config files
+- package.json
+- package-lock.json
+- composer.json
+- composer.lock
+- phpunit.xml*
+- phpcs.xml*
+- jest.config.js
+- postcss.config.js
+- webpack.config.js
+
+# Linting and formatting configs
+- .eslintrc*
+- .eslintignore
+- .stylelintrc*
+- .stylelintignore
+- .browserslistrc
+- .editorconfig
 - .gitignore
-- /object-cache.php
-- /client-mu-plugins/tests/
+- .lintstagedrc*
+- .prettierrc*
+- .phpunit.result.cache
+
+# IDE and editor files
+- .claude/
+- .cursor/
+- .idea/
+- .vscode/
+
+# Documentation and meta files
+- *.md
+- *.txt
+- LICENSE
+
+# System and temporary files
+- .DS_Store
+- Thumbs.db
+- *.log
+- .env*
+- *.tmp
+- *.cache
+- *.pid
+- *.lock

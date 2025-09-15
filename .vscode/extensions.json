@@ -1,8 +1,11 @@
 {
-  "recommendations": [
-    "editorconfig.editorconfig",
-    "davidanson.vscode-markdownlint",
-    "felixfbecker.php-debug",
-    "bmewburn.vscode-intelephense-client"
-  ]
+	"recommendations": [
+		"editorconfig.editorconfig",
+		"davidanson.vscode-markdownlint",
+		"xdebug.php-debug",
+		"bmewburn.vscode-intelephense-client",
+		"stylelint.vscode-stylelint",
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode"
+	]
 }

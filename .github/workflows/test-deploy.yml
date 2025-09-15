@@ -1,10 +1,17 @@
-name: Test and deploy
+name: Test and Deploy
 
-on: push
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [develop, main, release, production]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
-
     name: Lint, Test and Deploy
     runs-on: ubuntu-22.04
     steps:
@@ -69,16 +76,24 @@ jobs:
           git config --global user.name "XWP Deploy Bot"
           git config --global user.email "technology@xwp.co"
 
-      - name: Deploy to develop
+      - name: Deploy to develop (dev environment)
         if: github.ref_name == 'develop'
-        run: npm run deploy-staging
+        run: npm run deploy-dev
+
+      - name: Deploy to main (test environment)
+        if: github.ref_name == 'main'
+        run: npm run deploy-test
+
+      - name: Deploy to release (pre-prod environment)
+        if: github.ref_name == 'release'
+        run: npm run deploy-pre-prod
 
       - name: Deploy to production
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'production'
         run: npm run deploy-production
 
       - name: Set NewRelic deploy marker
         env:
           NEW_RELIC_API_KEY: ${{ secrets.NEW_RELIC_API_KEY }}
-        if: ${{ env.NEW_RELIC_API_KEY != null && github.ref_name == 'master' }}
+        if: ${{ env.NEW_RELIC_API_KEY != null && github.ref_name == 'production' }}
         run: npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ secrets.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"

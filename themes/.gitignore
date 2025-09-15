@@ -2,3 +2,5 @@
 *
 !.gitkeep
 !.gitignore
+!example-theme/
+!example-theme/**

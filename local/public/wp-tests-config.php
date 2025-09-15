@@ -2,7 +2,7 @@
 /**
  * PHPUnit config used only for tests.
  *
- * @package XWP\Vip_Site_Template
+ * @package XWP\VIP_Site_Template
  */
 
 // In case this is loaded before WP core.
@@ -22,6 +22,7 @@ define( 'DB_COLLATE', '' );
 error_reporting( -1 );
 
 define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', __DIR__ . '/wp-content/debug-tests.log' );
 define( 'WP_DEBUG_DISPLAY', true );
 
 // Enable offline mode to ensure it doesn't connect to WP.com.
@@ -55,6 +56,22 @@ define( 'VIP_ELASTICSEARCH_USERNAME', 'elastic' );
 define( 'VIP_ELASTICSEARCH_PASSWORD', 'changeme' );
 define( 'FILES_CLIENT_SITE_ID', 123456 ); // Fake client site ID.
 
+define( 'VIP_ENABLE_VIP_SEARCH', false ); // Disable ES during tests since data is populated during runtime and never indexed.
+
+// Enable Xdebug during tests.
+if ( 'cli' === php_sapi_name() && function_exists( 'xdebug_connect_to_client' ) ) {
+	xdebug_connect_to_client();
+}
+
+/**
+ * Match the VIP production behaviour on local.
+ *
+ * @see https://github.com/Automattic/vip-go-mu-plugins/blob/ab1f0ac12b1690d27a175baac10729cc7a0060ff/000-pre-vip-config/requires.php
+ */
+if ( file_exists( __DIR__ . '/wp-content/mu-plugins/000-pre-vip-config/requires.php' ) ) {
+	require_once __DIR__ . '/wp-content/mu-plugins/000-pre-vip-config/requires.php';
+}
+
 // Include VIP-specific config.
 if ( file_exists( __DIR__ . '/vip-config/vip-config.php' ) ) {
 	require __DIR__ . '/vip-config/vip-config.php';
@@ -72,7 +89,9 @@ try {
 // Use a dedicated prefix for the test tables.
 $table_prefix = 'tests_';
 
+// Multisite config.
 define( 'WP_TESTS_MULTISITE', true );
+
 define( 'WP_TESTS_DOMAIN', 'example.org' );
 define( 'WP_TESTS_EMAIL', 'admin@example.org' );
 define( 'WP_TESTS_TITLE', 'Test Blog' );

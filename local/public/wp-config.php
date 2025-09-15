@@ -4,8 +4,11 @@
  *
  * phpcs:disable WordPress.WP.CapitalPDangit.Misspelled, WordPress.WP.GlobalVariablesOverride.Prohibited
  *
- * @package XWP\Vip_Site_Template
+ * @package XWP\VIP_Site_Template
  */
+
+// On VIP this is actually loaded from /vip-config/vip-config.php.
+require_once __DIR__ . '/wp-content/plugins/vendor/autoload.php';
 
 // Configured in docker-compose.yml.
 define( 'DB_NAME', 'wordpress' );
@@ -15,21 +18,24 @@ define( 'DB_HOST', 'db' );
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
+// Multisite config.
 define( 'MULTISITE', true );
-define( 'SUBDOMAIN_INSTALL', true );
+define( 'SUBDOMAIN_INSTALL', false ); // Matching VIP setup.
 define( 'PATH_CURRENT_SITE', '/' );
 define( 'SITE_ID_CURRENT_SITE', 1 );
 define( 'BLOG_ID_CURRENT_SITE', 1 );
 
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_DISPLAY', true );
+define( 'WP_DEBUG_LOG', true );
+define( 'SCRIPT_DEBUG', true );
 
 // Define the local environment.
 define( 'VIP_GO_APP_ENVIRONMENT', 'local' );
 define( 'VIP_GO_ENV', 'local' );
 
 // Set the default theme for new sites.
-define( 'WP_DEFAULT_THEME', 'twentytwentytwo' );
+define( 'WP_DEFAULT_THEME', 'twentytwentyfive' );
 
 // Enable offline mode to ensure it doesn't connect to WP.com.
 define( 'JETPACK_DEV_DEBUG', true ); // phpcs:ignore WordPressVIPMinimum.Constants.RestrictedConstants.DefiningRestrictedConstant
@@ -68,6 +74,29 @@ define( 'VIP_ELASTICSEARCH_ENDPOINTS', [ 'http://elasticsearch:9200' ] );
 define( 'VIP_ELASTICSEARCH_USERNAME', 'elastic' );
 define( 'VIP_ELASTICSEARCH_PASSWORD', 'changeme' );
 define( 'FILES_CLIENT_SITE_ID', 123456 ); // Fake client site ID.
+
+// Enable Xdebug during CLI requests.
+if ( 'cli' === php_sapi_name() && function_exists( 'xdebug_connect_to_client' ) ) {
+	xdebug_connect_to_client();
+}
+
+// Ensure the DB host is ready to accept connections.
+$connection = new XWP\Wait_For\Tcp_Connection( DB_HOST, 3306 );
+
+try {
+	$connection->connect( 30 ); // DB container might take a while when starting from scratch.
+} catch ( Exception $e ) {
+	trigger_error( $e->getMessage(), E_USER_ERROR ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_trigger_error, WordPress.Security.EscapeOutput.OutputNotEscaped
+}
+
+/**
+ * Match the VIP production behaviour on local.
+ *
+ * @see https://github.com/Automattic/vip-go-mu-plugins/blob/ab1f0ac12b1690d27a175baac10729cc7a0060ff/000-pre-vip-config/requires.php
+ */
+if ( file_exists( __DIR__ . '/wp-content/mu-plugins/000-pre-vip-config/requires.php' ) ) {
+	require_once __DIR__ . '/wp-content/mu-plugins/000-pre-vip-config/requires.php';
+}
 
 // Include VIP-specific config.
 if ( file_exists( __DIR__ . '/vip-config/vip-config.php' ) ) {

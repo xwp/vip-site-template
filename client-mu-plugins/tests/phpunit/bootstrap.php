@@ -2,7 +2,7 @@
 /**
  * Bootstrap the WP testing environment.
  *
- * @package XWP\Vip_Site_Template
+ * @package XWP\VIP_Site_Template
  */
 
 // Load WP unit test helper library.

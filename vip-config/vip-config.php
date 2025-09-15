@@ -12,18 +12,39 @@
  *   classes, and functions are not available. The code below should be limited to pure PHP.
  *
  * @see https://vip.wordpress.com/documentation/vip-go/understanding-your-vip-go-codebase/
+ *
+ * @package XWP\VIP_Site_Template
  */
 
-// Enable Composer autoloader.
-require dirname( __DIR__ ) . '/wp-content/plugins/vendor/autoload.php';
+/**
+ * Enable Composer autoloader.
+ *
+ * Note that on VIP servers the vip-config directory gets mounted
+ * in the public root directory instead of inside the wp-content directory
+ * like it is in the source repository.
+ *
+ * This is also the reason why we can't place the vendor directory under
+ * vip-config as its path changes on the server which breaks all the
+ * resolved paths in the autoload.php file.
+ */
+if ( file_exists( dirname( __DIR__ ) . '/plugins/vendor/autoload.php' ) ) {
+	require_once dirname( __DIR__ ) . '/plugins/vendor/autoload.php';
+} elseif ( file_exists( dirname( __DIR__ ) . '/wp-content/plugins/vendor/autoload.php' ) ) {
+	require_once dirname( __DIR__ ) . '/wp-content/plugins/vendor/autoload.php';
+}
 
 /**
- * Enable VIP Search.
+ * Enable VIP Search. Use a conditional
+ * since it might be disabled for tests or local development.
  *
  * @see https://docs.wpvip.com/technical-references/enterprise-search/
  */
-define( 'VIP_ENABLE_VIP_SEARCH', true );
-define( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION', true );
+if ( ! defined( 'VIP_ENABLE_VIP_SEARCH' ) ) {
+	define( 'VIP_ENABLE_VIP_SEARCH', true );
+}
+if ( ! defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) ) {
+	define( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION', true );
+}
 
 /**
  * Set a high default limit to avoid too many revisions from polluting the database.
@@ -63,6 +84,14 @@ if ( function_exists( 'newrelic_disable_autorum' ) ) {
 if ( defined( 'VIP_GO_APP_ENVIRONMENT' ) && 'production' !== VIP_GO_APP_ENVIRONMENT && ! defined( 'WP_DEBUG' ) ) {
 	define( 'WP_DEBUG', true );
 }
+
+/**
+ * Set WP_MEMORY_LIMIT to the current memory limit.
+ * Fall back to 1024M if the current memory limit is not set.
+ *
+ * Some GraphQL/SQL queries, relying on Elasticsearch, can take up to 1GB of memory.
+ */
+define( 'WP_MEMORY_LIMIT', ini_get( 'memory_limit' ) ?: '1024M' );
 
 /**
  * Set site domain for NewRelic in order to have separate logs for each site.

@@ -1,20 +1,20 @@
-# Update the `setup` script in package.json to configure the correct type of site.
-url: local.wpenv.net
+# Update the `setup-multisite.sh` script to configure the correct type of site, domains and emails.
+url: network.local.wpenv.net
 path: wp
-
-# Single site config.
-core install:
-  skip-config: true
-  title: VIP Go
-  admin_user: devgo
-  admin_password: devgo
-  admin_email: local@devgo.vip
 
 # Multisite config.
 core multisite-install:
   skip-config: true
   subdomains: true
-  title: VIP Go
+  title: VIP Go Network
   admin_user: devgo
   admin_password: devgo
   admin_email: local@devgo.vip
+
+@devgo-network:
+  url: network.local.wpenv.net
+  path: wp
+
+@devgo:
+  url: main.local.wpenv.net
+  path: wp

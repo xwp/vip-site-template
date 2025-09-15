@@ -1,0 +1,21 @@
+# Development dependencies.
+node_modules
+vendor
+languages
+build
+.phpunit.result.cache
+
+# Supported local overrides.
+.env
+phpcs.xml
+.wp-env.override.json
+phpstan.neon
+
+# Logs and database dumps.
+*.log
+*.sql
+*.sqlite
+
+# OS and IDE files.
+.idea
+.DS_Store

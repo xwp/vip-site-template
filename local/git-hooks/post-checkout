@@ -1,0 +1,2 @@
+# Update autoload on branch checkout
+composer dump-autoload
