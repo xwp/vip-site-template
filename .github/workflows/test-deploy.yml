@@ -74,7 +74,17 @@ jobs:
         run: docker compose pull wordpress mkcert
 
       - name: Install Node dependencies
-        run: npm install --ignore-scripts --prefer-offline --no-audit
+        # We are checking for both root and theme node_modules folders to confirm the cache was found.
+        # The npm install deletes and recreates node_modules when needed,
+        # therefore we're skipping the command when the cache was hit.
+        # Important: keep the detection logic in sync with the cache path above.
+        run: |
+          if [ -d "node_modules" ] && [ -n "$(find themes -maxdepth 2 -name 'node_modules' -type d 2>/dev/null)" ]; then
+            echo "Node modules cache hit - skipping installation"
+          else
+            echo "Node modules cache miss - installing dependencies"
+            npm install --ignore-scripts --prefer-offline --no-audit
+          fi
 
       - name: Install Composer dependencies
         run: composer install
@@ -84,9 +94,6 @@ jobs:
 
       - name: Setup tests
         run: mkdir uploads
-
-      - name: Test
-        run: npm run test
 
       - name: Check if deployment needed
         id: check-deploy
@@ -123,6 +130,9 @@ jobs:
             echo "environment=none" >> $GITHUB_OUTPUT
           fi
 
+      - name: Test
+        run: npm run test
+
       - name: Notify Slack - Test results
         if: (success() || failure()) && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
@@ -138,7 +148,7 @@ jobs:
                 "fields": [
                   {
                     "title": "Branch",
-                    "value": "`${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}`",
+                     "value": "`${{ steps.check-deploy.outputs.display-branch }}`",
                     "short": true
                   },
                   {
@@ -148,7 +158,7 @@ jobs:
                   },
                   {
                     "title": "Commit",
-                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${GITHUB_SHA:0:8}`>",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ steps.check-deploy.outputs.short-sha }}`>",
                     "short": true
                   },
                   {
@@ -158,7 +168,7 @@ jobs:
                   },
                   {
                     "title": "Will Deploy",
-                    "value": "${{ github.event_name == 'push' && 'Yes' || 'No' }} - ${{ github.event_name == 'push' && (github.ref_name == 'develop' && 'dev' || github.ref_name == 'main' && 'test' || github.ref_name == 'release' && 'pre-prod' || github.ref_name == 'production' && 'production' || 'unknown') || 'none' }}",
+                    "value": "${{ steps.check-deploy.outputs.should-deploy == 'true' && 'Yes - ' || 'No - ' }}${{ steps.check-deploy.outputs.environment }}",
                     "short": false
                   }
                 ],
@@ -212,7 +222,17 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json', '**/package.json') }}
 
       - name: Install Node dependencies
-        run: npm install --ignore-scripts --prefer-offline --no-audit
+        # We are checking for both root and theme node_modules folders to confirm the cache was found.
+        # The npm install deletes and recreates node_modules when needed,
+        # therefore we're skipping the command when the cache was hit.
+        # Important: keep the detection logic in sync with the cache path above.
+        run: |
+          if [ -d "node_modules" ] && [ -n "$(find themes -maxdepth 2 -name 'node_modules' -type d 2>/dev/null)" ]; then
+            echo "Node modules cache hit - skipping installation"
+          else
+            echo "Node modules cache miss - installing dependencies"
+            npm install --ignore-scripts --prefer-offline --no-audit
+          fi
 
       - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader
