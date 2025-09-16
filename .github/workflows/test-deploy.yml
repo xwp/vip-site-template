@@ -281,7 +281,7 @@ jobs:
                   },
                   {
                     "title": "Deployed by",
-                    "value": "${{ github.actor }}",
+                    "value": "${{ github.actor }} (${{ github.event.pusher.name || github.actor }})",
                     "short": true
                   }
                 ]
@@ -339,12 +339,7 @@ jobs:
                   },
                   {
                     "title": "Deployed by",
-                    "value": "${{ github.actor }}",
-                    "short": true
-                  },
-                  {
-                    "title": "Deployment Time",
-                    "value": "~${{ job.duration }} minutes",
+                    "value": "${{ github.actor }} (${{ github.event.pusher.name || github.actor }})",
                     "short": true
                   }
                 ],
@@ -394,7 +389,7 @@ jobs:
                   },
                   {
                     "title": "Deployed by",
-                    "value": "${{ github.actor }}",
+                    "value": "${{ github.actor }} (${{ github.event.pusher.name || github.actor }})",
                     "short": true
                   },
                   {

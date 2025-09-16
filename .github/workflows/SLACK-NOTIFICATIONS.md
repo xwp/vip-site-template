@@ -113,7 +113,6 @@ Environment: production
 Branch: production
 Commit: ghi789jk
 Deployed by: release-manager
-Deployment Time: ~3 minutes
 
 [View Environment] [View Deployment]
 
