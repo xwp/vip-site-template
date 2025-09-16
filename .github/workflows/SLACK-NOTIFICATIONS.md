@@ -223,7 +223,59 @@ Error: Check the workflow logs for details
 🤖 XWP Deploy Bot
 ```
 
-### 10. Production Release Completed (cleanup-release-branch.yml)
+### 10. Branch Reset Started (reset-branch.yml)
+
+```
+🟠 ⚠️ Branch Reset In Progress
+🔄 Branch Reset Started
+
+Operation: Reset `develop` to match `main`
+Source Branch: `main`
+Target Branch: `develop`
+Initiated by: tech-lead
+Warning: ⚠️ This is a destructive operation that will overwrite the target branch
+
+[View Run]
+
+🤖 XWP Deploy Bot
+```
+
+### 11. Branch Reset Successful (reset-branch.yml)
+
+```
+🟢 ✅ Branch Reset Completed Successfully
+✅ Branch Reset Successful
+
+Operation: Reset `develop` to match `main`
+Source Branch: `main` (`f0337dfc`)
+Target Branch: `develop` (`f0337dfc`)
+Previous Target: `a1b2c3d4`
+Initiated by: tech-lead
+Next Step: 🚀 The Test and Deploy workflow will automatically trigger for the updated `develop` branch
+
+[View Branch] [View Actions]
+
+🤖 XWP Deploy Bot
+```
+
+### 12. Branch Reset Failed (reset-branch.yml)
+
+```
+🔴 ❌ Branch Reset Failed - Immediate Attention Required
+❌ Branch Reset Failed
+
+Operation: Reset `develop` to match `main`
+Source Branch: `main`
+Target Branch: `develop`
+Initiated by: tech-lead
+Status: ⚠️ Branch may be in an inconsistent state - manual intervention may be required
+
+[View Logs] [Contact Support]
+
+🤖 XWP Deploy Bot
+```
+
+### 13. Production Release Completed (cleanup-release-branch.yml)
 
 ```
 🟢 🎉 Production Release Completed & Cleaned Up
@@ -296,5 +348,6 @@ All notifications include an enhanced footer showing:
 | Workflow | Trigger | Success | Failure |
 |----------|---------|---------|---------|
 | **Create Release** | Manual action | Release Branch Created | Release Creation Failed |
+| **Reset Branch** | Manual action | Branch Reset Successful | Branch Reset Failed |
 | **Create Production PR** | Manual action | Production PR Created | Production PR Failed |
 | **Release Cleanup** | Auto after merge | Production Release Completed | Release Cleanup Failed |

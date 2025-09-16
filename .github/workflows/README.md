@@ -32,7 +32,31 @@ This repository uses automated GitHub Actions workflows to handle testing, deplo
 - Creates GitHub release draft
 - Sends Slack notification (if configured)
 
-### 2. Create Production PR  
+### 2. Reset Branch
+
+**File**: `reset-branch.yml`  
+**Trigger**: Manual (workflow_dispatch)  
+**Purpose**: Reset a target branch to match a source branch (destructive operation)
+
+**Usage**:
+
+1. Go to Actions → "Reset Branch"
+2. Select **From** branch (main or production)
+3. Select **To** branch (develop)
+4. Type "RESET" to confirm the destructive operation
+5. Click "Run workflow"
+
+**What it does**:
+
+- Validates the confirmation input
+- Resets target branch to exactly match source branch
+- Force pushes the updated branch
+- Automatically triggers Test and Deploy workflow
+- Sends Slack notifications for start/success/failure
+
+**⚠️ Warning**: This is a destructive operation that will overwrite the target branch completely.
+
+### 3. Create Production PR
 
 **File**: `create-production-pr.yml`  
 **Trigger**: Manual (workflow_dispatch)  

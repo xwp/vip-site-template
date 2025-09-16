@@ -1,0 +1,273 @@
+name: Reset Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      from_branch:
+        description: 'Source branch to reset FROM'
+        required: true
+        type: choice
+        options:
+          - main
+          - production
+      to_branch:
+        description: 'Target branch to reset TO'
+        required: true
+        type: choice
+        options:
+          - develop
+      confirm_reset:
+        description: 'Type "RESET" to confirm this destructive operation'
+        required: true
+        type: string
+
+env:
+  # Git Configuration
+  GIT_USER_NAME: ${{ vars.GIT_USER_NAME || 'XWP Deploy Bot' }}
+  GIT_USER_EMAIL: ${{ vars.GIT_USER_EMAIL || 'technology@xwp.co' }}
+  # Slack Configuration
+  SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+jobs:
+  reset-branch:
+    name: Reset Branch
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Validate confirmation
+        run: |
+          if [[ "${{ inputs.confirm_reset }}" != "RESET" ]]; then
+            echo "❌ Confirmation failed. You must type 'RESET' exactly to proceed."
+            echo "You entered: '${{ inputs.confirm_reset }}'"
+            exit 1
+          fi
+          echo "✅ Confirmation validated"
+
+      - name: Validate branch combination
+        run: |
+          FROM="${{ inputs.from_branch }}"
+          TO="${{ inputs.to_branch }}"
+
+          echo "🔍 Validating branch reset: ${FROM} → ${TO}"
+
+          # Validate allowed combinations
+          if [[ "${FROM}" == "${TO}" ]]; then
+            echo "❌ Source and target branches cannot be the same"
+            exit 1
+          fi
+
+          # Log the operation
+          echo "✅ Valid branch reset operation: ${FROM} → ${TO}"
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for all branches
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Git credentials
+        run: |
+          git config --global user.name "${{ env.GIT_USER_NAME }}"
+          git config --global user.email "${{ env.GIT_USER_EMAIL }}"
+
+      - name: Notify Slack - Reset started
+        if: env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "#ff9900",
+                "pretext": ":warning: *Branch Reset In Progress*",
+                "title": "🔄 Branch Reset Started",
+                "fields": [
+                  {
+                    "title": "Operation",
+                    "value": "Reset `${{ inputs.to_branch }}` to match `${{ inputs.from_branch }}`",
+                    "short": false
+                  },
+                  {
+                    "title": "Source Branch",
+                    "value": "`${{ inputs.from_branch }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "Target Branch",
+                    "value": "`${{ inputs.to_branch }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "Initiated by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Warning",
+                    "value": "⚠️ This is a destructive operation that will overwrite the target branch",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Run",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  }
+                ]
+              }]
+            }
+
+      - name: Reset target branch
+        run: |
+          FROM_BRANCH="${{ inputs.from_branch }}"
+          TO_BRANCH="${{ inputs.to_branch }}"
+
+          echo "🔄 Resetting ${TO_BRANCH} to match ${FROM_BRANCH}..."
+
+          # Ensure we have the latest refs
+          git fetch origin ${FROM_BRANCH}:${FROM_BRANCH}
+          git fetch origin ${TO_BRANCH}:${TO_BRANCH}
+
+          # Get commit SHAs for logging
+          FROM_SHA=$(git rev-parse origin/${FROM_BRANCH})
+          TO_SHA_BEFORE=$(git rev-parse origin/${TO_BRANCH})
+
+          echo "📍 Source (${FROM_BRANCH}): ${FROM_SHA:0:8}"
+          echo "📍 Target before (${TO_BRANCH}): ${TO_SHA_BEFORE:0:8}"
+
+          # Checkout target branch
+          git checkout ${TO_BRANCH}
+
+          # Reset target branch to match source
+          git reset --hard origin/${FROM_BRANCH}
+
+          # Force push to update remote
+          git push --force-with-lease origin ${TO_BRANCH}
+
+          # Get final SHA
+          TO_SHA_AFTER=$(git rev-parse HEAD)
+          echo "📍 Target after (${TO_BRANCH}): ${TO_SHA_AFTER:0:8}"
+
+          # Set outputs for Slack notification
+          echo "from-branch=${FROM_BRANCH}" >> $GITHUB_OUTPUT
+          echo "to-branch=${TO_BRANCH}" >> $GITHUB_OUTPUT
+          echo "from-sha=${FROM_SHA:0:8}" >> $GITHUB_OUTPUT
+          echo "to-sha-before=${TO_SHA_BEFORE:0:8}" >> $GITHUB_OUTPUT
+          echo "to-sha-after=${TO_SHA_AFTER:0:8}" >> $GITHUB_OUTPUT
+        id: reset
+
+      - name: Notify Slack - Reset success
+        if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "#36a64f",
+                "pretext": ":white_check_mark: *Branch Reset Completed Successfully*",
+                "title": "✅ Branch Reset Successful",
+                "fields": [
+                  {
+                    "title": "Operation",
+                    "value": "Reset `${{ inputs.to_branch }}` to match `${{ inputs.from_branch }}`",
+                    "short": false
+                  },
+                  {
+                    "title": "Source Branch",
+                    "value": "`${{ inputs.from_branch }}` (`${{ steps.reset.outputs.from-sha }}`)",
+                    "short": true
+                  },
+                  {
+                    "title": "Target Branch",
+                    "value": "`${{ inputs.to_branch }}` (`${{ steps.reset.outputs.to-sha-after }}`)",
+                    "short": true
+                  },
+                  {
+                    "title": "Previous Target",
+                    "value": "`${{ steps.reset.outputs.to-sha-before }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "Initiated by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Next Step",
+                    "value": "🚀 The Test and Deploy workflow will automatically trigger for the updated `${{ inputs.to_branch }}` branch",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Branch",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/tree/${{ inputs.to_branch }}",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Actions",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions"
+                  }
+                ]
+              }]
+            }
+
+      - name: Notify Slack - Reset failed
+        if: failure() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "#ff0000",
+                "pretext": ":x: *Branch Reset Failed - Immediate Attention Required*",
+                "title": "❌ Branch Reset Failed",
+                "fields": [
+                  {
+                    "title": "Operation",
+                    "value": "Reset `${{ inputs.to_branch }}` to match `${{ inputs.from_branch }}`",
+                    "short": false
+                  },
+                  {
+                    "title": "Source Branch",
+                    "value": "`${{ inputs.from_branch }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "Target Branch",
+                    "value": "`${{ inputs.to_branch }}`",
+                    "short": true
+                  },
+                  {
+                    "title": "Initiated by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Status",
+                    "value": "⚠️ Branch may be in an inconsistent state - manual intervention may be required",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Logs",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "style": "danger"
+                  },
+                  {
+                    "type": "button",
+                    "text": "Contact Support",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/issues"
+                  }
+                ]
+              }]
+            }
