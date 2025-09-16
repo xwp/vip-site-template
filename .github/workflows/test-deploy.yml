@@ -74,7 +74,7 @@ jobs:
         run: docker compose pull wordpress mkcert
 
       - name: Install Node dependencies
-        run: npm ci --ignore-scripts
+        run: npm install --ignore-scripts
 
       - name: Install Composer dependencies
         run: composer install
@@ -212,7 +212,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json', '**/package.json') }}
 
       - name: Install Node dependencies
-        run: npm ci --ignore-scripts
+        run: npm install --ignore-scripts
 
       - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader
