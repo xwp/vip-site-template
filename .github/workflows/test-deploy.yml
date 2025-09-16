@@ -74,7 +74,7 @@ jobs:
         run: docker compose pull wordpress mkcert
 
       - name: Install Node dependencies
-        run: npm install --ignore-scripts
+        run: npm install --ignore-scripts --prefer-offline --no-audit
 
       - name: Install Composer dependencies
         run: composer install
@@ -138,7 +138,7 @@ jobs:
                 "fields": [
                   {
                     "title": "Branch",
-                    "value": "`${{ steps.check-deploy.outputs.display-branch }}`",
+                    "value": "`${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}`",
                     "short": true
                   },
                   {
@@ -148,7 +148,7 @@ jobs:
                   },
                   {
                     "title": "Commit",
-                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ steps.check-deploy.outputs.short-sha }}`>",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${GITHUB_SHA:0:8}`>",
                     "short": true
                   },
                   {
@@ -158,7 +158,7 @@ jobs:
                   },
                   {
                     "title": "Will Deploy",
-                    "value": "${{ steps.check-deploy.outputs.should-deploy == 'true' && 'Yes - ' || 'No - ' }}${{ steps.check-deploy.outputs.environment }}",
+                    "value": "${{ github.event_name == 'push' && 'Yes' || 'No' }} - ${{ github.event_name == 'push' && (github.ref_name == 'develop' && 'dev' || github.ref_name == 'main' && 'test' || github.ref_name == 'release' && 'pre-prod' || github.ref_name == 'production' && 'production' || 'unknown') || 'none' }}",
                     "short": false
                   }
                 ],
@@ -212,7 +212,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json', '**/package.json') }}
 
       - name: Install Node dependencies
-        run: npm install --ignore-scripts
+        run: npm install --ignore-scripts --prefer-offline --no-audit
 
       - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader
