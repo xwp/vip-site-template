@@ -68,12 +68,15 @@ jobs:
           # Get commit messages between production and release
           git log --pretty=format:"- %s (%h)" origin/production..origin/release --no-merges >> $CHANGELOG_FILE
 
-          # Read the changelog and escape for JSON
-          CHANGELOG_CONTENT=$(cat $CHANGELOG_FILE | sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g')
+          # Read the changelog and properly encode it
+          CHANGELOG_CONTENT=$(cat $CHANGELOG_FILE)
 
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          cat $CHANGELOG_FILE >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          # Use a more robust delimiter and encode the content
+          {
+            echo 'changelog<<CHANGELOG_DELIMITER'
+            echo "$CHANGELOG_CONTENT"
+            echo 'CHANGELOG_DELIMITER'
+          } >> $GITHUB_OUTPUT
 
           rm $CHANGELOG_FILE
 

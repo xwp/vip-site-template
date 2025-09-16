@@ -80,6 +80,26 @@ jobs:
 
           echo "Release branch created/updated from main"
 
+      - name: Trigger deployment to release environment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log('🚀 Triggering deployment to release environment...');
+
+            await github.rest.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              event_type: 'release-branch-deploy',
+              client_payload: {
+                branch: 'release',
+                from_branch: 'main',
+                created_by: '${{ github.actor }}',
+                version: '${{ steps.version.outputs.version }}'
+              }
+            });
+
+            console.log('✅ Repository dispatch event sent - deployment should start shortly');
+
       - name: Get commit details
         id: commit-info
         run: |
@@ -157,7 +177,7 @@ jobs:
                   },
                   {
                     "title": "Next Steps",
-                    "value": "\n• Deploy to UAT environment\n• Run UAT testing\n• Create production PR when ready",
+                    "value": "\n• Deployment to pre-prod environment will start automatically\n• Run UAT testing\n• Create production PR when ready",
                     "short": false
                   }
                 ],
@@ -180,7 +200,7 @@ jobs:
                   }
                 ],
                 "footer": "🤖 ${{ env.GIT_USER_NAME }}",
-                "ts": ${{ github.event.repository.updated_at }}
+                "ts": "${{ github.event.repository.updated_at }}"
               }]
             }
 

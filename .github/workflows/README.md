@@ -30,6 +30,7 @@ This repository uses automated GitHub Actions workflows to handle testing, deplo
 
 - Creates/updates `release` branch from latest `main`
 - Creates GitHub release draft
+- Automatically triggers deployment to pre-prod environment
 - Sends Slack notification (if configured)
 
 ### 2. Reset Branch

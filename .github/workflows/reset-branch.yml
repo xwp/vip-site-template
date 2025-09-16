@@ -213,7 +213,7 @@ jobs:
                   },
                   {
                     "title": "Next Step",
-                    "value": "🚀 The Test and Deploy workflow will automatically trigger for the updated `${{ inputs.to_branch }}` branch",
+                    "value": "The Test and Deploy workflow will automatically trigger for the updated `${{ inputs.to_branch }}` branch",
                     "short": false
                   }
                 ],

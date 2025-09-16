@@ -6,7 +6,7 @@ on:
   push:
     branches: [develop, main, release, production]
   repository_dispatch:
-    types: [branch-reset-deploy]
+    types: [branch-reset-deploy, release-branch-deploy]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
