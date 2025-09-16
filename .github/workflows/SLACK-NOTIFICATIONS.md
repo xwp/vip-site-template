@@ -270,7 +270,7 @@ Target Branch: `develop`
 Initiated by: tech-lead
 Status: ⚠️ Branch may be in an inconsistent state - manual intervention may be required
 
-[View Logs] [Contact Support]
+[View Logs]
 
 🤖 XWP Deploy Bot
 ```

@@ -5,6 +5,8 @@ on:
     types: [opened, synchronize, reopened]
   push:
     branches: [develop, main, release, production]
+  repository_dispatch:
+    types: [branch-reset-deploy]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -33,6 +35,8 @@ jobs:
       display-branch: ${{ steps.check-deploy.outputs.display-branch }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -104,25 +108,40 @@ jobs:
           # Set user-friendly branch name for Slack notifications
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             echo "display-branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
+            echo "display-branch=${{ github.event.client_payload.branch }}" >> $GITHUB_OUTPUT
           else
             echo "display-branch=${{ github.ref_name }}" >> $GITHUB_OUTPUT
           fi
 
-          if [[ "${{ github.event_name }}" == "push" ]]; then
+          if [[ "${{ github.event_name }}" == "push" ]] || [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
             echo "should-deploy=true" >> $GITHUB_OUTPUT
 
-            case "${{ github.ref_name }}" in
+            # Determine branch name for environment mapping
+            if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
+              BRANCH_NAME="${{ github.event.client_payload.branch }}"
+            else
+              BRANCH_NAME="${{ github.ref_name }}"
+            fi
+
+            echo "🔍 Branch name for deployment: ${BRANCH_NAME}"
+
+            case "${BRANCH_NAME}" in
               "develop")
                 echo "environment=dev" >> $GITHUB_OUTPUT
+                echo "✅ Environment set to: dev"
                 ;;
               "main")
                 echo "environment=test" >> $GITHUB_OUTPUT
+                echo "✅ Environment set to: test"
                 ;;
               "release")
                 echo "environment=pre-prod" >> $GITHUB_OUTPUT
+                echo "✅ Environment set to: pre-prod"
                 ;;
               "production")
                 echo "environment=production" >> $GITHUB_OUTPUT
+                echo "✅ Environment set to: production"
                 ;;
             esac
           else
@@ -191,6 +210,8 @@ jobs:
     environment: ${{ needs.test.outputs.environment }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -289,23 +310,23 @@ jobs:
             }
 
       - name: Deploy to develop (dev environment)
-        if: github.ref_name == 'develop'
+        if: needs.test.outputs.environment == 'dev'
         run: npm run deploy-dev # wpcomvip/devgo-vip.git/develop
 
       - name: Deploy to main (test environment)
-        if: github.ref_name == 'main'
+        if: needs.test.outputs.environment == 'test'
         run: npm run deploy-test # wpcomvip/devgo-vip.git/staging
 
       - name: Deploy to release (pre-prod environment)
-        if: github.ref_name == 'release'
+        if: needs.test.outputs.environment == 'pre-prod'
         run: npm run deploy-pre-prod # wpcomvip/devgo-vip.git/release
 
       - name: Deploy to production
-        if: github.ref_name == 'production'
+        if: needs.test.outputs.environment == 'production'
         run: npm run deploy-production # wpcomvip/devgo-vip.git/production
 
       - name: Set NewRelic deploy marker
-        if: github.ref_name == 'production' && env.NEW_RELIC_API_KEY != ''
+        if: needs.test.outputs.environment == 'production' && env.NEW_RELIC_API_KEY != ''
         run: |
           npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ env.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"
 
@@ -347,7 +368,7 @@ jobs:
                   {
                     "type": "button",
                     "text": "View Environment",
-                    "url": "${{ github.ref_name == 'production' && 'https://www.devgo-vip.com' || github.ref_name == 'main' && 'https://staging.devgo-vip.com' || 'https://dev.devgo-vip.com' }}",
+                    "url": "${{ needs.test.outputs.environment == 'production' && 'https://www.devgo-vip.com' || needs.test.outputs.environment == 'test' && 'https://staging.devgo-vip.com' || 'https://dev.devgo-vip.com' }}",
                     "style": "primary"
                   },
                   {

@@ -63,16 +63,19 @@ jobs:
           git checkout main
           git pull origin main
 
-          # Delete existing release branch if force updating
+          # Create/update release branch from main
           if [[ "${{ steps.check-branch.outputs.exists }}" == "true" ]]; then
-            echo "Removing existing release branch..."
-            git branch -D release 2>/dev/null || true
-            git push origin --delete release 2>/dev/null || true
+            echo "Force updating existing release branch..."
+            # Checkout existing branch and reset to main
+            git fetch origin release:release 2>/dev/null || git checkout -b release
+            git checkout release
+            git reset --hard main
+            git push --force-with-lease origin release
+          else
+            echo "Creating new release branch..."
+            git checkout -b release
+            git push -u origin release
           fi
-
-          # Create new release branch
-          git checkout -b release
-          git push -u origin release
 
           echo "Release branch created/updated from main"
 

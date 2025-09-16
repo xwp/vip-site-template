@@ -125,9 +125,8 @@ jobs:
 
           echo "🔄 Resetting ${TO_BRANCH} to match ${FROM_BRANCH}..."
 
-          # Ensure we have the latest refs
-          git fetch origin ${FROM_BRANCH}:${FROM_BRANCH}
-          git fetch origin ${TO_BRANCH}:${TO_BRANCH}
+          # Fetch all refs to ensure we have latest
+          git fetch origin
 
           # Get commit SHAs for logging
           FROM_SHA=$(git rev-parse origin/${FROM_BRANCH})
@@ -137,10 +136,7 @@ jobs:
           echo "📍 Target before (${TO_BRANCH}): ${TO_SHA_BEFORE:0:8}"
 
           # Checkout target branch
-          git checkout ${TO_BRANCH}
-
-          # Reset target branch to match source
-          git reset --hard origin/${FROM_BRANCH}
+          git checkout -B ${TO_BRANCH} origin/${FROM_BRANCH}
 
           # Force push to update remote
           git push --force-with-lease origin ${TO_BRANCH}
@@ -156,6 +152,26 @@ jobs:
           echo "to-sha-before=${TO_SHA_BEFORE:0:8}" >> $GITHUB_OUTPUT
           echo "to-sha-after=${TO_SHA_AFTER:0:8}" >> $GITHUB_OUTPUT
         id: reset
+
+      - name: Trigger deployment via repository dispatch
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log('🚀 Triggering deployment via repository dispatch...');
+
+            await github.rest.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              event_type: 'branch-reset-deploy',
+              client_payload: {
+                branch: '${{ inputs.to_branch }}',
+                from_branch: '${{ inputs.from_branch }}',
+                reset_by: '${{ github.actor }}',
+                reset_sha: '${{ steps.reset.outputs.to-sha-after }}'
+              }
+            });
+
+            console.log('✅ Repository dispatch event sent - deployment should start shortly');
 
       - name: Notify Slack - Reset success
         if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
@@ -262,11 +278,6 @@ jobs:
                     "text": "View Logs",
                     "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                     "style": "danger"
-                  },
-                  {
-                    "type": "button",
-                    "text": "Contact Support",
-                    "url": "${{ github.server_url }}/${{ github.repository }}/issues"
                   }
                 ]
               }]
