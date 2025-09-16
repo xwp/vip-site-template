@@ -74,14 +74,14 @@ jobs:
                 return draftRelease.tag_name;
               } else {
                 // Fallback to timestamp if no draft found
-                const version = `release-${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}`;
+                const version = `release-${new Date().toISOString().replace(/[-T:.]/g, '').slice(0, 15).replace(/(\d{8})(\d{6})/, '$1-$2')}`;
                 console.log(`No draft release found, generating fallback version: ${version}`);
                 core.setOutput('version', version);
                 return version;
               }
             } catch (error) {
               // Fallback to timestamp if API fails
-              const version = `release-${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}`;
+              const version = `release-${new Date().toISOString().replace(/[-T:.]/g, '').slice(0, 15).replace(/(\d{8})(\d{6})/, '$1-$2')}`;
               console.log(`Error finding draft release, using fallback: ${version}`);
               core.setOutput('version', version);
               return version;
@@ -148,21 +148,21 @@ jobs:
                   release_id: draftRelease.id,
                   tag_name: version,
                   name: `Production Release ${version}`,
-                  body: `## Production Release ${version}
-
-**Deployment Date:** ${new Date().toISOString().split('T')[0]}
-**Deployed by:** ${{ github.event.pull_request.merged_by.login }}
-**PR:** #${{ github.event.pull_request.number }}
-
-### Release Notes
-${{ github.event.pull_request.body }}
-
-### Links
-- [Merged PR](${{ github.event.pull_request.html_url }})
-- [Production Branch](${context.payload.repository.html_url}/tree/production)
-
----
-*This release was finalized automatically by the ${{ env.GIT_USER_NAME }}*`,
+                  body: `## Production Release ${version}\n` +
+                        `\n` +
+                        `**Deployment Date:** ${new Date().toISOString().split('T')[0]}\n` +
+                        `**Deployed by:** ${{ github.event.pull_request.merged_by.login }}\n` +
+                        `**PR:** #${{ github.event.pull_request.number }}\n` +
+                        `\n` +
+                        `### Release Notes\n` +
+                        `${{ github.event.pull_request.body }}\n` +
+                        `\n` +
+                        `### Links\n` +
+                        `- [Merged PR](${{ github.event.pull_request.html_url }})\n` +
+                        `- [Production Branch](${context.payload.repository.html_url}/tree/production)\n` +
+                        `\n` +
+                        `---\n` +
+                        `*This release was finalized automatically by the ${{ env.GIT_USER_NAME }}*`,
                   draft: false,
                   prerelease: false
                 });
@@ -176,21 +176,21 @@ ${{ github.event.pull_request.body }}
                   repo: context.repo.repo,
                   tag_name: version,
                   name: `Production Release ${version}`,
-                  body: `## Production Release ${version}
-
-**Deployment Date:** ${new Date().toISOString().split('T')[0]}
-**Deployed by:** ${{ github.event.pull_request.merged_by.login }}
-**PR:** #${{ github.event.pull_request.number }}
-
-### Release Notes
-${{ github.event.pull_request.body }}
-
-### Links
-- [Merged PR](${{ github.event.pull_request.html_url }})
-- [Production Branch](${context.payload.repository.html_url}/tree/production)
-
----
-*This release was created automatically by the ${{ env.GIT_USER_NAME }}*`,
+                  body: `## Production Release ${version}\n` +
+                        `\n` +
+                        `**Deployment Date:** ${new Date().toISOString().split('T')[0]}\n` +
+                        `**Deployed by:** ${{ github.event.pull_request.merged_by.login }}\n` +
+                        `**PR:** #${{ github.event.pull_request.number }}\n` +
+                        `\n` +
+                        `### Release Notes\n` +
+                        `${{ github.event.pull_request.body }}\n` +
+                        `\n` +
+                        `### Links\n` +
+                        `- [Merged PR](${{ github.event.pull_request.html_url }})\n` +
+                        `- [Production Branch](${context.payload.repository.html_url}/tree/production)\n` +
+                        `\n` +
+                        `---\n` +
+                        `*This release was created automatically by the ${{ env.GIT_USER_NAME }}*`,
                   draft: false,
                   prerelease: false
                 });
