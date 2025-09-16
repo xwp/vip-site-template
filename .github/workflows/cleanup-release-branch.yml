@@ -15,6 +15,7 @@ env:
 
 jobs:
   cleanup-release:
+    name: Cleanup Release Branch
     runs-on: ubuntu-22.04
     # Only run if PR was merged (not just closed)
     if: github.event.pull_request.merged == true

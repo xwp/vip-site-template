@@ -22,6 +22,7 @@ env:
 
 jobs:
   create-production-pr:
+    name: Create Production PR
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
