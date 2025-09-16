@@ -23,9 +23,8 @@ This repository uses automated GitHub Actions workflows to handle testing, deplo
 **Usage**:
 
 1. Go to Actions → "Create Release Branch"
-2. Enter release version (e.g., `v2.1.0`)
-3. Optionally force update existing branch
-4. Click "Run workflow"
+2. Optionally check "Force update existing branch" if needed
+3. Click "Run workflow" (version will be auto-generated)
 
 **What it does**:
 
@@ -211,4 +210,4 @@ All workflows support optional Slack notifications. Examples and setup details: 
 1. Check workflow logs in GitHub Actions tab
 2. Review error messages in PR checks
 3. Consult team Slack channels
-4. Contact DevOps team for infrastructure issues
+4. Contact EM/TL for infrastructure issues

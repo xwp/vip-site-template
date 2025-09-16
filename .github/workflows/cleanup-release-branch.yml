@@ -54,21 +54,43 @@ jobs:
           echo "release_commit_msg=${RELEASE_COMMIT_MSG}" >> $GITHUB_OUTPUT
           echo "production_sha=${PRODUCTION_SHA}" >> $GITHUB_OUTPUT
 
-      - name: Create release tag on production
+      - name: Get release version from existing draft
         id: create-tag
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              // Find existing draft release created by create-release-branch workflow
+              const { data: releases } = await github.rest.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+
+              const draftRelease = releases.find(release => release.draft);
+
+              if (draftRelease && draftRelease.tag_name.startsWith('release-')) {
+                console.log(`Found existing draft release: ${draftRelease.tag_name}`);
+                core.setOutput('version', draftRelease.tag_name);
+                return draftRelease.tag_name;
+              } else {
+                // Fallback to timestamp if no draft found
+                const version = `release-${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}`;
+                console.log(`No draft release found, generating fallback version: ${version}`);
+                core.setOutput('version', version);
+                return version;
+              }
+            } catch (error) {
+              // Fallback to timestamp if API fails
+              const version = `release-${new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)}`;
+              console.log(`Error finding draft release, using fallback: ${version}`);
+              core.setOutput('version', version);
+              return version;
+            }
+
+      - name: Create release tag on production
         run: |
-          # Extract version from PR title or use timestamp
-          PR_TITLE="${{ github.event.pull_request.title }}"
-
-          # Try to extract version from PR title (looks for vX.Y.Z pattern)
-          if [[ $PR_TITLE =~ v[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-            VERSION=$(echo "$PR_TITLE" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+')
-          else
-            # Fallback to timestamp-based version
-            VERSION="release-$(date +%Y%m%d-%H%M%S)"
-          fi
-
-          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          VERSION="${{ steps.create-tag.outputs.version }}"
+          echo "Using version: ${VERSION}"
 
           # Create and push the tag
           git fetch origin production
@@ -87,7 +109,7 @@ jobs:
 
           git push origin "${VERSION}"
 
-          echo "Created release tag: ${VERSION}"
+          echo "Created production tag: ${VERSION}"
 
       - name: Delete release branch
         if: steps.check-branch.outputs.exists == 'true'
@@ -242,7 +264,7 @@ ${{ github.event.pull_request.body }}
               }]
             }
 
-      - name: Notify Slack - Partial Success
+      - name: Notify Slack - Partial success
         if: failure() && steps.check-branch.outputs.exists == 'false' && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
         with:

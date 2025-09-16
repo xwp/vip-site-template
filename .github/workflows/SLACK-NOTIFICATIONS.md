@@ -143,7 +143,7 @@ Action Required: Immediate attention needed - Check logs and consider rollback i
 🟢 🔧 Release Branch Created
 🔧 Release Branch Ready for Testing
 
-Version: v2.1.0
+Version: release-20240916-143022
 Branch: release
 Created by: tech-lead
 Base Commit: stu345vw
@@ -164,7 +164,7 @@ Next Steps:
 🔴 ❌ Release Branch Creation Failed
 ❌ Release Branch Creation Failed
 
-Version: v2.1.0
+Version: release-20240916-143022
 Triggered by: tech-lead
 Error: Check the workflow logs for details
 
@@ -230,13 +230,13 @@ Error: Check the workflow logs for details
 🟢 🎉 Production Release Completed & Cleaned Up
 🎉 Production Release Successfully Deployed
 
-Version: v2.1.0
+Version: release-20240916-143022
 Deployed by: tech-lead
 PR: #42
 Branch Cleanup: Release branch deleted
 Actions Completed:
 • Production deployment successful
-• Release tag created: v2.1.0
+• Release tag created: release-20240916-143022
 • GitHub release published
 • Release branch cleaned up
 
@@ -251,7 +251,7 @@ Actions Completed:
 🟠 ⚠️ Production Release Completed (Cleanup Skipped)
 ⚠️ Production Release Deployed (Minor Cleanup Issue)
 
-Version: v2.1.0
+Version: release-20240916-143022
 Deployed by: tech-lead
 Note: Release branch was already deleted (likely by GitHub's auto-delete feature)
 

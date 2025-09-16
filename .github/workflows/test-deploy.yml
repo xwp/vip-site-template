@@ -117,7 +117,7 @@ jobs:
             echo "environment=none" >> $GITHUB_OUTPUT
           fi
 
-      - name: Notify Slack - Test Results
+      - name: Notify Slack - Test results
         if: (success() || failure()) && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
         with:
@@ -202,7 +202,7 @@ jobs:
           git config --global user.name "${{ env.GIT_USER_NAME }}"
           git config --global user.email "${{ env.GIT_USER_EMAIL }}"
 
-      - name: Notify Slack - Deployment Started
+      - name: Notify Slack - Deployment started
         if: env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
         with:
@@ -260,7 +260,7 @@ jobs:
         run: |
           npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ env.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"
 
-      - name: Notify Slack - Deployment Success
+      - name: Notify Slack - Deployment success
         if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
         with:
@@ -315,7 +315,7 @@ jobs:
               }]
             }
 
-      - name: Notify Slack - Deployment Failed
+      - name: Notify Slack - Deployment failed
         if: failure() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
         with:

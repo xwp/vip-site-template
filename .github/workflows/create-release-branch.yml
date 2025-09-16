@@ -3,10 +3,6 @@ name: Create Release Branch
 on:
   workflow_dispatch:
     inputs:
-      release_version:
-        description: 'Release version (e.g., v2.1.0)'
-        required: true
-        type: string
       force_update:
         description: 'Force update existing release branch'
         required: false
@@ -46,17 +42,18 @@ jobs:
             echo "No existing release branch found"
           fi
 
-      - name: Validate inputs
+      - name: Generate release version
+        id: version
         run: |
           if [[ "${{ steps.check-branch.outputs.exists }}" == "true" && "${{ inputs.force_update }}" != "true" ]]; then
             echo "Release branch already exists. Use force_update=true to override."
             exit 1
           fi
 
-          # Validate version format (basic check)
-          if [[ ! "${{ inputs.release_version }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Warning: Version format should be vX.Y.Z (e.g., v2.1.0)"
-          fi
+          # Generate timestamp-based version for consistency
+          VERSION="release-$(date +%Y%m%d-%H%M%S)"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Generated version: ${VERSION}"
 
       - name: Create/Update release branch
         run: |
@@ -90,16 +87,16 @@ jobs:
           echo "message=${COMMIT_MSG}" >> $GITHUB_OUTPUT
           echo "author=${COMMIT_AUTHOR}" >> $GITHUB_OUTPUT
 
-      - name: Create GitHub Release Draft
+      - name: Create GitHub release draft
         uses: actions/create-release@v1
         id: create-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Do not move to a variable
         with:
-          tag_name: ${{ inputs.release_version }}
-          release_name: Release ${{ inputs.release_version }}
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: Release ${{ steps.version.outputs.version }}
           body: |
-            ## Release ${{ inputs.release_version }}
+            ## Release ${{ steps.version.outputs.version }}
 
             **Created from:** `main` branch
             **Commit:** ${{ steps.commit-info.outputs.sha }}
@@ -136,7 +133,7 @@ jobs:
                 "fields": [
                   {
                     "title": "Version",
-                    "value": "${{ inputs.release_version }}",
+                    "value": "${{ steps.version.outputs.version }}",
                     "short": true
                   },
                   {
@@ -198,7 +195,7 @@ jobs:
                 "fields": [
                   {
                     "title": "Version",
-                    "value": "${{ inputs.release_version }}",
+                    "value": "${{ steps.version.outputs.version }}",
                     "short": true
                   },
                   {
