@@ -67,10 +67,9 @@ jobs:
           # Create/update release branch from main
           if [[ "${{ steps.check-branch.outputs.exists }}" == "true" ]]; then
             echo "Force updating existing release branch..."
-            # Checkout existing branch and reset to main
-            git fetch origin release:release 2>/dev/null || git checkout -b release
-            git checkout release
-            git reset --hard main
+            # Fetch and checkout existing branch, then reset to main
+            git fetch origin
+            git checkout -B release origin/main
             git push --force-with-lease origin release
           else
             echo "Creating new release branch..."
@@ -82,23 +81,30 @@ jobs:
 
       - name: Trigger deployment to release environment
         uses: actions/github-script@v7
+        continue-on-error: true
         with:
           script: |
-            console.log('🚀 Triggering deployment to release environment...');
+            try {
+              console.log('🚀 Triggering deployment to release environment...');
 
-            await github.rest.repos.createDispatchEvent({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              event_type: 'release-branch-deploy',
-              client_payload: {
-                branch: 'release',
-                from_branch: 'main',
-                created_by: '${{ github.actor }}',
-                version: '${{ steps.version.outputs.version }}'
-              }
-            });
+              await github.rest.repos.createDispatchEvent({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                event_type: 'release-branch-deploy',
+                client_payload: {
+                  branch: 'release',
+                  from_branch: 'main',
+                  created_by: '${{ github.actor }}',
+                  version: '${{ steps.version.outputs.version }}'
+                }
+              });
 
-            console.log('✅ Repository dispatch event sent - deployment should start shortly');
+              console.log('✅ Repository dispatch event sent - deployment should start shortly');
+            } catch (error) {
+              console.error('❌ Failed to trigger deployment:', error.message);
+              console.log('⚠️ Release branch created successfully, but automatic deployment failed');
+              console.log('💡 You can manually trigger deployment from Actions tab');
+            }
 
       - name: Get commit details
         id: commit-info
@@ -111,36 +117,62 @@ jobs:
           echo "message=${COMMIT_MSG}" >> $GITHUB_OUTPUT
           echo "author=${COMMIT_AUTHOR}" >> $GITHUB_OUTPUT
 
-      - name: Create GitHub release draft
-        uses: actions/create-release@v1
-        id: create-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Do not move to a variable
-        with:
-          tag_name: ${{ steps.version.outputs.version }}
-          release_name: Release ${{ steps.version.outputs.version }}
-          body: |
-            ## Release ${{ steps.version.outputs.version }}
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "Generating changelog..."
 
-            **Created from:** `main` branch
+          # Create a temporary file for the changelog
+          CHANGELOG_FILE=$(mktemp)
+
+          echo "## Changes in this Release" >> $CHANGELOG_FILE
+          echo "" >> $CHANGELOG_FILE
+
+          # Get commit messages between production and main (what will be in the release)
+          git log --pretty=format:"- %s (%h)" origin/production..origin/main --no-merges >> $CHANGELOG_FILE
+
+          # Read the changelog and properly encode it
+          CHANGELOG_CONTENT=$(cat $CHANGELOG_FILE)
+
+          # Use a more robust delimiter and encode the content
+          {
+            echo 'changelog<<CHANGELOG_DELIMITER'
+            echo "$CHANGELOG_CONTENT"
+            echo 'CHANGELOG_DELIMITER'
+          } >> $GITHUB_OUTPUT
+
+          rm $CHANGELOG_FILE
+
+      - name: Create GitHub release draft
+        id: create-release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const releaseBody = `## Release \`${{ steps.version.outputs.version }}\`
+
+            **Created from:** \`main\` branch
             **Commit:** ${{ steps.commit-info.outputs.sha }}
             **Last commit:** ${{ steps.commit-info.outputs.message }}
 
-            ### Release Checklist
-            - [ ] UAT testing completed
-            - [ ] Security review completed
-            - [ ] Performance testing completed
-            - [ ] Stakeholder approval received
-
-            ### Deployment Plan
-            - [ ] Pre-deployment backup verified
-            - [ ] Rollback plan confirmed
-            - [ ] Monitoring alerts configured
+            ${{ steps.changelog.outputs.changelog }}
 
             ---
-            *This release was created automatically by the ${{ env.GIT_USER_NAME }}*
-          draft: true
-          prerelease: false
+            *This release was created automatically by the ${process.env.GIT_USER_NAME}*`;
+
+            const { data: release } = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: '${{ steps.version.outputs.version }}',
+              name: '${{ steps.version.outputs.version }}',
+              body: releaseBody,
+              draft: true,
+              prerelease: false
+            });
+
+            console.log(`Created draft release: ${release.html_url}`);
+            core.setOutput('html_url', release.html_url);
+            core.setOutput('id', release.id);
+            return release.html_url;
 
       - name: Notify Slack - Success
         if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
@@ -199,8 +231,7 @@ jobs:
                     "url": "${{ github.server_url }}/${{ github.repository }}/actions"
                   }
                 ],
-                "footer": "🤖 ${{ env.GIT_USER_NAME }}",
-                "ts": "${{ github.event.repository.updated_at }}"
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
               }]
             }
 

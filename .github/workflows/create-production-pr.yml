@@ -7,11 +7,6 @@ on:
         description: 'Release notes for production deployment'
         required: true
         type: string
-      is_hotfix:
-        description: 'Mark as hotfix release'
-        required: false
-        type: boolean
-        default: false
 env:
   # Slack Configuration
   SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
@@ -19,6 +14,8 @@ env:
   # Git Configuration
   GIT_USER_NAME: ${{ vars.GIT_USER_NAME || 'XWP Deploy Bot' }}
   GIT_USER_EMAIL: ${{ vars.GIT_USER_EMAIL || 'technology@xwp.co' }}
+  # Team Configuration
+  REVIEW_TEAM: ${{ vars.REVIEW_TEAM || 'xwp/client-x' }}
 
 jobs:
   create-production-pr:
@@ -80,34 +77,84 @@ jobs:
 
           rm $CHANGELOG_FILE
 
-      - name: Create production PR
-        id: create-pr
+      - name: Find GitHub release draft
+        id: find-release
         uses: actions/github-script@v7
         with:
           script: |
-            const hotfixBadge = ${{ inputs.is_hotfix }} ? "**HOTFIX RELEASE**\n\n" : "";
+            try {
+              const { data: releases } = await github.rest.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
 
-            const prBody = `${hotfixBadge}## Production Release - ${new Date().toISOString().split('T')[0]}
+              const draftRelease = releases.find(release => release.draft);
 
-            **Release Notes:**
-            ${{ inputs.release_notes }}
+              if (draftRelease) {
+                console.log(`Found draft release: ${draftRelease.html_url}`);
+                core.setOutput('release_url', draftRelease.html_url);
+                core.setOutput('release_tag', draftRelease.tag_name);
+                return draftRelease.html_url;
+              } else {
+                console.log('No draft release found');
+                core.setOutput('release_url', '');
+                core.setOutput('release_tag', '');
+                return null;
+              }
+            } catch (error) {
+              console.log('Error finding release:', error.message);
+              core.setOutput('release_url', '');
+              core.setOutput('release_tag', '');
+              return null;
+            }
+
+      - name: Create production PR
+        id: create-pr
+        uses: actions/github-script@v7
+        env:
+          RELEASE_NOTES: ${{ inputs.release_notes }}
+          COMMIT_COUNT: ${{ steps.release-info.outputs.commit_count }}
+          RELEASE_SHA: ${{ steps.release-info.outputs.release_sha }}
+          LAST_COMMIT: ${{ steps.release-info.outputs.last_commit }}
+          CHANGELOG: ${{ steps.changelog.outputs.changelog }}
+          RELEASE_URL: ${{ steps.find-release.outputs.release_url }}
+          RELEASE_TAG: ${{ steps.find-release.outputs.release_tag }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GIT_USER_NAME: ${{ env.GIT_USER_NAME }}
+          REVIEW_TEAM: ${{ env.REVIEW_TEAM }}
+        with:
+          script: |
+            const releaseNotes = process.env.RELEASE_NOTES;
+            const commitCount = process.env.COMMIT_COUNT;
+            const releaseSha = process.env.RELEASE_SHA;
+            const lastCommit = process.env.LAST_COMMIT;
+            const changelog = process.env.CHANGELOG;
+            const releaseUrl = process.env.RELEASE_URL;
+            const releaseTag = process.env.RELEASE_TAG;
+            const actor = process.env.GITHUB_ACTOR;
+            const gitUserName = process.env.GIT_USER_NAME;
+            const reviewTeam = process.env.REVIEW_TEAM;
+
+            const releaseLink = releaseUrl ?
+              `**📋 GitHub Release:** [${releaseTag}](${releaseUrl})\n\n` : '';
+
+            const prBody = `## Production Release ${new Date().toISOString().split('T')[0]}
+
+            ${releaseLink}**Release Notes:**
+            ${releaseNotes}
 
             **Release Statistics:**
-            - **Commits:** ${{ steps.release-info.outputs.commit_count }}
-            - **Release SHA:** \`${{ steps.release-info.outputs.release_sha }}\`
-            - **Last Commit:** ${{ steps.release-info.outputs.last_commit }}
+            - **Commits:** ${commitCount}
+            - **Release SHA:** \`${releaseSha}\`
+            - **Last Commit:** ${lastCommit}
 
-            ${{ steps.changelog.outputs.changelog }}
+            ${changelog}
 
             ## Pre-Deployment Checklist
-            ${${{ inputs.is_hotfix }} ?
-              `- [ ] Hotfix approved by Technical Lead
-            - [ ] Critical issue confirmed and documented
-            - [ ] Minimal change scope verified` :
-              `- [ ] UAT testing completed and signed off
-            - [ ] Security review completed
-            - [ ] Performance testing completed
-            - [ ] Stakeholder approval received`}
+            - [ ] UAT testing completed and signed off
+            - [ ] Stakeholder approval received
+            - [ ] Security review completed (if applicable)
+            - [ ] Performance testing completed (if applicable)
             - [ ] Database migration scripts reviewed (if applicable)
             - [ ] Feature flags configured (if applicable)
 
@@ -115,21 +162,22 @@ jobs:
             - [ ] Pre-deployment backup verified
             - [ ] Rollback plan confirmed and tested
             - [ ] Monitoring alerts configured
-            - [ ] On-call engineer notified
             - [ ] Deployment window confirmed
+            - [ ] On-call engineer notified
 
             ## Emergency Contacts
-            - **Release Manager:** ${{ github.actor }}
-            - **Team:** @xwp/client-x
+            - **Release Manager:** ${actor}
+            - **Team:** @${reviewTeam}
 
             ---
-            *This PR was created automatically by the ${{ env.GIT_USER_NAME }}*
-            *Hotfix Release: ${{ inputs.is_hotfix }}*`;
+            *This PR was created automatically by the ${gitUserName}*`;
+
+            const prTitle = `Production Release ${new Date().toISOString().split('T')[0]}`;
 
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `Production Release - ${new Date().toISOString().split('T')[0]}${${{ inputs.is_hotfix }} ? ' [HOTFIX]' : ''}`,
+              title: prTitle,
               head: 'release',
               base: 'production',
               body: prBody
@@ -141,7 +189,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: pr.number,
-                team_reviewers: ['xwp/client-x']
+                team_reviewers: [reviewTeam]
               });
               console.log('Team reviewers added successfully');
             } catch (error) {
@@ -150,17 +198,20 @@ jobs:
 
             // Add labels - simplified set
             const labels = ['production-release'];
-            if (${{ inputs.is_hotfix }}) {
-              labels.push('hotfix');
+
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: labels
+              });
+              console.log('Labels added successfully:', labels.join(', '));
+            } catch (error) {
+              console.log('Could not add labels:', error.message);
             }
 
-            await github.rest.issues.addLabels({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: pr.number,
-              labels: labels
-            });
-
+            console.log(`Production PR created: ${pr.html_url}`);
             return pr.number;
 
       - name: Notify Slack - Success
@@ -172,9 +223,9 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "${{ inputs.is_hotfix == true && '#ff6b6b' || '#ffa500' }}",
-                "pretext": "${{ inputs.is_hotfix == true && ':rotating_light: *HOTFIX Release PR Ready*' || ':memo: *Production Release PR Ready*' }}",
-                "title": "${{ inputs.is_hotfix == true && '🚨 HOTFIX Production Release PR Created' || '📋 Production Release PR Created' }}",
+                "color": "#ffa500",
+                "pretext": ":memo: *Production Release PR Ready*",
+                "title": "📋 Production Release PR Created",
                 "fields": [
                   {
                     "title": "PR Number",
@@ -192,18 +243,13 @@ jobs:
                     "short": true
                   },
                   {
-                    "title": "Hotfix Release",
-                    "value": "${{ inputs.is_hotfix }}",
-                    "short": true
-                  },
-                  {
                     "title": "Release Notes",
                     "value": "${{ inputs.release_notes }}",
                     "short": false
                   },
                   {
                     "title": "Action Required",
-                    "value": "**@xwp/client-x**: Please review and approve this PR for production deployment",
+                    "value": "@${{ env.REVIEW_TEAM }}: Please review and approve this PR for production deployment",
                     "short": false
                   }
                 ],
@@ -240,11 +286,6 @@ jobs:
                   {
                     "title": "Triggered by",
                     "value": "${{ github.actor }}",
-                    "short": true
-                  },
-                  {
-                    "title": "Hotfix Release",
-                    "value": "${{ inputs.is_hotfix }}",
                     "short": true
                   },
                   {

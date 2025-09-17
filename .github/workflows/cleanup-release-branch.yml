@@ -42,21 +42,9 @@ jobs:
             echo "Release branch not found - may have been auto-deleted by GitHub"
           fi
 
-      - name: Get release information
-        id: release-info
-        if: steps.check-branch.outputs.exists == 'true'
-        run: |
-          # Get the release branch commit info
-          RELEASE_SHA=$(git rev-parse origin/release)
-          RELEASE_COMMIT_MSG=$(git log -1 --pretty="%s" origin/release)
-          PRODUCTION_SHA=$(git rev-parse origin/production)
-
-          echo "release_sha=${RELEASE_SHA}" >> $GITHUB_OUTPUT
-          echo "release_commit_msg=${RELEASE_COMMIT_MSG}" >> $GITHUB_OUTPUT
-          echo "production_sha=${PRODUCTION_SHA}" >> $GITHUB_OUTPUT
 
       - name: Get release version from existing draft
-        id: create-tag
+        id: get-version
         uses: actions/github-script@v7
         with:
           script: |
@@ -88,30 +76,6 @@ jobs:
               return version;
             }
 
-      - name: Create release tag on production
-        run: |
-          VERSION="${{ steps.create-tag.outputs.version }}"
-          echo "Using version: ${VERSION}"
-
-          # Create and push the tag
-          git fetch origin production
-          git checkout production
-          git pull origin production
-
-          # Create annotated tag
-          git tag -a "${VERSION}" -m "Production release ${VERSION}
-
-          Release Notes:
-          ${{ github.event.pull_request.body }}
-
-          Merged PR: #${{ github.event.pull_request.number }}
-          Merged by: ${{ github.event.pull_request.merged_by.login }}
-          Release SHA: ${{ steps.release-info.outputs.release_sha }}"
-
-          git push origin "${VERSION}"
-
-          echo "Created production tag: ${VERSION}"
-
       - name: Delete release branch
         if: steps.check-branch.outputs.exists == 'true'
         run: |
@@ -125,10 +89,9 @@ jobs:
       - name: Update GitHub release
         id: update-release
         uses: actions/github-script@v7
-        continue-on-error: true
         with:
           script: |
-            const version = "${{ steps.create-tag.outputs.version }}";
+            const version = "${{ steps.get-version.outputs.version }}";
 
             try {
               // Try to find existing draft release
@@ -143,27 +106,30 @@ jobs:
 
               if (draftRelease) {
                 // Update existing draft release
+                const deployedBy = context.payload.pull_request?.merged_by?.login || 'Unknown';
+                const deployedByName = context.payload.pull_request?.merged_by?.name || deployedBy;
+                const prNumber = context.payload.pull_request?.number || 'N/A';
+                const prUrl = context.payload.pull_request?.html_url || '#';
+                const prBody = context.payload.pull_request?.body || 'No description provided.';
+
+                const releaseBody = `## Release \`${version}\`\n\n` +
+                  `**Deployment Date:** ${new Date().toISOString().split('T')[0]}\n` +
+                  `**Deployed by:** ${deployedBy} (${deployedByName})\n` +
+                  `**PR:** #${prNumber}\n\n` +
+                  `### Release Notes\n${prBody}\n\n` +
+                  `### Links\n` +
+                  `- [Merged PR](${prUrl})\n` +
+                  `- [Production Branch](${context.payload.repository.html_url}/tree/production)\n\n` +
+                  `---\n` +
+                  `*This release was finalized automatically by the ${process.env.GIT_USER_NAME}*`;
+
                 await github.rest.repos.updateRelease({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   release_id: draftRelease.id,
                   tag_name: version,
-                  name: `Production Release ${version}`,
-                  body: `## Production Release ${version}\n` +
-                        `\n` +
-                        `**Deployment Date:** ${new Date().toISOString().split('T')[0]}\n` +
-                        `**Deployed by:** ${{ github.event.pull_request.merged_by.login }}\n` +
-                        `**PR:** #${{ github.event.pull_request.number }}\n` +
-                        `\n` +
-                        `### Release Notes\n` +
-                        `${{ github.event.pull_request.body }}\n` +
-                        `\n` +
-                        `### Links\n` +
-                        `- [Merged PR](${{ github.event.pull_request.html_url }})\n` +
-                        `- [Production Branch](${context.payload.repository.html_url}/tree/production)\n` +
-                        `\n` +
-                        `---\n` +
-                        `*This release was finalized automatically by the ${{ env.GIT_USER_NAME }}*`,
+                  name: `${version}`,
+                  body: releaseBody,
                   draft: false,
                   prerelease: false
                 });
@@ -172,26 +138,29 @@ jobs:
                 return draftRelease.html_url;
               } else {
                 // Create new release
+                const deployedBy = context.payload.pull_request?.merged_by?.login || 'Unknown';
+                const deployedByName = context.payload.pull_request?.merged_by?.name || deployedBy;
+                const prNumber = context.payload.pull_request?.number || 'N/A';
+                const prUrl = context.payload.pull_request?.html_url || '#';
+                const prBody = context.payload.pull_request?.body || 'No description provided.';
+
+                const releaseBody = `## Release \`${version}\`\n\n` +
+                  `**Deployment Date:** ${new Date().toISOString().split('T')[0]}\n` +
+                  `**Deployed by:** ${deployedBy} (${deployedByName})\n` +
+                  `**PR:** #${prNumber}\n\n` +
+                  `### Release Notes\n${prBody}\n\n` +
+                  `### Links\n` +
+                  `- [Merged PR](${prUrl})\n` +
+                  `- [Production Branch](${context.payload.repository.html_url}/tree/production)\n\n` +
+                  `---\n` +
+                  `*This release was created automatically by the ${process.env.GIT_USER_NAME}*`;
+
                 const { data: newRelease } = await github.rest.repos.createRelease({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   tag_name: version,
-                  name: `Production Release ${version}`,
-                  body: `## Production Release ${version}\n` +
-                        `\n` +
-                        `**Deployment Date:** ${new Date().toISOString().split('T')[0]}\n` +
-                        `**Deployed by:** ${{ github.event.pull_request.merged_by.login }}\n` +
-                        `**PR:** #${{ github.event.pull_request.number }}\n` +
-                        `\n` +
-                        `### Release Notes\n` +
-                        `${{ github.event.pull_request.body }}\n` +
-                        `\n` +
-                        `### Links\n` +
-                        `- [Merged PR](${{ github.event.pull_request.html_url }})\n` +
-                        `- [Production Branch](${context.payload.repository.html_url}/tree/production)\n` +
-                        `\n` +
-                        `---\n` +
-                        `*This release was created automatically by the ${{ env.GIT_USER_NAME }}*`,
+                  name: `${version}`,
+                  body: releaseBody,
                   draft: false,
                   prerelease: false
                 });
@@ -219,7 +188,7 @@ jobs:
                 "fields": [
                   {
                     "title": "Version",
-                    "value": "${{ steps.create-tag.outputs.version }}",
+                    "value": "${{ steps.get-version.outputs.version }}",
                     "short": true
                   },
                   {
@@ -239,7 +208,7 @@ jobs:
                   },
                   {
                     "title": "Actions Completed",
-                    "value": "\n• Production deployment successful\n• Release tag created: `${{ steps.create-tag.outputs.version }}`\n• GitHub release published\n• Release branch cleaned up",
+                    "value": "\n• Production deployment successful\n• Release tag created: `${{ steps.get-version.outputs.version }}`\n• GitHub release published\n• Release branch cleaned up",
                     "short": false
                   }
                 ],
@@ -253,7 +222,7 @@ jobs:
                   {
                     "type": "button",
                     "text": "View Release",
-                    "url": "${{ steps.update-release.outputs.result }}"
+                    "url": "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ steps.get-version.outputs.version }}"
                   },
                   {
                     "type": "button",
@@ -265,41 +234,8 @@ jobs:
               }]
             }
 
-      - name: Notify Slack - Partial success
-        if: failure() && steps.check-branch.outputs.exists == 'false' && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
-        uses: 8398a7/action-slack@v3
-        with:
-          status: custom
-          custom_payload: |
-            {
-              "channel": "${{ env.SLACK_CHANNEL }}",
-              "attachments": [{
-                "color": "#ffa500",
-                "pretext": ":warning: *Production Release Deployed (Minor Cleanup Issue)*",
-                "title": "⚠️ Production Release Completed (Cleanup Skipped)",
-                "fields": [
-                  {
-                    "title": "Version",
-                    "value": "${{ steps.create-tag.outputs.version }}",
-                    "short": true
-                  },
-                  {
-                    "title": "Deployed by",
-                    "value": "${{ github.event.pull_request.merged_by.login }} (${{ github.event.pull_request.merged_by.name || github.event.pull_request.merged_by.login }})",
-                    "short": true
-                  },
-                  {
-                    "title": "Note",
-                    "value": "Release branch was already deleted (likely by GitHub's auto-delete feature)",
-                    "short": false
-                  }
-                ],
-                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
-              }]
-            }
-
       - name: Notify Slack - Failure
-        if: failure() && steps.check-branch.outputs.exists == 'true' && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        if: failure() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
         with:
           status: custom
@@ -308,22 +244,32 @@ jobs:
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
                 "color": "#ff0000",
-                "pretext": ":x: *Release Cleanup Failed - Manual Action Required*",
+                "pretext": ":x: *Production Release Cleanup Failed*",
                 "title": "❌ Release Cleanup Failed",
                 "fields": [
+                  {
+                    "title": "Version",
+                    "value": "${{ steps.get-version.outputs.version || 'Unknown' }}",
+                    "short": true
+                  },
                   {
                     "title": "PR",
                     "value": "<${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>",
                     "short": true
                   },
                   {
-                    "title": "Deployed by",
-                    "value": "${{ github.event.pull_request.merged_by.login }} (${{ github.event.pull_request.merged_by.name || github.event.pull_request.merged_by.login }})",
-                    "short": true
+                    "title": "Failed Step",
+                    "value": "Check the workflow logs to identify which cleanup step failed",
+                    "short": false
                   },
                   {
-                    "title": "Error",
-                    "value": "Production deployment succeeded but cleanup failed. Check the <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|workflow logs> for details. Manual cleanup may be required.",
+                    "title": "Impact",
+                    "value": "Production deployment succeeded, but cleanup tasks may need manual completion",
+                    "short": false
+                  },
+                  {
+                    "title": "Manual Actions Required",
+                    "value": "\n• Check if release branch needs manual deletion\n• Verify GitHub release was published\n• Confirm production tag exists",
                     "short": false
                   }
                 ],
@@ -333,6 +279,11 @@ jobs:
                     "text": "View Logs",
                     "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                     "style": "danger"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Production",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/tree/production"
                   }
                 ],
                 "footer": "🤖 ${{ env.GIT_USER_NAME }}"

@@ -1,4 +1,4 @@
-# WordPress VIP Site Template
+# WordPress/VIP Site Template
 
 Site setup, development environment and deploy tooling for [WordPress VIP](https://docs.wpvip.com/technical-references/vip-platform/):
 
@@ -141,19 +141,13 @@ Use the included `npm run stop-all` command to stop all containers running Docke
 
 1. Setup the local environment environment as described in the "Setup" section above.
 
-2. Create a Git branch such as `feature/name` or `fix/vertical-scroll` when you start working on a feature or a bug fix. Commit your work to that branch until it's ready for quality assurance and testing.
+2. Create a Git branch such as `feature/name` or `fix/vertical-scroll` when you start working on a feature or a bug fix. You can use the `develop` branch for your own testing and development.
 
-3. Open [a pull request](https://help.github.com/en/desktop/contributing-to-projects/creating-a-pull-request) from your feature branch to the `develop` branch or the staging environment.
+3. Open [a pull request](https://help.github.com/en/desktop/contributing-to-projects/creating-a-pull-request) from your feature branch to the `main` branch for code review.
 
-4. Review any feedback from the automated checks. Note that your local environment is configured to automatically check for any issues before each commit so there should be very few issues if you commit early and often.
+4. Review any feedback from the automated checks (linting, testing).
 
-5. Merge the feature branch into `develop` on GitHub if all checks pass. The automated [GitHub Actions workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `develop-built` branch.
-
-6. Test your feature on the VIP Go staging server. Open a new pull request from the same feature branch to `develop` if any fixes or changes are necessary.
-
-7. Once the feature is ready for production, open a new pull request from the same feature branch to the `main` branch.
-
-8. Ensure that all automated checks pass and merge in the pull request. The automated [GitHub Action workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `main-built` branch.
+5. Once approved, **squash and merge** the PR into `main`. This automatically deploys to the test environment.
 
 ## Plugins and Themes
 
@@ -216,8 +210,8 @@ This project follows a structured release process with automated deployments man
 
 ### Release Workflow
 
-1. **Development**: Developers merge feature branches into `develop` → Auto-deploys to dev environment
-2. **Staging**: Approved changes are merged from `develop` → `main` → Auto-deploys to test environment  
+1. **Development**: Developers can use `develop` for testing, but create PRs to `main` for code review
+2. **Testing**: Approved features merged into `main` → Auto-deploys to test environment  
 3. **Release Creation**: EM/TL creates `release` branch from `main` for UAT → Auto-deploys to pre-prod
 4. **Production**: After UAT approval, `release` is merged → `production` → Auto-deploys to production
 

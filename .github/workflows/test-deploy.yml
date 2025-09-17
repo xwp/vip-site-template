@@ -172,7 +172,7 @@ jobs:
                   },
                   {
                     "title": "Event",
-                    "value": "${{ github.event_name == 'push' && 'Push' || 'Pull Request' }}",
+                    "value": "${{ github.event_name == 'push' && 'Push' || github.event_name == 'repository_dispatch' && 'Manual Deployment' || 'Pull Request' }}",
                     "short": true
                   },
                   {
@@ -362,13 +362,18 @@ jobs:
                     "title": "Deployed by",
                     "value": "${{ github.actor }} (${{ github.event.pusher.name || github.actor }})",
                     "short": true
+                  },
+                  {
+                    "title": "Deployment Time",
+                    "value": "Completed successfully",
+                    "short": true
                   }
                 ],
                 "actions": [
                   {
                     "type": "button",
                     "text": "View Environment",
-                    "url": "${{ needs.test.outputs.environment == 'production' && 'https://www.devgo-vip.com' || needs.test.outputs.environment == 'test' && 'https://staging.devgo-vip.com' || 'https://dev.devgo-vip.com' }}",
+                    "url": "${{ needs.test.outputs.environment == 'production' && 'https://www.devgo-vip.com' || needs.test.outputs.environment == 'test' && 'https://staging.devgo-vip.com' || needs.test.outputs.environment == 'pre-prod' && 'https://release.devgo-vip.com' || 'https://dev.devgo-vip.com' }}",
                     "style": "primary"
                   },
                   {
@@ -415,7 +420,7 @@ jobs:
                   },
                   {
                     "title": "Action Required",
-                    "value": "**Immediate attention needed** - Check logs and consider rollback if necessary",
+                    "value": "Immediate attention needed - Check logs and consider rollback if necessary",
                     "short": false
                   }
                 ],

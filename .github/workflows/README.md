@@ -9,7 +9,7 @@ This repository uses automated GitHub Actions workflows to handle testing, deplo
 | [test-deploy.yml](test-deploy.yml) | PR/Push | Lint, test, and deploy to environments |
 | [create-release-branch.yml](create-release-branch.yml) | Manual | Create release branch from main |
 | [create-production-pr.yml](create-production-pr.yml) | Manual | Create production release PR |
-| [cleanup-release-branch.yml](cleanup-release-branch.yml) | Production merge | Clean up after release |
+| [cleanup-release-branch.yml](cleanup-release-branch.yml) | Production merge | Update release, cleanup branch |
 | [docker-images.yml](docker-images.yml) | Docker changes | Build/publish Docker images |
 
 ## Release Management Workflows
@@ -29,7 +29,8 @@ This repository uses automated GitHub Actions workflows to handle testing, deplo
 **What it does**:
 
 - Creates/updates `release` branch from latest `main`
-- Creates GitHub release draft
+- Generates changelog with recent commits
+- Creates GitHub release draft with changelog
 - Automatically triggers deployment to pre-prod environment
 - Sends Slack notification (if configured)
 
@@ -57,7 +58,7 @@ This repository uses automated GitHub Actions workflows to handle testing, deplo
 
 **⚠️ Warning**: This is a destructive operation that will overwrite the target branch completely.
 
-### 3. Create Production PR
+### 3. Create Production PR  
 
 **File**: `create-production-pr.yml`  
 **Trigger**: Manual (workflow_dispatch)  
@@ -67,8 +68,7 @@ This repository uses automated GitHub Actions workflows to handle testing, deplo
 
 1. Go to Actions → "Create Production Release PR"
 2. Enter release notes
-3. Mark as hotfix if needed
-4. Click "Run workflow"
+3. Click "Run workflow"
 
 **What it does**:
 
@@ -76,19 +76,18 @@ This repository uses automated GitHub Actions workflows to handle testing, deplo
 - Generates changelog from commits
 - Creates PR with deployment checklist
 - Assigns `@xwp/client-x` team as reviewers
-- Adds appropriate labels (`production-release`, `hotfix`)
+- Adds `production-release` label
 
 ### 3. Release Cleanup
 
 **File**: `cleanup-release-branch.yml`  
 **Trigger**: Automatic (when production PR is merged)  
-**Purpose**: Cleans up after successful production deployment
+**Purpose**: Cleans up after successful production deployment and syncs branches
 
 **What it does**:
 
-- Creates release tag on production branch
 - Deletes release branch (if exists)
-- Publishes GitHub release
+- Publishes GitHub release with cross-linking to production PR
 - Sends completion notification
 
 ## Test & Deploy Workflow
@@ -170,7 +169,6 @@ GIT_USER_EMAIL         # Git author email (default: technology@xwp.co)
 
 ```bash
 production-release     # Added to production PRs
-hotfix                 # Added to emergency releases
 docker-image-build     # Triggers Docker image publishing
 ```
 
