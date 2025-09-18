@@ -220,6 +220,7 @@ This project follows a structured release process with automated deployments man
 Our deployment process uses several automated GitHub Actions workflows:
 
 - **[Test & Deploy](.github/workflows/test-deploy.yml)**: Runs on all PR/push events - handles linting, testing, and environment-specific deployments
+  - **Note**: Tests are skipped for production deployments since code has already been tested in pre-production
 - **[Create Release Branch](.github/workflows/create-release-branch.yml)**: Manual workflow for EM/TL to create release branches from main
 - **[Create Production PR](.github/workflows/create-production-pr.yml)**: Manual workflow to create production release PRs with comprehensive checklists
 - **[Release Cleanup](.github/workflows/cleanup-release-branch.yml)**: Automatic cleanup after production deployments

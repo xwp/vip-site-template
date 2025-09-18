@@ -313,7 +313,7 @@ All notifications include an enhanced footer showing:
 | **Development** | Push to `develop` | Test Results → Deployment Started → Success/Failed |
 | **Test/Staging** | Push to `main` | Test Results → Deployment Started → Success/Failed |
 | **Pre-Production** | Push to `release` | Test Results → Deployment Started → Success/Failed |
-| **Production** | Push to `production` | Test Results → Deployment Started → Success/Failed → Release Cleanup Completed |
+| **Production** | Push to `production` | Deployment Started → Success/Failed → Release Cleanup Completed |
 
 ### Manual Workflow Notifications
 
