@@ -8,8 +8,42 @@ on:
   repository_dispatch:
     types: [branch-reset-deploy, release-branch-deploy]
 
+# CONCURRENCY CONTROL LOGIC:
+# =============================
+#
+# PURPOSE: Ensure proper workflow execution without unwanted cancellations
+#
+# CONCURRENCY GROUPS:
+# - Pull Requests: "test-deploy-pr-{PR_NUMBER}" (e.g., test-deploy-pr-123)
+#   → Each PR gets its own group for individual testing/linting
+#   → Multiple developers can have PRs running simultaneously
+#
+# - Environment Deployments: "test-deploy-env-{ENVIRONMENT}"
+#   → dev: "test-deploy-env-dev"
+#   → test: "test-deploy-env-test"
+#   → pre-prod: "test-deploy-env-pre-prod"
+#   → production: "test-deploy-env-production"
+#   → Only ONE deployment per environment can run at a time
+#   → Different environments can deploy simultaneously
+#
+# CANCELLATION POLICY:
+# - Pull Requests: ✅ Allow cancellation (developers can push new commits)
+# - Environment deployments: ✅ Allow cancellation (all environments treated equally)
+# - Repository dispatch: ✅ Allow cancellation (manual deployments can be restarted)
+#
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: >-
+    test-deploy-${{ github.event_name == 'pull_request' && format('pr-{0}',
+    github.event.pull_request.number) || github.event_name ==
+    'repository_dispatch' && format('env-{0}',
+    github.event.client_payload.branch == 'develop' && 'dev' ||
+    github.event.client_payload.branch == 'main' && 'test' ||
+    github.event.client_payload.branch == 'release' && 'pre-prod' ||
+    github.event.client_payload.branch == 'production' && 'production' ||
+    'unknown') || github.ref == 'refs/heads/develop' && 'env-dev' || github.ref
+    == 'refs/heads/main' && 'env-test' || github.ref == 'refs/heads/release' &&
+    'env-pre-prod' || github.ref == 'refs/heads/production' && 'env-production'
+    || format('ref-{0}', github.ref_name) }}
   cancel-in-progress: true
 
 env:

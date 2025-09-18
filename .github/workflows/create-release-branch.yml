@@ -184,8 +184,8 @@ jobs:
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
                 "color": "#36a64f",
-                "pretext": ":construction: *Release Branch Ready for Testing*",
-                "title": "🔧 Release Branch Created",
+                "pretext": ":construction: *Release Branch Created*",
+                "title": "🔧 Release Branch Created - Deployment Starting",
                 "fields": [
                   {
                     "title": "Version",

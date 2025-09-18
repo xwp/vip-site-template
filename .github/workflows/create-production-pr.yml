@@ -150,6 +150,15 @@ jobs:
 
             ${changelog}
 
+            ## Status Check Information
+            ⚠️ **Important**: The status checks shown below are from the \`release\` branch (pre-prod environment).
+            Production deployment will occur **after** this PR is approved and merged.
+
+            Current status checks reflect:
+            - ✅ Pre-prod environment testing and deployment
+            - ✅ Code quality and lint checks
+            - ✅ Release branch readiness
+
             ## Pre-Deployment Checklist
             - [ ] UAT testing completed and signed off
             - [ ] Stakeholder approval received

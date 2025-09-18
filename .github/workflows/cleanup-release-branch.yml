@@ -183,8 +183,8 @@ jobs:
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
                 "color": "#36a64f",
-                "pretext": ":tada: *Production Release Successfully Deployed*",
-                "title": "🎉 Production Release Completed & Cleaned Up",
+                "pretext": ":recycle: *Production Release Cleanup Completed*",
+                "title": "🧹 Release Cleanup & GitHub Release Published",
                 "fields": [
                   {
                     "title": "Version",
@@ -207,8 +207,8 @@ jobs:
                     "short": true
                   },
                   {
-                    "title": "Actions Completed",
-                    "value": "\n• Production deployment successful\n• Release tag created: `${{ steps.get-version.outputs.version }}`\n• GitHub release published\n• Release branch cleaned up",
+                    "title": "Cleanup Actions Completed",
+                    "value": "\n• Release tag created: `${{ steps.get-version.outputs.version }}`\n• GitHub release published\n• Release branch cleaned up\n\n⚠️ *Production deployment may still be in progress - check deployment notifications for completion status*",
                     "short": false
                   }
                 ],

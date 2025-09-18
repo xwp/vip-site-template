@@ -139,8 +139,8 @@ Action Required: Immediate attention needed - Check logs and consider rollback i
 ### 5. Release Branch Created (create-release-branch.yml)
 
 ```
-🟢 🔧 Release Branch Created
-🔧 Release Branch Ready for Testing
+🟢 🔧 Release Branch Created - Deployment Starting
+🔧 Release Branch Created
 
 Version: release-20240916-143022
 Branch: release
@@ -148,8 +148,8 @@ Created by: tech-lead
 Base Commit: stu345vw
 Last commit message here
 Next Steps:
-• Deploy to UAT environment
-• Run UAT testing  
+• Deployment to pre-prod environment will start automatically
+• Run UAT testing
 • Create production PR when ready
 
 [View Release Branch] [View Draft Release] [Deploy to UAT]
@@ -255,21 +255,21 @@ Status: ⚠️ Branch may be in an inconsistent state - manual intervention may 
 🤖 XWP Deploy Bot
 ```
 
-### 12. Production Release Completed (cleanup-release-branch.yml)
+### 12. Production Release Cleanup Completed (cleanup-release-branch.yml)
 
 ```
-🟢 🎉 Production Release Completed & Cleaned Up
-🎉 Production Release Successfully Deployed
+🟢 🧹 Release Cleanup & GitHub Release Published
+🧹 Production Release Cleanup Completed
 
 Version: release-20240916-143022
-Deployed by: tech-lead
 PR: #42
 Branch Cleanup: Release branch deleted
-Actions Completed:
-• Production deployment successful
+Cleanup Actions Completed:
 • Release tag created: release-20240916-143022
 • GitHub release published
 • Release branch cleaned up
+
+⚠️ Production deployment may still be in progress - check deployment notifications for completion status
 
 [View Production] [View Release] [View Deployment]
 
@@ -313,13 +313,19 @@ All notifications include an enhanced footer showing:
 | **Development** | Push to `develop` | Test Results → Deployment Started → Success/Failed |
 | **Test/Staging** | Push to `main` | Test Results → Deployment Started → Success/Failed |
 | **Pre-Production** | Push to `release` | Test Results → Deployment Started → Success/Failed |
-| **Production** | Push to `production` | Test Results → Deployment Started → Success/Failed → Release Completed |
+| **Production** | Push to `production` | Test Results → Deployment Started → Success/Failed → Release Cleanup Completed |
 
 ### Manual Workflow Notifications
 
 | Workflow | Trigger | Success | Failure |
 |----------|---------|---------|---------|
-| **Create Release** | Manual action | Release Branch Created | Release Creation Failed |
-| **Reset Branch** | Manual action | Branch Reset Successful | Branch Reset Failed |
+| **Create Release** | Manual action | Release Branch Created *(triggers deployment)* | Release Creation Failed |
+| **Reset Branch** | Manual action | Branch Reset Successful *(triggers deployment)* | Branch Reset Failed |
 | **Create Production PR** | Manual action | Production PR Created | Production PR Failed |
-| **Release Cleanup** | Auto after merge | Production Release Completed | Release Cleanup Failed |
+| **Release Cleanup** | Auto after merge | Release Cleanup Completed *(parallel to deployment)* | Release Cleanup Failed |
+
+### Important Timing Notes
+
+- **Release Branch Created**: Sent immediately when branch is created, deployment starts automatically afterward
+- **Release Cleanup Completed**: Sent when GitHub cleanup is done, but production deployment may still be in progress
+- **Deployment Completed Successfully**: The definitive notification that environment is ready for use
