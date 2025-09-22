@@ -28,7 +28,11 @@ foreach ( $mu_plugin_files as $mu_plugin_file ) {
 /**
  * Use wpcom_vip_load_plugin( 'plugin-name' ); to always
  * enable certain plugins from wp-content/plugins.
+ *
+ * Don't force-enable them on the network admin site.
  */
-wpcom_vip_load_plugin( 'action-scheduler' );
-wpcom_vip_load_plugin( 'safe-svg' );
-wpcom_vip_load_plugin( 'wpcom-legacy-redirector' );
+if ( ! is_main_site() ) {
+	wpcom_vip_load_plugin( 'action-scheduler' );
+	wpcom_vip_load_plugin( 'safe-svg' );
+	wpcom_vip_load_plugin( 'wpcom-legacy-redirector' );
+}

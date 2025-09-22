@@ -1,4 +1,4 @@
-# WordPress VIP Site Template
+# WordPress/VIP Site Template
 
 Site setup, development environment and deploy tooling for [WordPress VIP](https://docs.wpvip.com/technical-references/vip-platform/):
 
@@ -141,19 +141,13 @@ Use the included `npm run stop-all` command to stop all containers running Docke
 
 1. Setup the local environment environment as described in the "Setup" section above.
 
-2. Create a Git branch such as `feature/name` or `fix/vertical-scroll` when you start working on a feature or a bug fix. Commit your work to that branch until it's ready for quality assurance and testing.
+2. Create a Git branch such as `feature/name` or `fix/vertical-scroll` when you start working on a feature or a bug fix. You can use the `develop` branch for your own testing and development.
 
-3. Open [a pull request](https://help.github.com/en/desktop/contributing-to-projects/creating-a-pull-request) from your feature branch to the `develop` branch or the staging environment.
+3. Open [a pull request](https://help.github.com/en/desktop/contributing-to-projects/creating-a-pull-request) from your feature branch to the `main` branch for code review.
 
-4. Review any feedback from the automated checks. Note that your local environment is configured to automatically check for any issues before each commit so there should be very few issues if you commit early and often.
+4. Review any feedback from the automated checks (linting, testing).
 
-5. Merge the feature branch into `develop` on GitHub if all checks pass. The automated [GitHub Actions workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `develop-built` branch.
-
-6. Test your feature on the VIP Go staging server. Open a new pull request from the same feature branch to `develop` if any fixes or changes are necessary.
-
-7. Once the feature is ready for production, open a new pull request from the same feature branch to the `main` branch.
-
-8. Ensure that all automated checks pass and merge in the pull request. The automated [GitHub Action workflow](https://github.com/xwp/vip-site-template/actions) will deploy it to the `main-built` branch.
+5. Once approved, **squash and merge** the PR into `main`. This automatically deploys to the test environment.
 
 ## Plugins and Themes
 
@@ -187,7 +181,6 @@ Use [VIP dashboard or VIP-CLI](https://docs.wpvip.com/technical-references/vip-d
 
 - Run `npm run cli -- bash -c "pv import.sql | wp db query"` to import a large database file `local/public/wp/vip-export.sql` while monitoring the progress with [`pv`](https://linux.die.net/man/1/pv) which is bundled with the WordPress container. The `bash -c` prefix allows us to run multiple commands inside the container without affecting the main `npm run cli` command.
 
-
 ## Scripts 🧰
 
 We use `npm` as the canonical task runner for things like linting files and creating release bundles. Composer scripts (defined in `composer.json`) are used only for PHP related tasks and they have a wrapper npm script in `package.json` for consistency with the rest of the registered tasks.
@@ -202,30 +195,60 @@ We use `npm` as the canonical task runner for things like linting files and crea
 
 - `npm run install-cert` to mark the self-signed SSL certificate authority (under [`local/certs/rootCA.pem`](local/certs/rootCA.pem)) for the local development environment as trusted. Make sure [`mkcert` is installed on your computer](#install-dependencies). This command is required to avoid the "Your connection is not private" error when visiting the site. Stop the local environment before running this command, restart the browser/tab after installing the certificate, and start the environment again.
 
-## Deployments 🚀
+## Release Process & Deployments 🚀
 
-The deployment process always starts from the same clean state, which enables reproducible builds across different environments, such as local development machines and continuous integration services.
+This project follows a structured release process with automated deployments managed by GitHub Actions workflows.
 
-Deployments to the VIP upstream repository are handled automatically by the [GitHub Actions workflow](.github/workflows) after a branch is merged into `develop` for development, `main` for test, `release` for pre-production and `production` for production.
+### Branch Strategy
 
-The CI process checks the code against the [VIP coding standards](https://github.com/Automattic/VIP-Coding-Standards), builds the release bundle, and pushes the changes to matching release branch:
+| Branch | Purpose | Environment | Auto-Deploy |
+|--------|---------|-------------|-------------|
+| `develop` | Development work | Dev | ✅ |
+| `main` | Staging/testing | Test | ✅ |
+| `release` | UAT testing | Pre-prod | ✅ |
+| `production` | Live site | Production | ✅ |
 
-	┌──────────────┐   ┌──────────────────┐   ┌────────────────────┐
-	│  production  ├──►│  GitHub Actions  ├──►│  production-built  │
-	└──────────────┘   └──────────────────┘   └────────────────────┘
+### Release Workflow
 
-Internally it runs the `local/scripts/deploy.sh` script, which does a clean checkout of the deploy source branch to `local/deploy/src`, runs the build process and copies the project files with the release artifacts to `deploy/dist` using `rsync`. It then commits the changes to the matching `*-built` branch which is then imported by the VIP Go servers.
+1. **Development**: Developers can use `develop` for testing, but create PRs to `main` for code review
+2. **Testing**: Approved features merged into `main` → Auto-deploys to test environment  
+3. **Release Creation**: EM/TL creates `release` branch from `main` for UAT → Auto-deploys to pre-prod
+4. **Production**: After UAT approval, `release` is merged → `production` → Auto-deploys to production
 
-### NewRelic Deploy Markers
+### Automated Workflows
 
-The repository includes support for publishing [NewRelic deployment markers](https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/record-deployments) after each deploy, if the [`NEW_RELIC_API_KEY` key](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/) is configured in the GitHub Actions environment. Note that we're not using the official [NewRelic deployment marker GitHub action](https://github.com/newrelic/deployment-marker-action) because it is harder to configure for multiple App GUIDs.
+Our deployment process uses several automated GitHub Actions workflows:
 
-	npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ secrets.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"
+- **[Test & Deploy](.github/workflows/test-deploy.yml)**: Runs on all PR/push events - handles linting, testing, and environment-specific deployments
+  - **Note**: Tests are skipped for production deployments since code has already been tested in pre-production
+- **[Create Release Branch](.github/workflows/create-release-branch.yml)**: Manual workflow for EM/TL to create release branches from main
+- **[Create Production PR](.github/workflows/create-production-pr.yml)**: Manual workflow to create production release PRs with comprehensive checklists
+- **[Release Cleanup](.github/workflows/cleanup-release-branch.yml)**: Automatic cleanup after production deployments
+- **[Docker Images](.github/workflows/docker-images.yml)**: Builds and publishes Docker images when needed
 
-where:
+📋 **Detailed workflow documentation**: [GitHub Actions Workflows](.github/workflows/README.md)
 
-- `--search` is the search term to find the NewRelic app GUIDs by app name. The app names are set to `$_SERVER['HTTP_HOST']-VIP_GO_APP_ENVIRONMENT` in [`vip-config/vip-config.php`](vip-config/vip-config.php) so we use a wildcard search for `*-VIPENVNAME` where `VIPENVNAME` is the environment name such as `staging` or `production`.
-- `--api_key` is the [API key](https://docs.newrelic.com/docs/apis/get-started/intro-apis/types-new-relic-api-keys#user-api-key) to authenticate with New Relic.
-- `--commit` is the commit hash to use for the deployment.
-- `--user` is the user to associate with the deployment.
-- `--description` is the description to use for the deployment.
+### Environment Configuration
+
+The workflows require specific GitHub secrets and variables to be configured in your repository settings.
+
+📋 **Complete configuration details**: [Workflow Configuration](.github/workflows/README.md#configuration)
+
+### Technical Details
+
+The deployment process:
+
+1. Runs `local/scripts/deploy.sh` which creates a clean build environment
+2. Checks code against [VIP coding standards](https://github.com/Automattic/VIP-Coding-Standards)
+3. Builds release artifacts and filters files using `.distinclude`
+4. Commits changes to the matching VIP branch for server import
+
+#### NewRelic Integration
+
+Automatic deployment markers are sent to NewRelic (when `NEW_RELIC_API_KEY` is configured):
+
+```bash
+npm run newrelic-mark-deploy -- --search "*-production" --api_key "$NEW_RELIC_API_KEY" --commit "$COMMIT_SHA" --user "$DEPLOY_USER" --description "$COMMIT_MESSAGE"
+```
+
+The `--search` parameter finds NewRelic apps using the pattern `*-{environment}` where environment matches the VIP environment name.

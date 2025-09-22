@@ -1,0 +1,291 @@
+name: Release Branch Cleanup
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [production]
+
+env:
+  # Slack Configuration
+  SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  # Git Configuration
+  GIT_USER_NAME: ${{ vars.GIT_USER_NAME || 'XWP Deploy Bot' }}
+  GIT_USER_EMAIL: ${{ vars.GIT_USER_EMAIL || 'technology@xwp.co' }}
+
+jobs:
+  cleanup-release:
+    name: Cleanup Release Branch
+    runs-on: ubuntu-22.04
+    # Only run if PR was merged (not just closed)
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }} # Do not move to a variable
+
+      - name: Setup Git
+        run: |
+          git config user.name "${{ env.GIT_USER_NAME }}"
+          git config user.email "${{ env.GIT_USER_EMAIL }}"
+
+      - name: Check if release branch exists
+        id: check-branch
+        run: |
+          if git show-ref --verify --quiet refs/remotes/origin/release; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Release branch found - will proceed with cleanup"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Release branch not found - may have been auto-deleted by GitHub"
+          fi
+
+
+      - name: Get release version from existing draft
+        id: get-version
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              // Find existing draft release created by create-release-branch workflow
+              const { data: releases } = await github.rest.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+
+              const draftRelease = releases.find(release => release.draft);
+
+              if (draftRelease && draftRelease.tag_name.startsWith('release-')) {
+                console.log(`Found existing draft release: ${draftRelease.tag_name}`);
+                core.setOutput('version', draftRelease.tag_name);
+                return draftRelease.tag_name;
+              } else {
+                // Fallback to timestamp if no draft found
+                const version = `release-${new Date().toISOString().replace(/[-T:.]/g, '').slice(0, 15).replace(/(\d{8})(\d{6})/, '$1-$2')}`;
+                console.log(`No draft release found, generating fallback version: ${version}`);
+                core.setOutput('version', version);
+                return version;
+              }
+            } catch (error) {
+              // Fallback to timestamp if API fails
+              const version = `release-${new Date().toISOString().replace(/[-T:.]/g, '').slice(0, 15).replace(/(\d{8})(\d{6})/, '$1-$2')}`;
+              console.log(`Error finding draft release, using fallback: ${version}`);
+              core.setOutput('version', version);
+              return version;
+            }
+
+      - name: Delete release branch
+        if: steps.check-branch.outputs.exists == 'true'
+        run: |
+          echo "Deleting release branch..."
+
+          # Delete the remote release branch
+          git push origin --delete release
+
+          echo "Release branch deleted successfully"
+
+      - name: Update GitHub release
+        id: update-release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const version = "${{ steps.get-version.outputs.version }}";
+
+            try {
+              // Try to find existing draft release
+              const { data: releases } = await github.rest.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+
+              const draftRelease = releases.find(release =>
+                release.draft && (release.tag_name === version || release.name.includes(version))
+              );
+
+              if (draftRelease) {
+                // Update existing draft release
+                const deployedBy = context.payload.pull_request?.merged_by?.login || 'Unknown';
+                const deployedByName = context.payload.pull_request?.merged_by?.name || deployedBy;
+                const prNumber = context.payload.pull_request?.number || 'N/A';
+                const prUrl = context.payload.pull_request?.html_url || '#';
+                const prBody = context.payload.pull_request?.body || 'No description provided.';
+
+                const releaseBody = `## Release \`${version}\`\n\n` +
+                  `**Deployment Date:** ${new Date().toISOString().split('T')[0]}\n` +
+                  `**Deployed by:** ${deployedBy} (${deployedByName})\n` +
+                  `**PR:** #${prNumber}\n\n` +
+                  `### Release Notes\n${prBody}\n\n` +
+                  `### Links\n` +
+                  `- [Merged PR](${prUrl})\n` +
+                  `- [Production Branch](${context.payload.repository.html_url}/tree/production)\n\n` +
+                  `---\n` +
+                  `*This release was finalized automatically by the ${process.env.GIT_USER_NAME}*`;
+
+                await github.rest.repos.updateRelease({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  release_id: draftRelease.id,
+                  tag_name: version,
+                  name: `${version}`,
+                  body: releaseBody,
+                  draft: false,
+                  prerelease: false
+                });
+
+                console.log(`Updated release: ${draftRelease.html_url}`);
+                return draftRelease.html_url;
+              } else {
+                // Create new release
+                const deployedBy = context.payload.pull_request?.merged_by?.login || 'Unknown';
+                const deployedByName = context.payload.pull_request?.merged_by?.name || deployedBy;
+                const prNumber = context.payload.pull_request?.number || 'N/A';
+                const prUrl = context.payload.pull_request?.html_url || '#';
+                const prBody = context.payload.pull_request?.body || 'No description provided.';
+
+                const releaseBody = `## Release \`${version}\`\n\n` +
+                  `**Deployment Date:** ${new Date().toISOString().split('T')[0]}\n` +
+                  `**Deployed by:** ${deployedBy} (${deployedByName})\n` +
+                  `**PR:** #${prNumber}\n\n` +
+                  `### Release Notes\n${prBody}\n\n` +
+                  `### Links\n` +
+                  `- [Merged PR](${prUrl})\n` +
+                  `- [Production Branch](${context.payload.repository.html_url}/tree/production)\n\n` +
+                  `---\n` +
+                  `*This release was created automatically by the ${process.env.GIT_USER_NAME}*`;
+
+                const { data: newRelease } = await github.rest.repos.createRelease({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  tag_name: version,
+                  name: `${version}`,
+                  body: releaseBody,
+                  draft: false,
+                  prerelease: false
+                });
+
+                console.log(`Created new release: ${newRelease.html_url}`);
+                return newRelease.html_url;
+              }
+            } catch (error) {
+              console.log(`Could not update GitHub release: ${error.message}`);
+              return null;
+            }
+
+      - name: Notify Slack - Success
+        if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "#36a64f",
+                "pretext": ":recycle: *Production Release Cleanup Completed*",
+                "title": "🧹 Release Cleanup & GitHub Release Published",
+                "fields": [
+                  {
+                    "title": "Version",
+                    "value": "${{ steps.get-version.outputs.version }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Deployed by",
+                    "value": "${{ github.event.pull_request.merged_by.login }} (${{ github.event.pull_request.merged_by.name || github.event.pull_request.merged_by.login }})",
+                    "short": true
+                  },
+                  {
+                    "title": "PR",
+                    "value": "<${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>",
+                    "short": true
+                  },
+                  {
+                    "title": "Branch Cleanup",
+                    "value": "${{ steps.check-branch.outputs.exists == 'true' && 'Release branch deleted' || 'Release branch was already deleted by GitHub' }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Cleanup Actions Completed",
+                    "value": "\n• Release tag created: `${{ steps.get-version.outputs.version }}`\n• GitHub release published\n• Release branch cleaned up\n\n⚠️ *Production deployment may still be in progress - check deployment notifications for completion status*",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Production",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/tree/production",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Release",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ steps.get-version.outputs.version }}"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Deployment",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/deployments"
+                  }
+                ],
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
+              }]
+            }
+
+      - name: Notify Slack - Failure
+        if: failure() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "#ff0000",
+                "pretext": ":x: *Production Release Cleanup Failed*",
+                "title": "❌ Release Cleanup Failed",
+                "fields": [
+                  {
+                    "title": "Version",
+                    "value": "${{ steps.get-version.outputs.version || 'Unknown' }}",
+                    "short": true
+                  },
+                  {
+                    "title": "PR",
+                    "value": "<${{ github.event.pull_request.html_url }}|#${{ github.event.pull_request.number }}>",
+                    "short": true
+                  },
+                  {
+                    "title": "Failed Step",
+                    "value": "Check the workflow logs to identify which cleanup step failed",
+                    "short": false
+                  },
+                  {
+                    "title": "Impact",
+                    "value": "Production deployment succeeded, but cleanup tasks may need manual completion",
+                    "short": false
+                  },
+                  {
+                    "title": "Manual Actions Required",
+                    "value": "\n• Check if release branch needs manual deletion\n• Verify GitHub release was published\n• Confirm production tag exists",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Logs",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "style": "danger"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Production",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/tree/production"
+                  }
+                ],
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
+              }]
+            }

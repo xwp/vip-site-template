@@ -1,0 +1,277 @@
+name: Create Release Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update existing release branch'
+        required: false
+        type: boolean
+        default: false
+env:
+  # Slack Configuration
+  SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  # Git Configuration
+  GIT_USER_NAME: ${{ vars.GIT_USER_NAME || 'XWP Deploy Bot' }}
+  GIT_USER_EMAIL: ${{ vars.GIT_USER_EMAIL || 'technology@xwp.co' }}
+
+jobs:
+  create-release:
+    name: Create Release Branch
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }} # Do not move to a variable
+
+      - name: Setup Git
+        run: |
+          git config user.name "${{ env.GIT_USER_NAME }}"
+          git config user.email "${{ env.GIT_USER_EMAIL }}"
+
+      - name: Check if release branch exists
+        id: check-branch
+        run: |
+          if git show-ref --verify --quiet refs/remotes/origin/release; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Release branch already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "No existing release branch found"
+          fi
+
+      - name: Generate release version
+        id: version
+        run: |
+          if [[ "${{ steps.check-branch.outputs.exists }}" == "true" && "${{ inputs.force_update }}" != "true" ]]; then
+            echo "Release branch already exists. Use force_update=true to override."
+            exit 1
+          fi
+
+          # Generate timestamp-based version for consistency
+          VERSION="release-$(date +%Y%m%d-%H%M%S)"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Generated version: ${VERSION}"
+
+      - name: Create/Update release branch
+        run: |
+          echo "Creating release branch from main..."
+
+          # Ensure we have the latest main
+          git checkout main
+          git pull origin main
+
+          # Create/update release branch from main
+          if [[ "${{ steps.check-branch.outputs.exists }}" == "true" ]]; then
+            echo "Force updating existing release branch..."
+            # Fetch and checkout existing branch, then reset to main
+            git fetch origin
+            git checkout -B release origin/main
+            git push --force-with-lease origin release
+          else
+            echo "Creating new release branch..."
+            git checkout -b release
+            git push -u origin release
+          fi
+
+          echo "Release branch created/updated from main"
+
+      - name: Trigger deployment to release environment
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          script: |
+            try {
+              console.log('🚀 Triggering deployment to release environment...');
+
+              await github.rest.repos.createDispatchEvent({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                event_type: 'release-branch-deploy',
+                client_payload: {
+                  branch: 'release',
+                  from_branch: 'main',
+                  created_by: '${{ github.actor }}',
+                  version: '${{ steps.version.outputs.version }}'
+                }
+              });
+
+              console.log('✅ Repository dispatch event sent - deployment should start shortly');
+            } catch (error) {
+              console.error('❌ Failed to trigger deployment:', error.message);
+              console.log('⚠️ Release branch created successfully, but automatic deployment failed');
+              console.log('💡 You can manually trigger deployment from Actions tab');
+            }
+
+      - name: Get commit details
+        id: commit-info
+        run: |
+          COMMIT_SHA=$(git rev-parse HEAD)
+          COMMIT_MSG=$(git log -1 --pretty=%B | head -1)
+          COMMIT_AUTHOR=$(git log -1 --pretty=%an)
+
+          echo "sha=${COMMIT_SHA}" >> $GITHUB_OUTPUT
+          echo "message=${COMMIT_MSG}" >> $GITHUB_OUTPUT
+          echo "author=${COMMIT_AUTHOR}" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "Generating changelog..."
+
+          # Create a temporary file for the changelog
+          CHANGELOG_FILE=$(mktemp)
+
+          echo "## Changes in this Release" >> $CHANGELOG_FILE
+          echo "" >> $CHANGELOG_FILE
+
+          # Get commit messages between production and main (what will be in the release)
+          git log --pretty=format:"- %s (%h)" origin/production..origin/main --no-merges >> $CHANGELOG_FILE
+
+          # Read the changelog and properly encode it
+          CHANGELOG_CONTENT=$(cat $CHANGELOG_FILE)
+
+          # Use a more robust delimiter and encode the content
+          {
+            echo 'changelog<<CHANGELOG_DELIMITER'
+            echo "$CHANGELOG_CONTENT"
+            echo 'CHANGELOG_DELIMITER'
+          } >> $GITHUB_OUTPUT
+
+          rm $CHANGELOG_FILE
+
+      - name: Create GitHub release draft
+        id: create-release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const releaseBody = `## Release \`${{ steps.version.outputs.version }}\`
+
+            **Created from:** \`main\` branch
+            **Commit:** ${{ steps.commit-info.outputs.sha }}
+            **Last commit:** ${{ steps.commit-info.outputs.message }}
+
+            ${{ steps.changelog.outputs.changelog }}
+
+            ---
+            *This release was created automatically by the ${process.env.GIT_USER_NAME}*`;
+
+            const { data: release } = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: '${{ steps.version.outputs.version }}',
+              name: '${{ steps.version.outputs.version }}',
+              body: releaseBody,
+              draft: true,
+              prerelease: false
+            });
+
+            console.log(`Created draft release: ${release.html_url}`);
+            core.setOutput('html_url', release.html_url);
+            core.setOutput('id', release.id);
+            return release.html_url;
+
+      - name: Notify Slack - Success
+        if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "#36a64f",
+                "pretext": ":construction: *Release Branch Created*",
+                "title": "🔧 Release Branch Created - Deployment Starting",
+                "fields": [
+                  {
+                    "title": "Version",
+                    "value": "${{ steps.version.outputs.version }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Branch",
+                    "value": "`release`",
+                    "short": true
+                  },
+                  {
+                    "title": "Created by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Base Commit",
+                    "value": "`${{ steps.commit-info.outputs.sha }}`\n${{ steps.commit-info.outputs.message }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Next Steps",
+                    "value": "\n• Deployment to pre-prod environment will start automatically\n• Run UAT testing\n• Create production PR when ready",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Release Branch",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/tree/release",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Draft Release",
+                    "url": "${{ steps.create-release.outputs.html_url }}"
+                  },
+                  {
+                    "type": "button",
+                    "text": "Deploy to UAT",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions"
+                  }
+                ],
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
+              }]
+            }
+
+      - name: Notify Slack - Failure
+        if: failure() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "#ff0000",
+                "pretext": ":x: *Release Branch Creation Failed*",
+                "title": "❌ Release Branch Creation Failed",
+                "fields": [
+                  {
+                    "title": "Version",
+                    "value": "${{ steps.version.outputs.version }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Triggered by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Error",
+                    "value": "Check the <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|workflow logs> for details",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Logs",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "style": "danger"
+                  }
+                ],
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
+              }]
+            }

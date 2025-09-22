@@ -1,0 +1,316 @@
+name: Create Production Release PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_notes:
+        description: 'Release notes for production deployment'
+        required: true
+        type: string
+env:
+  # Slack Configuration
+  SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  # Git Configuration
+  GIT_USER_NAME: ${{ vars.GIT_USER_NAME || 'XWP Deploy Bot' }}
+  GIT_USER_EMAIL: ${{ vars.GIT_USER_EMAIL || 'technology@xwp.co' }}
+  # Team Configuration
+  REVIEW_TEAM: ${{ vars.REVIEW_TEAM || 'xwp/client-x' }}
+
+jobs:
+  create-production-pr:
+    name: Create Production PR
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate release branch exists
+        run: |
+          if ! git show-ref --verify --quiet refs/remotes/origin/release; then
+            echo "Release branch does not exist. Create a release branch first."
+            exit 1
+          fi
+          echo "Release branch found"
+
+      - name: Get release information
+        id: release-info
+        run: |
+          # Get commits between production and release
+          git fetch origin production release
+
+          COMMITS=$(git log --oneline origin/production..origin/release --no-merges | wc -l | xargs)
+          LAST_COMMIT=$(git log -1 --pretty="%h - %s" origin/release)
+          RELEASE_COMMIT=$(git rev-parse origin/release)
+
+          echo "commit_count=${COMMITS}" >> $GITHUB_OUTPUT
+          echo "last_commit=${LAST_COMMIT}" >> $GITHUB_OUTPUT
+          echo "release_sha=${RELEASE_COMMIT}" >> $GITHUB_OUTPUT
+
+          echo "Found ${COMMITS} commits ready for production"
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "Generating changelog..."
+
+          # Create a temporary file for the changelog
+          CHANGELOG_FILE=$(mktemp)
+
+          echo "## Changes in this Release" >> $CHANGELOG_FILE
+          echo "" >> $CHANGELOG_FILE
+
+          # Get commit messages between production and release
+          git log --pretty=format:"- %s (%h)" origin/production..origin/release --no-merges >> $CHANGELOG_FILE
+
+          # Read the changelog and properly encode it
+          CHANGELOG_CONTENT=$(cat $CHANGELOG_FILE)
+
+          # Use a more robust delimiter and encode the content
+          {
+            echo 'changelog<<CHANGELOG_DELIMITER'
+            echo "$CHANGELOG_CONTENT"
+            echo 'CHANGELOG_DELIMITER'
+          } >> $GITHUB_OUTPUT
+
+          rm $CHANGELOG_FILE
+
+      - name: Find GitHub release draft
+        id: find-release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              const { data: releases } = await github.rest.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+
+              const draftRelease = releases.find(release => release.draft);
+
+              if (draftRelease) {
+                console.log(`Found draft release: ${draftRelease.html_url}`);
+                core.setOutput('release_url', draftRelease.html_url);
+                core.setOutput('release_tag', draftRelease.tag_name);
+                return draftRelease.html_url;
+              } else {
+                console.log('No draft release found');
+                core.setOutput('release_url', '');
+                core.setOutput('release_tag', '');
+                return null;
+              }
+            } catch (error) {
+              console.log('Error finding release:', error.message);
+              core.setOutput('release_url', '');
+              core.setOutput('release_tag', '');
+              return null;
+            }
+
+      - name: Create production PR
+        id: create-pr
+        uses: actions/github-script@v7
+        env:
+          RELEASE_NOTES: ${{ inputs.release_notes }}
+          COMMIT_COUNT: ${{ steps.release-info.outputs.commit_count }}
+          RELEASE_SHA: ${{ steps.release-info.outputs.release_sha }}
+          LAST_COMMIT: ${{ steps.release-info.outputs.last_commit }}
+          CHANGELOG: ${{ steps.changelog.outputs.changelog }}
+          RELEASE_URL: ${{ steps.find-release.outputs.release_url }}
+          RELEASE_TAG: ${{ steps.find-release.outputs.release_tag }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GIT_USER_NAME: ${{ env.GIT_USER_NAME }}
+          REVIEW_TEAM: ${{ env.REVIEW_TEAM }}
+        with:
+          script: |
+            const releaseNotes = process.env.RELEASE_NOTES;
+            const commitCount = process.env.COMMIT_COUNT;
+            const releaseSha = process.env.RELEASE_SHA;
+            const lastCommit = process.env.LAST_COMMIT;
+            const changelog = process.env.CHANGELOG;
+            const releaseUrl = process.env.RELEASE_URL;
+            const releaseTag = process.env.RELEASE_TAG;
+            const actor = process.env.GITHUB_ACTOR;
+            const gitUserName = process.env.GIT_USER_NAME;
+            const reviewTeam = process.env.REVIEW_TEAM;
+
+            const releaseLink = releaseUrl ?
+              `**📋 GitHub Release:** [${releaseTag}](${releaseUrl})\n\n` : '';
+
+            const prBody = `## Production Release ${new Date().toISOString().split('T')[0]}
+
+            ${releaseLink}**Release Notes:**
+            ${releaseNotes}
+
+            **Release Statistics:**
+            - **Commits:** ${commitCount}
+            - **Release SHA:** \`${releaseSha}\`
+            - **Last Commit:** ${lastCommit}
+
+            ${changelog}
+
+            ## Status Check Information
+            ⚠️ **Important**: The status checks shown below are from the \`release\` branch (pre-prod environment).
+            Production deployment will occur **after** this PR is approved and merged.
+
+            Current status checks reflect:
+            - ✅ Pre-prod environment testing and deployment
+            - ✅ Code quality and lint checks
+            - ✅ Release branch readiness
+
+            ## Pre-Deployment Checklist
+            - [ ] UAT testing completed and signed off
+            - [ ] Stakeholder approval received
+            - [ ] Security review completed (if applicable)
+            - [ ] Performance testing completed (if applicable)
+            - [ ] Database migration scripts reviewed (if applicable)
+            - [ ] Feature flags configured (if applicable)
+
+            ## Deployment Checklist
+            - [ ] Pre-deployment backup verified
+            - [ ] Rollback plan confirmed and tested
+            - [ ] Monitoring alerts configured
+            - [ ] Deployment window confirmed
+            - [ ] On-call engineer notified
+
+            ## Emergency Contacts
+            - **Release Manager:** ${actor}
+            - **Team:** @${reviewTeam}
+
+            ---
+            *This PR was created automatically by the ${gitUserName}*`;
+
+            const prTitle = `Production Release ${new Date().toISOString().split('T')[0]}`;
+
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: prTitle,
+              head: 'release',
+              base: 'production',
+              body: prBody
+            });
+
+            // Add reviewers - team and specific users
+            try {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                team_reviewers: [reviewTeam]
+              });
+              console.log('Team reviewers added successfully');
+            } catch (error) {
+              console.log('Could not add team reviewers:', error.message);
+            }
+
+            // Add labels - simplified set
+            const labels = ['production-release'];
+
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                labels: labels
+              });
+              console.log('Labels added successfully:', labels.join(', '));
+            } catch (error) {
+              console.log('Could not add labels:', error.message);
+            }
+
+            console.log(`Production PR created: ${pr.html_url}`);
+            return pr.number;
+
+      - name: Notify Slack - Success
+        if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "#ffa500",
+                "pretext": ":memo: *Production Release PR Ready*",
+                "title": "📋 Production Release PR Created",
+                "fields": [
+                  {
+                    "title": "PR Number",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.create-pr.outputs.result }}|#${{ steps.create-pr.outputs.result }}>",
+                    "short": true
+                  },
+                  {
+                    "title": "Created by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Commits",
+                    "value": "${{ steps.release-info.outputs.commit_count }} commits ready for production",
+                    "short": true
+                  },
+                  {
+                    "title": "Release Notes",
+                    "value": "${{ inputs.release_notes }}",
+                    "short": false
+                  },
+                  {
+                    "title": "Action Required",
+                    "value": "@${{ env.REVIEW_TEAM }}: Please review and approve this PR for production deployment",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "Review PR",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/pull/${{ steps.create-pr.outputs.result }}",
+                    "style": "primary"
+                  },
+                  {
+                    "type": "button",
+                    "text": "View Changes",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/compare/production...release"
+                  }
+                ],
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
+              }]
+            }
+
+      - name: Notify Slack - Failure
+        if: failure() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          custom_payload: |
+            {
+              "channel": "${{ env.SLACK_CHANNEL }}",
+              "attachments": [{
+                "color": "#ff0000",
+                "pretext": ":x: *Production PR Creation Failed*",
+                "title": "❌ Production PR Creation Failed",
+                "fields": [
+                  {
+                    "title": "Triggered by",
+                    "value": "${{ github.actor }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Error",
+                    "value": "Check the <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|workflow logs> for details",
+                    "short": false
+                  }
+                ],
+                "actions": [
+                  {
+                    "type": "button",
+                    "text": "View Logs",
+                    "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "style": "danger"
+                  }
+                ],
+                "footer": "🤖 ${{ env.GIT_USER_NAME }}"
+              }]
+            }
