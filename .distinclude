@@ -23,7 +23,11 @@
 - node_modules/
 - tests/
 - test/
-- vendor/
+- /plugins/vendor/automattic/vip-go-mu-plugins/
+- /plugins/vendor/bin/
+- /plugins/vendor/phpunit/
+- /plugins/vendor/phpstan/
+- /plugins/vendor/squizlabs/
 
 # Development config files
 - package.json
