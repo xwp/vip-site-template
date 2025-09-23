@@ -23,7 +23,7 @@
 - node_modules/
 - tests/
 - test/
-- vendor/
+- /plugins/vendor/
 
 # Development config files
 - package.json
