@@ -6,7 +6,7 @@
 	>
 	<testsuites>
 		<testsuite name="client-mu-plugins">
-			<directory suffix=".php">client-mu-plugins/tests/phpunit/</directory>
+			<directory suffix="-test.php">client-mu-plugins/tests/phpunit/</directory>
 		</testsuite>
 	</testsuites>
 </phpunit>

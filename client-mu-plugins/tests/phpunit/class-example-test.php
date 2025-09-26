@@ -17,7 +17,7 @@ class Example_Test extends WP_UnitTestCase {
 	 *
 	 * @return void
 	 */
-	public function test_actions_exist() {
+	public function test_actions_exist(): void {
 		$this->assertTrue( function_exists( 'add_action' ) );
 	}
 }
