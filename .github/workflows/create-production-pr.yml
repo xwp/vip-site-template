@@ -79,7 +79,7 @@ jobs:
 
       - name: Find GitHub release draft
         id: find-release
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             try {
@@ -110,7 +110,7 @@ jobs:
 
       - name: Create production PR
         id: create-pr
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           RELEASE_NOTES: ${{ inputs.release_notes }}
           COMMIT_COUNT: ${{ steps.release-info.outputs.commit_count }}
