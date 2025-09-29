@@ -17,6 +17,53 @@
  */
 
 /**
+ * Domain redirect configuration for a VIP multisite.
+ *
+ * Must run before WordPress loads to handle redirects efficiently.
+ */
+if ( isset( $_SERVER['HTTP_HOST'] ) && isset( $_SERVER['REQUEST_URI'] ) ) {
+	$http_host   = $_SERVER['HTTP_HOST']; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$request_uri = $_SERVER['REQUEST_URI']; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+	/**
+	 * Configure domain redirects for www/non-www variants.
+	 *
+	 * Structure: 'canonical-domain.com' => [ 'redirect-from-domains' ]
+	 *
+	 * Domain configuration:
+	 * - Main site: www.client-x.com (canonical), client-x.com (redirects to www).
+	 * - Network site: network.client-x.com (no www variant needed).
+	 */
+	$redirect_domains = [
+		// Main site - redirect non-www to www.
+		'www.client-x.com' => [
+			'client-x.com',  // Redirect client-x.com → www.client-x.com.
+		],
+		// Network site doesn't need redirects (no www variant exists).
+		// 'network.client-x.com' has no variants to redirect.
+	];
+
+	/**
+	 * Safety checks for redirection:
+	 * 1. Don't redirect for '/cache-healthcheck?' or monitoring will break.
+	 * 2. Don't redirect in WP CLI context.
+	 * 3. Only redirect if we're not already on the target domain.
+	 * 4. Don't redirect go-vip.net domains (they're for non-production environments).
+	 */
+	foreach ( $redirect_domains as $redirect_to => $redirect_from_domains ) {
+		if (
+			'/cache-healthcheck?' !== $request_uri && // Do not redirect VIP's monitoring.
+			! ( defined( 'WP_CLI' ) && WP_CLI ) && // Do not redirect WP-CLI commands.
+			$redirect_to !== $http_host &&
+			in_array( $http_host, $redirect_from_domains, true )
+		) {
+			header( 'Location: https://' . $redirect_to . $request_uri, true, 301 );
+			exit;
+		}
+	}
+}
+
+/**
  * Enable Composer autoloader.
  *
  * Note that on VIP servers the vip-config directory gets mounted

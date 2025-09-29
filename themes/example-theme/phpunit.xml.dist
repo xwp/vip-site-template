@@ -6,7 +6,7 @@
 	>
 	<testsuites>
 		<testsuite name="example">
-			<directory suffix=".php">./tests/phpunit/</directory>
+			<directory suffix="-test.php">./tests/phpunit/</directory>
 		</testsuite>
 	</testsuites>
 	<coverage>

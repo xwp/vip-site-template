@@ -1,0 +1,74 @@
+{
+	"search.exclude": {
+		"local/public/wp-content": true,
+		"local/deploy": true,
+		"**/node_modules": true,
+		"**/.git": true,
+		"themes/**/build": true,
+		"themes/**/vendor": true
+	},
+	"files.watcherExclude": {
+		"local/public/wp-content": true,
+		"local/deploy": true,
+		"**/node_modules": true,
+		"**/.git": true,
+		"themes/**/build": true,
+		"themes/**/vendor": true
+	},
+	"intelephense.files.exclude": [
+		"local/public/wp-content",
+		"local/deploy",
+		"**/node_modules",
+		"**/.git",
+		"themes/**/build",
+		"themes/**/vendor",
+		"**/.DS_Store"
+	],
+	"css.validate": false,
+	"scss.validate": false,
+	"stylelint.validate": ["css", "scss"],
+	"stylelint.config": null,
+	"eslint.format.enable": true,
+	"[javascript]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+	"cSpell.words": [
+		"ABSPATH",
+		"atts",
+		"bloginfo",
+		"buddypress",
+		"crontrol",
+		"cutover",
+		"dbname",
+		"elasticpress",
+		"ERRMODE",
+		"fclose",
+		"fflush",
+		"fopen",
+		"ftruncate",
+		"fwrite",
+		"gzdecode",
+		"intval",
+		"isset",
+		"LONGTEXT",
+		"MEDIUMBLOB",
+		"multisite",
+		"ONLYDIR",
+		"pickability",
+		"postid",
+		"restartability",
+		"resumability",
+		"retryable",
+		"runbook",
+		"shardable",
+		"strtolower",
+		"TINYINT",
+		"trailingslashit",
+		"ulike",
+		"VARCHAR",
+		"WPCOM"
+	]
+}
