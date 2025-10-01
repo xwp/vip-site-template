@@ -26,7 +26,7 @@ Scope (apply all that are relevant):
 
 Format & Style:
 
-- Provide **copy-paste ready** code with **1 tab** indentation (see global.mdc).
+- Prefer proposing workspace edits (diffs) for approval; fallback to copy/paste only if edits are unavailable. Use **1 tab** indentation (see global.mdc).
 - Preserve behavior where safe; change behavior only to fix vulnerabilities.
 - Keep diffs surgical and readable; follow repository patterns.
 

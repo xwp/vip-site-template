@@ -37,7 +37,7 @@ README requirement:
 
 Output:
 
-1) The original code **annotated with PHPDoc/JSDoc** (copy-paste ready; no behavior changes).
+1) Proposed workspace edits adding PHPDoc/JSDoc (no behavior changes).
 2) A complete `README.md` for the feature/block.
 3) A short bullet list (≤8 bullets) summarizing what was documented and any TODOs.
 

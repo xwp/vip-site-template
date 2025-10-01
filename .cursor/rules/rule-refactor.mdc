@@ -20,16 +20,17 @@ Rules:
 
 Format & Code Style:
 
-- Provide **copy-paste ready** PHP with **1 tab** indentation.
+- Prefer proposing workspace edits (diffs) for approval; fallback to copy/paste only if edits are unavailable. Use **1 tab** indentation.
 - Follow PSR-12/WordPress standards already used in the repo.
 - Use i18n for user-facing PHP strings (`__()`, `_e()`); JS output does not require i18n.
 - Keep inline comments minimal and educational; keep result clean.
 
 Output:
 
-1) **Diff-style summary** (bulleted, very short) referencing **filename:line ranges**.
-2) **Refactored code** (≤ 200 lines shown; omit boilerplate if huge).
-3) **Equivalence note** (optional, 1 paragraph): how behavior was preserved (e.g., tests, fixtures, before/after outputs).
+1) Proposed workspace edits (diffs) for approval in Cursor.
+2) Diff-style summary (bulleted) referencing `filename:line ranges`.
+3) Refactored code snippet (≤200 lines) only if helpful for review.
+4) Equivalence note (optional): how behavior was preserved.
 
 Acceptance Criteria:
 

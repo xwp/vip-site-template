@@ -9,7 +9,7 @@ Context: The codebase uses PHP 8.3 and modern JavaScript. Keep functions single-
 
 Format and Code Style:
 
-- Provide **copy-paste ready** code. Use **1 tab** indentation.
+- Prefer proposing workspace edits (diffs) for approval; fallback to copy/paste only if edits are unavailable. Use **1 tab** indentation.
 - PHP: Prefer helpers/classes with clear names; add PHPDoc for public APIs; internationalize user-facing strings with `__()`/`_e()`.
 - JS: Use vanilla JS or Gutenberg/React as relevant; split into small modules/functions; add JSDoc where helpful.
 - WordPress integration: Use hooks/filters/template tags appropriately; avoid global state; respect repository structure.
@@ -42,8 +42,8 @@ Performance (see global.mdc for full policy):
 
 Output:
 
-1) Implemented feature code (≤ 200 lines shown; omit boilerplate if huge).
-2) Short explanation (bulleted): design, key decisions, hooks added, and how the code was organized.
+1) Proposed workspace edits (diffs) for approval in Cursor.
+2) Short explanation (bulleted): design, key decisions, hooks added, code organization.
 3) Usage notes: actions/filters, template tags, or CLI commands introduced.
 4) Optional tests or sample calls (very brief) showing expected behavior.
 

@@ -25,7 +25,7 @@ The environment must stay **VIP-compliant** (security, caching, file-system rest
 - Do not try to be efficient with context space or token use.
 - Do not use `head`, `tail`, or `sed` to restrict the amount of data you are reading.
 - When suggesting changes, **ALL existing comments must be preserved**.
-- Do not use code edit tools unless explicitly told you may modify the workspace.
+- Use code edit tools to propose workspace edits as diffs; never auto-apply. Only apply after explicit approval via Cursor UI or a clear “approve” in chat.
 - When showing lines of code, **preserve original spacing & indentation**.
 - NEVER change spacing/indentation/formatting of code that is not being functionally altered.
 - Do not make any code changes or suggestions unrelated to the query at hand.
@@ -33,7 +33,7 @@ The environment must stay **VIP-compliant** (security, caching, file-system rest
 - Do not ASSUME anything that can be verified by reading the code — **always check first**.
 - NEVER say “I need to see the files” — use the tools to read them.
 - NEVER modify code without explicit authorization.
-- When asked to make changes, first propose a **step-by-step execution plan** (with checkboxes), stop for approval at each step.
+- When asked to make changes, first propose a **step-by-step execution plan** (with checkboxes), stop for approval at each step. After the plan is approved, generate a single batch of workspace “edits” for review and approval in Cursor; avoid copy/paste when edits are available.
 
 ## 💻 Code Editing & Style
 
