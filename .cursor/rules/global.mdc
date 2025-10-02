@@ -148,4 +148,12 @@ The environment must stay **VIP-compliant** (security, caching, file-system rest
 ## 🚫 Forbidden / Always Avoid
 
 - No speculation; read the code.
-- No layout/UX ch
+- No layout/UX changes without explicit authorization.
+- Never keep unused variables, remove them.
+- Do not introduce new dependencies without explicit approval.
+- Avoid using the spread operator unless it significantly improves clarity.
+- No temporary variables that are only used once.
+- Never change spacing/indentation/formatting of code not being functionally altered.
+- No obtuse or creative coding; write at junior engineer complexity level.
+- Follow these and all instructions exactly unless contradictory (ask for clarification).
+- Follow exactly unless the USER explicitly tells you not to. ALWAYS say when not following a rule intentionally.
