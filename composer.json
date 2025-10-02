@@ -59,7 +59,7 @@
 		"wp-cli/php-cli-tools": "^0.11",
 		"wp-phpunit/wp-phpunit": "^6.8",
 		"xwp/wait-for": "^0.0.2",
-		"yoast/phpunit-polyfills": "^2.0"
+		"yoast/phpunit-polyfills": "^2.0.5"
 	},
 	"scripts": {
 		"lint": [
