@@ -14,4 +14,4 @@ Output:
 - Recommended option with rationale (why this, why not others).
 - Risks & mitigations (brief).
 - Open questions/assumptions to validate.
-- Authoritative references (prefer developer.wordpress.org, VIP docs).
+- Authoritative references (prefer [developer.wordpress.org](https://developer.wordpress.org/), [VIP docs](https://docs.wpvip.com/)).
