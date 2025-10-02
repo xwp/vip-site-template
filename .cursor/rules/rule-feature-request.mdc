@@ -37,7 +37,7 @@ Security & Compliance (see global.mdc for full policy):
 Performance (see global.mdc for full policy):
 
 - Avoid N+1 queries: don’t query inside a loop; instead, batch related lookups into a single query.
-- Use Object Cache/Transients judiciously without changing semantics.
+- Use Object Cache/Transients appropriately without changing semantics.
 - Keep critical paths lightweight; prefer lazy loading and early returns.
 
 Output:
