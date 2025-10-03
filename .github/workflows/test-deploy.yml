@@ -133,7 +133,7 @@ jobs:
             echo "Node modules cache hit - skipping installation"
           else
             echo "Node modules cache miss - installing dependencies"
-            pnpm install --ignore-scripts --prefer-offline --no-audit
+            pnpm install --ignore-scripts --prefer-offline
           fi
 
       - name: Install Composer dependencies
