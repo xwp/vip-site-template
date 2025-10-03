@@ -47,7 +47,7 @@ COPY config/php/* /usr/local/etc/php/conf.d/
 RUN docker-php-ext-install pcntl
 
 # Setup xdebug and memcached.
-RUN pecl install xdebug-3.3.1 memcached-3.2.0 \
+RUN pecl install xdebug-3.4.5 memcached-3.2.0 \
 	&& docker-php-ext-enable xdebug memcached
 
 # Enable HTTPS endpoints for reverse proxy requests. Used for images.
