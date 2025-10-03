@@ -84,7 +84,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.4'
           tools: composer:v2
 
       - name: Get Composer cache directory
@@ -101,6 +101,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+
+      - name: Install pnpm
+        run: npm install -g pnpm@10.18.0
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
@@ -122,7 +125,7 @@ jobs:
 
       - name: Install Node dependencies
         # We are checking for both root and theme node_modules folders to confirm the cache was found.
-        # The npm install deletes and recreates node_modules when needed,
+        # The pnpm install deletes and recreates node_modules when needed,
         # therefore we're skipping the command when the cache was hit.
         # Important: keep the detection logic in sync with the cache path above.
         run: |
@@ -130,14 +133,14 @@ jobs:
             echo "Node modules cache hit - skipping installation"
           else
             echo "Node modules cache miss - installing dependencies"
-            npm install --ignore-scripts --prefer-offline --no-audit
+            pnpm install --ignore-scripts --prefer-offline --no-audit
           fi
 
       - name: Install Composer dependencies
         run: composer install
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Setup tests
         run: mkdir uploads
@@ -204,7 +207,7 @@ jobs:
 
       - name: Test
         if: steps.check-deploy.outputs.skip-tests != 'true'
-        run: npm run test
+        run: pnpm run test
 
       - name: Notify Slack - Test results
         if: (success() || failure()) && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
@@ -322,24 +325,24 @@ jobs:
 
       - name: Deploy to develop (dev environment)
         if: needs.test.outputs.environment == 'dev'
-        run: npm run deploy-dev # wpcomvip/devgo-vip.git/develop
+        run: pnpm run deploy-dev # wpcomvip/devgo-vip.git/develop
 
       - name: Deploy to main (test environment)
         if: needs.test.outputs.environment == 'test'
-        run: npm run deploy-test # wpcomvip/devgo-vip.git/staging
+        run: pnpm run deploy-test # wpcomvip/devgo-vip.git/staging
 
       - name: Deploy to release (pre-prod environment)
         if: needs.test.outputs.environment == 'pre-prod'
-        run: npm run deploy-pre-prod # wpcomvip/devgo-vip.git/release
+        run: pnpm run deploy-pre-prod # wpcomvip/devgo-vip.git/release
 
       - name: Deploy to production
         if: needs.test.outputs.environment == 'production'
-        run: npm run deploy-production # wpcomvip/devgo-vip.git/production
+        run: pnpm run deploy-production # wpcomvip/devgo-vip.git/production
 
       - name: Set NewRelic deploy marker
         if: needs.test.outputs.environment == 'production' && env.NEW_RELIC_API_KEY != ''
         run: |
-          npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ env.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"
+          pnpm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ env.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"
 
       - name: Notify Slack - Deployment success
         if: success() && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
