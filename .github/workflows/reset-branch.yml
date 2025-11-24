@@ -59,7 +59,7 @@ jobs:
           # Log the operation
           echo "✅ Valid branch reset operation: ${FROM} → ${TO}"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # Fetch all history for all branches
           token: ${{ secrets.GITHUB_TOKEN }}
