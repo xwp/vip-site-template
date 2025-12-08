@@ -77,14 +77,14 @@ jobs:
       short-sha: ${{ steps.check-deploy.outputs.short-sha }}
       display-branch: ${{ steps.check-deploy.outputs.display-branch }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref }}
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           tools: composer:v2
 
       - name: Get Composer cache directory
@@ -263,7 +263,7 @@ jobs:
     if: needs.test.outputs.should-deploy == 'true'
     environment: ${{ needs.test.outputs.environment }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref }}
 

@@ -101,13 +101,17 @@ services:
     depends_on:
       - db
     build: ./local/docker/wordpress
-    image: ghcr.io/xwp/vip-site-template--wordpress:2.2.0
+    image: ghcr.io/xwp/vip-site-template--wordpress:2.3.0
     restart: always
     volumes:
       - ./local/public:/var/www/html
       - .:/var/www/html/wp-content
       - ./vip-config:/var/www/html/vip-config # Match the VIP production setup where vip-config is mapped to the root directory.
       - webgrind_data:/tmp
+    extra_hosts:
+      - "${DEV_URL:-local.wpenv.net}:host-gateway"
+      - "main.${DEV_URL:-local.wpenv.net}:host-gateway"
+      - "network.${DEV_URL:-local.wpenv.net}:host-gateway"
     environment:
       APACHE_DOCUMENT_ROOT: /var/www/html
       VIRTUAL_HOST: ${DEV_URL:-local.wpenv.net}, *.${DEV_URL:-local.wpenv.net}
