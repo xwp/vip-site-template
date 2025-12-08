@@ -98,7 +98,7 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
 
@@ -268,7 +268,7 @@ jobs:
           ref: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: '.nvmrc'
 
