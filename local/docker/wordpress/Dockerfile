@@ -1,4 +1,4 @@
-FROM wordpress:php8.2-apache
+FROM wordpress:php8.3-apache
 
 ARG VERSION_WPCLI=2.9.0
 ARG NODE_VERSION=20

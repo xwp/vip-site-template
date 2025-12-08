@@ -6,9 +6,9 @@
 	<arg value="s" /><!-- Show sniff codes in all reports. -->
 	<arg value="p" /><!-- Show progress. -->
 
-	<!-- Ensure all code works with PHP 8.2 and above. -->
+	<!-- Ensure all code works with PHP 8.3 and above. -->
 	<rule ref="PHPCompatibilityWP" />
-	<config name="testVersion" value="8.2-" />
+	<config name="testVersion" value="8.3-" />
 
 	<!--
 	Prevent errors caused by WordPress Coding Standards not supporting PHP 8.0+.

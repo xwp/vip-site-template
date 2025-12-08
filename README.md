@@ -16,7 +16,7 @@ Site setup, development environment and deploy tooling for [WordPress VIP](https
 
 ## Requirements
 
-- PHP 8.2
+- PHP 8.3
 - [Composer](https://getcomposer.org)
 - [Node.js](https://nodejs.org) version 20
 - [Docker with Docker Compose](https://docs.docker.com/compose/install/)
@@ -26,7 +26,7 @@ Site setup, development environment and deploy tooling for [WordPress VIP](https
 
 We suggest using [Homebrew](https://brew.sh) on macOS or [Chocolatey](https://chocolatey.org) for Windows to install the project dependencies.
 
-	brew install git php@8.2 composer node@20 mkcert nss
+	brew install git php@8.3 composer node@20 mkcert nss
 	brew install --cask docker
 
 Once NVM is installed, you can install the required Node.js version from the `.nvmrc` file:
@@ -36,7 +36,7 @@ Once NVM is installed, you can install the required Node.js version from the `.n
 
 ### WordPress Compatibility
 
-This theme template is aligned with WordPress 6.8.x package versions.
+This theme template is aligned with WordPress 6.9.x package versions.
 To update packages to match a different WordPress version:
 `npx wp-scripts packages-update --dist-tag=wp-[version] --save`
 
