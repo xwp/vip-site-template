@@ -146,24 +146,35 @@ jobs:
       - name: Create GitHub release draft
         id: create-release
         uses: actions/github-script@v8
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+          COMMIT_SHA: ${{ steps.commit-info.outputs.sha }}
+          COMMIT_MESSAGE: ${{ steps.commit-info.outputs.message }}
+          CHANGELOG: ${{ steps.changelog.outputs.changelog }}
         with:
           script: |
-            const releaseBody = `## Release \`${{ steps.version.outputs.version }}\`
+            const version = process.env.RELEASE_VERSION;
+            const commitSha = process.env.COMMIT_SHA;
+            const commitMessage = process.env.COMMIT_MESSAGE;
+            const changelog = process.env.CHANGELOG;
+            const gitUserName = process.env.GIT_USER_NAME;
+
+            const releaseBody = `## Release \`${version}\`
 
             **Created from:** \`main\` branch
-            **Commit:** ${{ steps.commit-info.outputs.sha }}
-            **Last commit:** ${{ steps.commit-info.outputs.message }}
+            **Commit:** ${commitSha}
+            **Last commit:** ${commitMessage}
 
-            ${{ steps.changelog.outputs.changelog }}
+            ${changelog}
 
             ---
-            *This release was created automatically by the ${process.env.GIT_USER_NAME}*`;
+            *This release was created automatically by the ${gitUserName}*`;
 
             const { data: release } = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              tag_name: '${{ steps.version.outputs.version }}',
-              name: '${{ steps.version.outputs.version }}',
+              tag_name: version,
+              name: version,
               body: releaseBody,
               draft: true,
               prerelease: false
