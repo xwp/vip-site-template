@@ -47,7 +47,7 @@ jobs:
 
       - name: Set up QEMU
         if: steps.should-publish.outputs.should_publish == 'true'
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
         if: steps.should-publish.outputs.should_publish == 'true'
