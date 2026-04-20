@@ -12,10 +12,29 @@ on:
 # ============================
 #
 # PERFORMANCE OPTIMIZATIONS:
-# - Tests are SKIPPED for production branch deployments (saves 3-4 minutes)
-#   → Rationale: Code reaching production was already tested in release/pre-prod
+# - Lint and Test run as PARALLEL jobs on separate runners (saves ~4 minutes wall-clock)
+#   → Combined wall-clock = max(Lint, Test) instead of Lint + Test
+# - Tests are SKIPPED entirely for release/production branch deployments (saves 3-4 minutes)
+#   → Rationale: Code reaching production was already tested upstream
+# - Lint job does NOT require Docker (skips Docker login and image pull)
+# - PHPCS runs incrementally on PRs (only changed PHP files are checked)
+#   → Full PHPCS still runs on pushes to protected branches as a safety net
+#   → PHPStan always runs full (needs whole-project type context)
 # - Deploy job runs minimal steps since deploy.sh handles building
 #   → Avoids duplicate npm install and build steps
+#
+# JOB TOPOLOGY:
+# =============
+#
+#   ┌──────┐  ┌──────┐
+#   │ Lint │  │ Test │ ← parallel
+#   └──┬───┘  └──┬───┘
+#      │   ┌─────┘
+#   ┌──▼───▼───────┐
+#   │ Notify Slack │   ← consolidated result
+#   ├──────────────┤
+#   │    Deploy    │   ← when pushing to protected branches
+#   └──────────────┘
 #
 # CONCURRENCY CONTROL LOGIC:
 # ==========================
@@ -67,9 +86,10 @@ env:
   GIT_USER_EMAIL: ${{ vars.GIT_USER_EMAIL || 'technology@xwp.co' }}
 
 jobs:
-  # Job 1: Always run linting and testing
-  test:
-    name: Lint and Test
+  # Job 1: Lint — runs on every trigger, no Docker needed.
+  # Owns deployment metadata outputs consumed by Notify and Deploy.
+  lint:
+    name: Lint
     runs-on: ubuntu-22.04
     outputs:
       should-deploy: ${{ steps.check-deploy.outputs.should-deploy }}
@@ -81,67 +101,11 @@ jobs:
         with:
           ref: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref }}
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-          tools: composer:v2
+      - name: Fetch base branch for diff
+        if: github.event_name == 'pull_request'
+        run: git fetch --no-tags --depth=1 origin ${{ github.base_ref }}
 
-      - name: Get Composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-      - name: Cache Composer packages
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: '.nvmrc'
-
-      - name: Cache npm dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            node_modules
-            themes/*/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json', '**/package.json') }}
-
-      - name: Log in to the Docker container registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }} # Do not move to a variable
-
-      - name: Pull custom Docker images
-        run: docker compose pull wordpress mkcert
-
-      - name: Install Node dependencies
-        # We are checking for both root and theme node_modules folders to confirm the cache was found.
-        # The npm install deletes and recreates node_modules when needed,
-        # therefore we're skipping the command when the cache was hit.
-        # Important: keep the detection logic in sync with the cache path above.
-        run: |
-          if [ -d "node_modules" ] && [ -n "$(find themes -maxdepth 2 -name 'node_modules' -type d 2>/dev/null)" ]; then
-            echo "Node modules cache hit - skipping installation"
-          else
-            echo "Node modules cache miss - installing dependencies"
-            npm install --ignore-scripts --prefer-offline --no-audit
-          fi
-
-      - name: Install Composer dependencies
-        run: composer install
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Setup tests
-        run: mkdir uploads
-
+      # Compute deployment metadata early so outputs are available even if lint fails.
       - name: Check if deployment needed
         id: check-deploy
         run: |
@@ -172,42 +136,212 @@ jobs:
             case "${BRANCH_NAME}" in
               "develop")
                 echo "environment=dev" >> $GITHUB_OUTPUT
-                echo "skip-tests=false" >> $GITHUB_OUTPUT
                 echo "✅ Environment set to: dev"
                 ;;
               "main")
                 echo "environment=test" >> $GITHUB_OUTPUT
-                echo "skip-tests=false" >> $GITHUB_OUTPUT
                 echo "✅ Environment set to: test"
                 ;;
               "release")
                 echo "environment=pre-prod" >> $GITHUB_OUTPUT
-                echo "skip-tests=false" >> $GITHUB_OUTPUT
                 echo "✅ Environment set to: pre-prod"
                 ;;
               "production")
                 echo "environment=production" >> $GITHUB_OUTPUT
-                echo "skip-tests=true" >> $GITHUB_OUTPUT
                 echo "✅ Environment set to: production"
-                echo "⚡ SKIPPING TESTS for production deployment (already tested in release)"
                 ;;
               *)
                 echo "environment=none" >> $GITHUB_OUTPUT
-                echo "skip-tests=false" >> $GITHUB_OUTPUT
                 ;;
             esac
           else
             echo "should-deploy=false" >> $GITHUB_OUTPUT
             echo "environment=none" >> $GITHUB_OUTPUT
-            echo "skip-tests=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer packages
+        uses: actions/cache@v5
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v5
+        with:
+          path: |
+            node_modules
+            themes/*/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Node dependencies
+        # We are checking for both root and theme node_modules folders to confirm the cache was found.
+        # The npm install deletes and recreates node_modules when needed,
+        # therefore we're skipping the command when the cache was hit.
+        # Important: keep the detection logic in sync with the cache path above.
+        run: |
+          if [ -d "node_modules" ] && [ -n "$(find themes -maxdepth 2 -name 'node_modules' -type d 2>/dev/null)" ]; then
+            echo "Node modules cache hit - skipping installation"
+          else
+            echo "Node modules cache miss - installing dependencies"
+            npm install --ignore-scripts --prefer-offline --no-audit
+          fi
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress
+
+      # PHPStan's built-in result cache only re-analyses files that changed since the last run.
+      # Persisting the cache directory between CI runs provides incremental analysis for free.
+      - name: Cache PHPStan results
+        uses: actions/cache@v5
+        with:
+          path: local/phpstan/phpstan-cache
+          key: phpstan-${{ hashFiles('phpstan.dist.neon', 'local/phpstan/phpstan-baseline.neon') }}-${{ github.sha }}
+          restore-keys: |
+            phpstan-${{ hashFiles('phpstan.dist.neon', 'local/phpstan/phpstan-baseline.neon') }}-
+
+      # Full lint for push/dispatch events — PHPCS scans all project files.
+      - name: Lint
+        if: github.event_name != 'pull_request'
+        run: npm run lint
+
+      # Incremental lint for PRs — PHPCS checks only changed PHP files.
+      # JS/CSS lint, composer validate, and PHPStan still run full.
+      - name: Lint (PR — incremental PHPCS)
+        if: github.event_name == 'pull_request'
+        run: |
+          EXIT_CODE=0
+
+          # JS/CSS lint and composer validate always run full.
+          npm run lint-workspaces || EXIT_CODE=1
+          npm run lint-composer || EXIT_CODE=1
+          npm run lint-js || EXIT_CODE=1
+
+          # PHPCS: only changed PHP files (exclude-patterns in phpcs.xml.dist still apply).
+          CHANGED_PHP=$(git diff --name-only --diff-filter=d origin/${{ github.base_ref }} HEAD -- '*.php')
+          if [ -n "$CHANGED_PHP" ]; then
+            FILE_COUNT=$(echo "$CHANGED_PHP" | wc -l | tr -d ' ')
+            echo "▶ PHPCS: ${FILE_COUNT} changed PHP file(s)"
+
+            # Project standard — theme and third-party paths are auto-excluded by phpcs.xml.dist.
+            echo "$CHANGED_PHP" | xargs -d '\n' ./plugins/vendor/bin/phpcs || EXIT_CODE=1
+
+            # Theme standard — only run on changed files inside the theme directory.
+            THEME_PHP=$(echo "$CHANGED_PHP" | grep '^themes/example-theme/' || true)
+            if [ -n "$THEME_PHP" ]; then
+              echo "$THEME_PHP" | xargs -d '\n' ./plugins/vendor/bin/phpcs --standard=themes/example-theme/phpcs.xml.dist || EXIT_CODE=1
+            fi
+          else
+            echo "▶ PHPCS: no PHP files changed — skipped"
+          fi
+
+          # PHPStan always runs full (needs whole-project type context).
+          composer lint:phpstan || EXIT_CODE=1
+
+          exit $EXIT_CODE
+
+  # Job 2: Test — runs in parallel with Lint; skipped entirely for release/production deployments.
+  # Docker is only needed here (not in the Lint job).
+  test:
+    name: Test
+    runs-on: ubuntu-22.04
+    # Tests are skipped for release/production — code was already tested upstream.
+    if: >-
+      !(github.event_name == 'push'
+        && (github.ref_name == 'release' || github.ref_name == 'production'))
+      && !(github.event_name == 'repository_dispatch'
+        && (github.event.client_payload.branch == 'release'
+          || github.event.client_payload.branch == 'production'))
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.branch || github.ref }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer packages
+        uses: actions/cache@v5
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v5
+        with:
+          path: |
+            node_modules
+            themes/*/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+      - name: Log in to the Docker container registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }} # Do not move to a variable
+
+      - name: Pull custom Docker images
+        run: docker compose pull wordpress
+
+      - name: Install Node dependencies
+        # We are checking for both root and theme node_modules folders to confirm the cache was found.
+        # The npm install deletes and recreates node_modules when needed,
+        # therefore we're skipping the command when the cache was hit.
+        # Important: keep the detection logic in sync with the cache path above.
+        run: |
+          if [ -d "node_modules" ] && [ -n "$(find themes -maxdepth 2 -name 'node_modules' -type d 2>/dev/null)" ]; then
+            echo "Node modules cache hit - skipping installation"
+          else
+            echo "Node modules cache miss - installing dependencies"
+            npm install --ignore-scripts --prefer-offline --no-audit
+          fi
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --no-progress
+
+      - name: Setup tests
+        run: mkdir uploads
+
       - name: Test
-        if: steps.check-deploy.outputs.skip-tests != 'true'
         run: npm run test
 
-      - name: Notify Slack - Test results
-        if: (success() || failure()) && env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
+  # Job 3: Notify — consolidated Slack notification after both Lint and Test complete.
+  # Fires on success AND failure so developers always get feedback.
+  notify:
+    name: Notify Slack
+    needs: [lint, test]
+    runs-on: ubuntu-22.04
+    if: always() && !cancelled()
+    steps:
+      - name: Notify Slack - Lint and Test results
+        if: env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
         with:
           status: custom
@@ -215,13 +349,23 @@ jobs:
             {
               "channel": "${{ env.SLACK_CHANNEL }}",
               "attachments": [{
-                "color": "${{ job.status == 'success' && 'good' || 'danger' }}",
-                "pretext": "${{ job.status == 'success' && ':white_check_mark: *Tests Passed Successfully*' || ':x: *Tests Failed*' }}",
-                "title": "${{ job.status == 'success' && '✅ All Tests Passed' || '❌ Test Suite Failed' }}",
+                "color": "${{ needs.lint.result == 'success' && (needs.test.result == 'success' || needs.test.result == 'skipped') && 'good' || 'danger' }}",
+                "pretext": "${{ needs.lint.result == 'success' && (needs.test.result == 'success' || needs.test.result == 'skipped') && ':white_check_mark: *Lint and Test Passed Successfully*' || ':x: *Lint or Test Failed*' }}",
+                "title": "${{ needs.lint.result == 'success' && (needs.test.result == 'success' || needs.test.result == 'skipped') && '✅ All Checks Passed' || '❌ Check Suite Failed' }}",
                 "fields": [
                   {
+                    "title": "Lint",
+                    "value": "${{ needs.lint.result == 'success' && '✅ Passed' || '❌ Failed' }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Test",
+                    "value": "${{ needs.test.result == 'success' && '✅ Passed' || needs.test.result == 'skipped' && '⏭️ Skipped' || '❌ Failed' }}",
+                    "short": true
+                  },
+                  {
                     "title": "Branch",
-                     "value": "`${{ steps.check-deploy.outputs.display-branch }}`",
+                     "value": "`${{ needs.lint.outputs.display-branch }}`",
                     "short": true
                   },
                   {
@@ -231,7 +375,7 @@ jobs:
                   },
                   {
                     "title": "Commit",
-                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ steps.check-deploy.outputs.short-sha }}`>",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.lint.outputs.short-sha }}`>",
                     "short": true
                   },
                   {
@@ -241,7 +385,7 @@ jobs:
                   },
                   {
                     "title": "Will Deploy",
-                    "value": "${{ steps.check-deploy.outputs.should-deploy == 'true' && 'Yes - ' || 'No - ' }}${{ steps.check-deploy.outputs.environment }}",
+                    "value": "${{ needs.lint.outputs.should-deploy == 'true' && 'Yes - ' || 'No - ' }}${{ needs.lint.outputs.environment }}",
                     "short": false
                   }
                 ],
@@ -255,13 +399,16 @@ jobs:
               }]
             }
 
-  # Job 2: Deploy only when needed (pushes to protected branches)
+  # Job 4: Deploy only when needed (pushes to protected branches).
+  # Runs when Lint succeeds and Test either succeeds or is skipped (release/production).
   deploy:
     name: Deploy
     runs-on: ubuntu-22.04
-    needs: test
-    if: needs.test.outputs.should-deploy == 'true'
-    environment: ${{ needs.test.outputs.environment }}
+    needs: [lint, test]
+    if: >-
+      !failure() && !cancelled()
+      && needs.lint.outputs.should-deploy == 'true'
+    environment: ${{ needs.lint.outputs.environment }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -298,17 +445,17 @@ jobs:
                 "fields": [
                   {
                     "title": "Environment",
-                    "value": "${{ needs.test.outputs.environment }}",
+                    "value": "${{ needs.lint.outputs.environment }}",
                     "short": true
                   },
                   {
                     "title": "Branch",
-                    "value": "`${{ needs.test.outputs.display-branch }}`",
+                    "value": "`${{ needs.lint.outputs.display-branch }}`",
                     "short": true
                   },
                   {
                     "title": "Commit",
-                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.test.outputs.short-sha }}`>",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.lint.outputs.short-sha }}`>",
                     "short": true
                   },
                   {
@@ -321,23 +468,23 @@ jobs:
             }
 
       - name: Deploy to develop (dev environment)
-        if: needs.test.outputs.environment == 'dev'
+        if: needs.lint.outputs.environment == 'dev'
         run: npm run deploy-dev # wpcomvip/devgo-vip.git/develop
 
       - name: Deploy to main (test environment)
-        if: needs.test.outputs.environment == 'test'
+        if: needs.lint.outputs.environment == 'test'
         run: npm run deploy-test # wpcomvip/devgo-vip.git/staging
 
       - name: Deploy to release (pre-prod environment)
-        if: needs.test.outputs.environment == 'pre-prod'
+        if: needs.lint.outputs.environment == 'pre-prod'
         run: npm run deploy-pre-prod # wpcomvip/devgo-vip.git/release
 
       - name: Deploy to production
-        if: needs.test.outputs.environment == 'production'
+        if: needs.lint.outputs.environment == 'production'
         run: npm run deploy-production # wpcomvip/devgo-vip.git/production
 
       - name: Set NewRelic deploy marker
-        if: needs.test.outputs.environment == 'production' && env.NEW_RELIC_API_KEY != ''
+        if: needs.lint.outputs.environment == 'production' && env.NEW_RELIC_API_KEY != ''
         run: |
           npm run newrelic-mark-deploy -- --search "*-production" --api_key "${{ env.NEW_RELIC_API_KEY }}" --commit "${{ github.sha }}" --user "${{ github.actor }}" --description "$(git log -1 --pretty=%B)"
 
@@ -356,17 +503,17 @@ jobs:
                 "fields": [
                   {
                     "title": "Environment",
-                    "value": "${{ needs.test.outputs.environment }}",
+                    "value": "${{ needs.lint.outputs.environment }}",
                     "short": true
                   },
                   {
                     "title": "Branch",
-                    "value": "`${{ needs.test.outputs.display-branch }}`",
+                    "value": "`${{ needs.lint.outputs.display-branch }}`",
                     "short": true
                   },
                   {
                     "title": "Commit",
-                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.test.outputs.short-sha }}`>",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.lint.outputs.short-sha }}`>",
                     "short": true
                   },
                   {
@@ -384,7 +531,7 @@ jobs:
                   {
                     "type": "button",
                     "text": "View Environment",
-                    "url": "${{ needs.test.outputs.environment == 'production' && 'https://www.devgo-vip.com' || needs.test.outputs.environment == 'test' && 'https://staging.devgo-vip.com' || needs.test.outputs.environment == 'pre-prod' && 'https://release.devgo-vip.com' || 'https://dev.devgo-vip.com' }}",
+                    "url": "${{ needs.lint.outputs.environment == 'production' && 'https://www.devgo-vip.com' || needs.lint.outputs.environment == 'test' && 'https://staging.devgo-vip.com' || needs.lint.outputs.environment == 'pre-prod' && 'https://release.devgo-vip.com' || 'https://dev.devgo-vip.com' }}",
                     "style": "primary"
                   },
                   {
@@ -411,17 +558,17 @@ jobs:
                 "fields": [
                   {
                     "title": "Environment",
-                    "value": "${{ needs.test.outputs.environment }}",
+                    "value": "${{ needs.lint.outputs.environment }}",
                     "short": true
                   },
                   {
                     "title": "Branch",
-                    "value": "`${{ needs.test.outputs.display-branch }}`",
+                    "value": "`${{ needs.lint.outputs.display-branch }}`",
                     "short": true
                   },
                   {
                     "title": "Commit",
-                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.test.outputs.short-sha }}`>",
+                    "value": "<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|`${{ needs.lint.outputs.short-sha }}`>",
                     "short": true
                   },
                   {

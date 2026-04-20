@@ -16,7 +16,7 @@
 		"install-cert": "CAROOT=./local/certs mkcert -install",
 		"preinstall": "composer install",
 		"prepare": "git config core.hooksPath ./local/git-hooks",
-		"lint": "npm-run-all lint-*",
+		"lint": "npm-run-all --parallel --print-label lint-*",
 		"lint-workspaces": "npm run lint --workspaces",
 		"lint-composer": "composer verify",
 		"lint-js": "wp-scripts lint-js ./local/scripts",

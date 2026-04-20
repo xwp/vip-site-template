@@ -95,26 +95,49 @@ This repository uses automated GitHub Actions workflows to handle testing, deplo
 **File**: `test-deploy.yml`  
 **Trigger**: All PRs and pushes to protected branches
 
+### Job Topology
+
+Lint and Test run as **parallel jobs** on separate runners, cutting wall-clock time roughly in half compared to serial execution. A lightweight Notify job sends a single consolidated Slack message after both complete. Deploy runs only on pushes to protected branches.
+
+```txt
+  ┌──────┐  ┌──────┐
+  │ Lint │  │ Test │   ← parallel
+  └──┬───┘  └──┬───┘
+     │   ┌─────┘
+  ┌──▼───▼──────┐
+  │ Notify Slack │   ← consolidated result
+  ├──────────────┤
+  │    Deploy    │   ← protected branches only
+  └──────────────┘
+```
+
 ### For Pull Requests
 
-- ✅ Lint and test only
+- ✅ Lint and Test (parallel)
 - ❌ No deployment
 
 ### For Branch Pushes
 
-- ✅ Lint and test
+- ✅ Lint and Test (parallel)
+- ⏭️ Tests skipped for `release`/`production` (already tested upstream)
 - 🚀 Deploy to environment:
   - `develop` → Dev environment
-  - `main` → Test environment  
+  - `main` → Test environment
   - `release` → Pre-prod environment
   - `production` → Production environment
 
 ### Features
 
-- Split jobs for efficiency (test always runs, deploy only when needed)
+- **Parallel jobs** — Lint and Test run simultaneously on separate runners
+- **No Docker in Lint** — Lint job skips Docker login/pull for faster setup
+- **Incremental PHPCS on PRs** — only changed PHP files are checked; full scan on pushes to protected branches
+- **Consolidated Slack** — single notification after both jobs complete
 - Auto-cancellation of redundant runs
-- Comprehensive Slack notifications
 - NewRelic deployment markers (production only)
+
+### Branch Protection
+
+If branch protection rules reference the old **"Lint and Test"** check name, update them to require both **"Lint"** and **"Test"**. The **"Notify Slack"** job should not be a required check.
 
 ## Docker Image Management
 
