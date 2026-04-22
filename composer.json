@@ -72,7 +72,7 @@
 		],
 		"lint:project": "phpcs",
 		"lint:theme": "phpcs --standard=themes/example-theme/phpcs.xml.dist",
-		"lint:phpstan": "phpstan analyse --memory-limit 4G -vvv",
+		"lint:phpstan": "phpstan analyse --memory-limit 4G",
 		"lint-fix": [
 			"phpcbf",
 			"phpcbf --standard=themes/example-theme/phpcs.xml.dist"
@@ -82,8 +82,8 @@
 			"composer validate --no-check-all --no-check-publish --strict"
 		],
 		"test": [
-			"phpunit --configuration=phpunit.xml.dist",
-			"phpunit --configuration=themes/example-theme/phpunit.xml.dist"
+			"phpunit -v --configuration=phpunit.xml.dist",
+			"phpunit -v --configuration=themes/example-theme/phpunit.xml.dist"
 		],
 		"release": [
 			"composer install --no-dev --prefer-dist --optimize-autoloader"
