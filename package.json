@@ -53,8 +53,8 @@
 	},
 	"devDependencies": {
 		"@automattic/vip": "^3",
-		"@wordpress/eslint-plugin": "^22.5.1",
-		"@wordpress/scripts": "^30.12.1",
+		"@wordpress/eslint-plugin": "^24.0.0",
+		"@wordpress/scripts": "^31.3.0",
 		"clean-webpack-plugin": "^4.0.0",
 		"lint-staged": "^15.0.2",
 		"npm-run-all2": "^5.0.0"
