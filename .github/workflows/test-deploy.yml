@@ -430,6 +430,15 @@ jobs:
           git config --global user.name "${{ env.GIT_USER_NAME }}"
           git config --global user.email "${{ env.GIT_USER_EMAIL }}"
 
+      - name: Sanitize values for Slack
+        id: sanitize
+        if: always()
+        env:
+          PUSHER_NAME: ${{ github.event.pusher.name || github.actor }}
+        run: |
+          SAFE_NAME=$(printf '%s' "$PUSHER_NAME" | sed 's/\\/\\\\/g; s/"/\\"/g' | tr -d '\n\r')
+          echo "pusher_name=${SAFE_NAME}" >> $GITHUB_OUTPUT
+
       - name: Notify Slack - Deployment started
         if: env.SLACK_CHANNEL != '' && env.SLACK_WEBHOOK_URL != ''
         uses: 8398a7/action-slack@v3
@@ -460,7 +469,7 @@ jobs:
                   },
                   {
                     "title": "Deployed by",
-                    "value": "${{ github.actor }} (${{ github.event.pusher.name || github.actor }})",
+                    "value": "${{ github.actor }} (${{ steps.sanitize.outputs.pusher_name }})",
                     "short": true
                   }
                 ]
@@ -518,7 +527,7 @@ jobs:
                   },
                   {
                     "title": "Deployed by",
-                    "value": "${{ github.actor }} (${{ github.event.pusher.name || github.actor }})",
+                    "value": "${{ github.actor }} (${{ steps.sanitize.outputs.pusher_name }})",
                     "short": true
                   },
                   {
@@ -573,7 +582,7 @@ jobs:
                   },
                   {
                     "title": "Deployed by",
-                    "value": "${{ github.actor }} (${{ github.event.pusher.name || github.actor }})",
+                    "value": "${{ github.actor }} (${{ steps.sanitize.outputs.pusher_name }})",
                     "short": true
                   },
                   {

@@ -80,7 +80,7 @@ jobs:
           echo "Release branch created/updated from main"
 
       - name: Trigger deployment to release environment
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         continue-on-error: true
         with:
           script: |
@@ -117,6 +117,14 @@ jobs:
           echo "message=${COMMIT_MSG}" >> $GITHUB_OUTPUT
           echo "author=${COMMIT_AUTHOR}" >> $GITHUB_OUTPUT
 
+      - name: Sanitize values for Slack
+        id: sanitize
+        env:
+          COMMIT_MSG: ${{ steps.commit-info.outputs.message }}
+        run: |
+          SAFE_MSG=$(printf '%s' "$COMMIT_MSG" | sed 's/\\/\\\\/g; s/"/\\"/g' | tr -d '\n\r')
+          echo "commit_message=${SAFE_MSG}" >> $GITHUB_OUTPUT
+
       - name: Generate changelog
         id: changelog
         run: |
@@ -145,7 +153,7 @@ jobs:
 
       - name: Create GitHub release draft
         id: create-release
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           RELEASE_VERSION: ${{ steps.version.outputs.version }}
           COMMIT_SHA: ${{ steps.commit-info.outputs.sha }}
@@ -215,7 +223,7 @@ jobs:
                   },
                   {
                     "title": "Base Commit",
-                    "value": "`${{ steps.commit-info.outputs.sha }}`\n${{ steps.commit-info.outputs.message }}",
+                    "value": "`${{ steps.commit-info.outputs.sha }}`\n${{ steps.sanitize.outputs.commit_message }}",
                     "short": true
                   },
                   {

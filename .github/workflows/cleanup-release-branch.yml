@@ -45,7 +45,7 @@ jobs:
 
       - name: Get release version from existing draft
         id: get-version
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             try {
@@ -76,6 +76,14 @@ jobs:
               return version;
             }
 
+      - name: Sanitize values for Slack
+        id: sanitize
+        env:
+          MERGED_BY_NAME: ${{ github.event.pull_request.merged_by.name || github.event.pull_request.merged_by.login }}
+        run: |
+          SAFE_NAME=$(printf '%s' "$MERGED_BY_NAME" | sed 's/\\/\\\\/g; s/"/\\"/g' | tr -d '\n\r')
+          echo "merged_by_name=${SAFE_NAME}" >> $GITHUB_OUTPUT
+
       - name: Delete release branch
         if: steps.check-branch.outputs.exists == 'true'
         run: |
@@ -88,7 +96,7 @@ jobs:
 
       - name: Update GitHub release
         id: update-release
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const version = "${{ steps.get-version.outputs.version }}";
@@ -193,7 +201,7 @@ jobs:
                   },
                   {
                     "title": "Deployed by",
-                    "value": "${{ github.event.pull_request.merged_by.login }} (${{ github.event.pull_request.merged_by.name || github.event.pull_request.merged_by.login }})",
+                    "value": "${{ github.event.pull_request.merged_by.login }} (${{ steps.sanitize.outputs.merged_by_name }})",
                     "short": true
                   },
                   {

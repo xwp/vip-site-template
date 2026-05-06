@@ -51,6 +51,14 @@ jobs:
 
           echo "Found ${COMMITS} commits ready for production"
 
+      - name: Sanitize values for Slack
+        id: sanitize
+        env:
+          RELEASE_NOTES: ${{ inputs.release_notes }}
+        run: |
+          SAFE_NOTES=$(printf '%s' "$RELEASE_NOTES" | sed 's/\\/\\\\/g; s/"/\\"/g' | tr '\n\r' ' ')
+          echo "release_notes=${SAFE_NOTES}" >> $GITHUB_OUTPUT
+
       - name: Generate changelog
         id: changelog
         run: |
@@ -79,7 +87,7 @@ jobs:
 
       - name: Find GitHub release draft
         id: find-release
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             try {
@@ -110,7 +118,7 @@ jobs:
 
       - name: Create production PR
         id: create-pr
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           RELEASE_NOTES: ${{ inputs.release_notes }}
           COMMIT_COUNT: ${{ steps.release-info.outputs.commit_count }}
@@ -253,7 +261,7 @@ jobs:
                   },
                   {
                     "title": "Release Notes",
-                    "value": "${{ inputs.release_notes }}",
+                    "value": "${{ steps.sanitize.outputs.release_notes }}",
                     "short": false
                   },
                   {

@@ -35,10 +35,15 @@ define( 'VIP_GO_APP_ENVIRONMENT', 'local' );
 define( 'VIP_GO_ENV', 'local' );
 
 // Set the default theme for new sites.
-define( 'WP_DEFAULT_THEME', 'twentytwentyfive' );
+define( 'WP_DEFAULT_THEME', 'example-theme' );
 
 // Enable offline mode to ensure it doesn't connect to WP.com.
 define( 'JETPACK_DEV_DEBUG', true ); // phpcs:ignore WordPressVIPMinimum.Constants.RestrictedConstants.DefiningRestrictedConstant
+
+// Enable development mode for local environment.
+if ( ! defined( 'WP_DEVELOPMENT_MODE' ) ) {
+	define( 'WP_DEVELOPMENT_MODE', 'all' );
+}
 
 // Use Composer and Git to update plugins and themes.
 define( 'DISALLOW_FILE_MODS', true );

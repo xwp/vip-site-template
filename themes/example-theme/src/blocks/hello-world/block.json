@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "example-theme/hello-world",
+	"version": "1.0.0",
+	"title": "Hello World",
+	"category": "example-blocks",
+	"description": "A simple Hello World block.",
+	"textdomain": "example-theme",
+	"editorScript": "file:./js/edit.js",
+	"render": "file:./php/render.php",
+	"supports": {
+		"html": false
+	}
+}

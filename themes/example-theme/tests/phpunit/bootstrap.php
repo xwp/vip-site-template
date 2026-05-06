@@ -9,7 +9,7 @@
 
 // WP core test suite will make these the option values automatically.
 global $wp_tests_options;
-$test_theme_basename = basename( dirname( __DIR__ ) );
+$test_theme_basename = basename( dirname( __DIR__, 2 ) );
 $wp_tests_options    = [
 	'template'       => $test_theme_basename,
 	'stylesheet'     => $test_theme_basename,

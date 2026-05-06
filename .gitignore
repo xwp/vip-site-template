@@ -30,6 +30,13 @@ docker-compose.override.yml
 ehthumbs.db
 Thumbs.db
 
+# Ignore Cursor plan files
+.cursor/plans/
+
+# Ignore AI files
+.ai-recipes-backups
+.claude/settings.local.json
+
 # Ignore Jetbrains IDE files
 .idea/
 

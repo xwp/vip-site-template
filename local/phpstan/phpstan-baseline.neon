@@ -1,2 +1,6 @@
 parameters:
-	ignoreErrors: []
+	ignoreErrors:
+		-
+			message: "#^Call to method init\\(\\) on an unknown class \\\\XWP\\\\Enterprise_Migration_Tools\\\\XWP_CLI_Command\\.$#"
+			count: 1
+			path: ../../themes/example-theme/src/core/php/class-feature-registry.php

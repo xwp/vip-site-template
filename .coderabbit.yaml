@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+reviews:
+  request_changes_workflow: true
+  collapse_walkthrough: true
+  estimate_code_review_effort: false
+  suggested_labels: false
+  in_progress_fortune: false
+  high_level_summary_in_walkthrough: true
+  poem: false
+  auto_review:
+    ignore_title_keywords:
+      - '[WIP]'
+      - '[DO NOT MERGE]'
+    base_branches:
+      - .*
+  path_instructions:
+    - path: "**/*.{js,ts,tsx,jsx,php}"
+      instructions: |
+        In addition to default instructions, perform a detailed review of the provided code with following key aspects in mind:
+          - Verify compliance with WordPress and WordPress VIP coding standards and best practices.
+          - Check for proper escaping and sanitization of data to prevent security vulnerabilities.
+          - Guarantee compatibility with the latest version of WordPress, avoiding deprecated functions or features.
+
+chat:
+  art: false
