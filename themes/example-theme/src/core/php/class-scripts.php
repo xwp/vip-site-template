@@ -152,8 +152,7 @@ class Scripts implements Component {
 		return apply_filters(
 			'example_editor_data',
 			[
-				'home_url'            => home_url(),
-				'features_post_types' => apply_filters( 'example__editor_data__features_post_types', [] ),
+				'home_url' => home_url(),
 			]
 		);
 	}

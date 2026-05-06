@@ -33,7 +33,6 @@ $components = [
 	new Components\Foundation(),
 	new Components\Styles(),
 	new Components\Scripts(),
-	new Components\Blocks_Settings(),
 	new Components\Block_Registry(
 		new Path( __DIR__ . '/src/blocks' ),
 		new Path( __DIR__ . '/build/blocks' )
