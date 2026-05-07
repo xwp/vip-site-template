@@ -32,7 +32,10 @@ The core module provides the theme's infrastructure, including component managem
 
 ### Utilities
 
-- **`class-utils.php`**: Common helper functions for theme operations
+- **`class-request-context.php`**: Request type detection (AJAX, REST, CLI, cron, autosave, import)
+- **`class-environment.php`**: Environment and runtime detection (env tier, debug flags, VIP env vars, CLI availability, unit test context)
+- **`class-cache.php`**: Object cache helpers (read-through, delete, group flush)
+- **`class-utils.php`**: String and URL helpers (case conversion, URL building, URL validation)
 - **`class-path.php`**: File path management and resolution
 - **`class-container.php`**: Dependency injection container
 - **`class-components.php`**: Component registration and lifecycle management
