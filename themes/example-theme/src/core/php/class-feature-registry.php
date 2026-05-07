@@ -11,8 +11,9 @@ use FilesystemIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+use XWP\VIP_Site_Template\Theme\Environment;
 use XWP\VIP_Site_Template\Theme\Path;
-use XWP\VIP_Site_Template\Theme\Utils;
+use XWP\VIP_Site_Template\Theme\Request_Context;
 use XWP\VIP_Site_Template\Theme\Features\Feature;
 
 use function XWP\VIP_Site_Template\Theme\theme;
@@ -113,7 +114,7 @@ class Feature_Registry implements Component {
 		}
 
 		// 2. Load CLI commands if in CLI context.
-		if ( Utils::is_wp_cli_request() && Utils::is_vip_wp_cli_available() ) {
+		if ( Request_Context::is_wp_cli_request() && Environment::is_vip_wp_cli_available() ) {
 			$this->load_cli_commands( $directory );
 		}
 	}
@@ -146,7 +147,7 @@ class Feature_Registry implements Component {
 	 */
 	private function load_cli_commands( string $directory ): void {
 		// Only proceed in CLI contexts supported on VIP.
-		if ( ! Utils::is_wp_cli_request() || ! Utils::is_vip_wp_cli_available() ) {
+		if ( ! Request_Context::is_wp_cli_request() || ! Environment::is_vip_wp_cli_available() ) {
 			return;
 		}
 

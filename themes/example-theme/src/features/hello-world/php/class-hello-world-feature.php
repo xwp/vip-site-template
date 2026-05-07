@@ -21,7 +21,7 @@ class Hello_World_Feature extends Feature {
 	 * @return void
 	 */
 	protected function feature_init(): void {
-		add_filter( 'body_class', [ Hello_World_Feature::class, 'add_body_class' ] );
+		add_filter( 'body_class', [ $this, 'add_body_class' ] );
 	}
 
 	/**
@@ -31,7 +31,7 @@ class Hello_World_Feature extends Feature {
 	 *
 	 * @return string[]
 	 */
-	public static function add_body_class( array $classes ): array {
+	public function add_body_class( array $classes ): array {
 		$classes[] = 'hello-world-feature';
 		return $classes;
 	}

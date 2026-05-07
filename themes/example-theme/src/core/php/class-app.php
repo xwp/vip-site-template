@@ -55,7 +55,7 @@ class App {
 		try {
 			return self::$container->get( $name );
 		} catch ( RuntimeException $e ) {
-			if ( Utils::is_debug() ) {
+			if ( Environment::is_debug() ) {
 				throw new RuntimeException( $e->getMessage() ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- happens only during dev.
 			}
 		}
