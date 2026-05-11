@@ -391,8 +391,9 @@
             "type": "wordpress-theme",
             "autoload": {
                 "classmap": [
-                    "php/",
-                    "blocks/*/php/"
+                    "src/core/php/",
+                    "src/features/*/php/",
+                    "src/blocks/*/php/"
                 ]
             },
             "transport-options": {

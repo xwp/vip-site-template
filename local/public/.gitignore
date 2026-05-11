@@ -1,2 +1,4 @@
 /wp/
 /wp-content/
+*.sql.gz
+*.sql

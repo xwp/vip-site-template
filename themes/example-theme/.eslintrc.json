@@ -18,7 +18,8 @@
 		"jsdoc/require-param-type": "off",
 		"jsdoc/check-param-names": "off",
 		"@wordpress/i18n-no-flanking-whitespace": "off",
-		"space-in-parens": "off"
+		"space-in-parens": "off",
+		"indent": "off"
 	},
 	"plugins": [ "@typescript-eslint" ],
 	"parser": "@typescript-eslint/parser",

@@ -22,7 +22,7 @@
 	},
 	"overrides": [
 		{
-			"files": ["css/editor.scss", "css/style.scss"],
+			"files": ["css/editor.scss", "css/frontend.scss"],
 			"rules": {
 				"selector-class-pattern": null,
 				"no-invalid-position-at-import-rule": null

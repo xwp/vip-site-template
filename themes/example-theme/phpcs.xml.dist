@@ -33,6 +33,7 @@
 	</rule>
 
 	<exclude-pattern>*/assets/*</exclude-pattern>
+	<exclude-pattern>*/build/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/tests/coverage/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
