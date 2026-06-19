@@ -57,6 +57,6 @@
 		"@wordpress/scripts": "^30.26.2",
 		"clean-webpack-plugin": "^4.0.0",
 		"lint-staged": "^15.0.2",
-		"npm-run-all2": "^5.0.0"
+		"npm-run-all2": "^5.0.2"
 	}
 }
