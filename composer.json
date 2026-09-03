@@ -49,7 +49,7 @@
 		"automattic/vip-go-mu-plugins": "dev-master",
 		"automattic/vipwpcs": "^3.0",
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.2",
-		"php-stubs/wordpress-stubs": "^6.9",
+		"php-stubs/wordpress-stubs": "^6.9.4",
 		"php-stubs/wp-cli-stubs": "^2.12",
 		"phpcompatibility/php-compatibility": "^9.3",
 		"phpcompatibility/phpcompatibility-wp": "^2.1",
